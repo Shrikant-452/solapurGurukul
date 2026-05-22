@@ -1,0 +1,452 @@
+/* ==================== CSS VARIABLES ==================== */
+/* This file contains all global CSS variables for the Divine Mantra website */
+
+:root {
+  /* ==================== COLOR SYSTEM ==================== */
+  
+  /* Primary Colors */
+  --color-primary: #ffd700;
+  --color-primary-light: #ffed4a;
+  --color-primary-dark: #b8860b;
+  --color-primary-rgb: 255, 215, 0;
+  
+  /* Secondary Colors */
+  --color-secondary: #ff8c42;
+  --color-secondary-light: #ffaa66;
+  --color-secondary-dark: #cc6b1a;
+  
+  /* Accent Colors */
+  --color-accent-crimson: #dc143c;
+  --color-accent-teal: #20b2aa;
+  --color-accent-purple: #9370db;
+  --color-accent-saffron: #ff9933;
+  --color-accent-rose: #ff69b4;
+  --color-accent-indigo: #4b0082;
+  
+  /* Status Colors */
+  --color-success: #10b981;
+  --color-success-light: #34d399;
+  --color-success-dark: #059669;
+  
+  --color-error: #ef4444;
+  --color-error-light: #f87171;
+  --color-error-dark: #dc2626;
+  
+  --color-warning: #f59e0b;
+  --color-warning-light: #fbbf24;
+  --color-warning-dark: #d97706;
+  
+  --color-info: #3b82f6;
+  --color-info-light: #60a5fa;
+  --color-info-dark: #2563eb;
+  
+  /* Background Colors (Dark Theme) */
+  --bg-primary: #0a0a1a;
+  --bg-secondary: #0f0f1f;
+  --bg-tertiary: #141428;
+  --bg-card: #1a1a2e;
+  --bg-card-hover: #1f1f3a;
+  --bg-input: #0f0f1f;
+  --bg-overlay: rgba(0, 0, 0, 0.7);
+  --bg-gradient-start: #0f0f2a;
+  --bg-gradient-end: #1a1a3a;
+  
+  /* Text Colors */
+  --text-primary: #ffffff;
+  --text-secondary: #d4d4d8;
+  --text-tertiary: #a1a1aa;
+  --text-muted: #71717a;
+  --text-inverse: #0a0a1a;
+  
+  /* Border Colors */
+  --border-light: rgba(255, 215, 0, 0.15);
+  --border-medium: rgba(255, 215, 0, 0.25);
+  --border-dark: rgba(255, 215, 0, 0.4);
+  --border-gold: rgba(255, 215, 0, 0.5);
+  --border-error: rgba(239, 68, 68, 0.3);
+  --border-success: rgba(16, 185, 129, 0.3);
+  
+  /* Shadow Colors */
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --shadow-color-dark: rgba(0, 0, 0, 0.3);
+  --shadow-gold-color: rgba(255, 215, 0, 0.2);
+  
+  /* ==================== TYPOGRAPHY ==================== */
+  
+  /* Font Families */
+  --font-serif: 'Playfair Display', serif;
+  --font-body: 'Crimson Text', serif;
+  --font-devanagari: 'Noto Sans Devanagari', sans-serif;
+  --font-mono: 'Courier New', monospace;
+  
+  /* Font Sizes */
+  --text-xs: 0.75rem;     /* 12px */
+  --text-sm: 0.875rem;    /* 14px */
+  --text-base: 1rem;      /* 16px */
+  --text-lg: 1.125rem;    /* 18px */
+  --text-xl: 1.25rem;     /* 20px */
+  --text-2xl: 1.5rem;     /* 24px */
+  --text-3xl: 1.875rem;   /* 30px */
+  --text-4xl: 2.25rem;    /* 36px */
+  --text-5xl: 3rem;       /* 48px */
+  --text-6xl: 3.75rem;    /* 60px */
+  --text-7xl: 4.5rem;     /* 72px */
+  
+  /* Font Weights */
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-extrabold: 800;
+  --font-black: 900;
+  
+  /* Line Heights */
+  --leading-none: 1;
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 2;
+  
+  /* Letter Spacing */
+  --tracking-tighter: -0.05em;
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.025em;
+  --tracking-wider: 0.05em;
+  --tracking-widest: 0.1em;
+  
+  /* ==================== SPACING ==================== */
+  
+  /* Spacing Scale (based on 4px) */
+  --spacing-0: 0;
+  --spacing-1: 0.25rem;   /* 4px */
+  --spacing-2: 0.5rem;    /* 8px */
+  --spacing-3: 0.75rem;   /* 12px */
+  --spacing-4: 1rem;      /* 16px */
+  --spacing-5: 1.25rem;   /* 20px */
+  --spacing-6: 1.5rem;    /* 24px */
+  --spacing-7: 1.75rem;   /* 28px */
+  --spacing-8: 2rem;      /* 32px */
+  --spacing-9: 2.25rem;   /* 36px */
+  --spacing-10: 2.5rem;   /* 40px */
+  --spacing-11: 2.75rem;  /* 44px */
+  --spacing-12: 3rem;     /* 48px */
+  --spacing-14: 3.5rem;   /* 56px */
+  --spacing-16: 4rem;     /* 64px */
+  --spacing-20: 5rem;     /* 80px */
+  --spacing-24: 6rem;     /* 96px */
+  --spacing-32: 8rem;     /* 128px */
+  --spacing-40: 10rem;    /* 160px */
+  --spacing-48: 12rem;    /* 192px */
+  --spacing-56: 14rem;    /* 224px */
+  --spacing-64: 16rem;    /* 256px */
+  
+  /* ==================== BORDER RADIUS ==================== */
+  
+  --radius-none: 0;
+  --radius-sm: 0.125rem;   /* 2px */
+  --radius-base: 0.25rem;  /* 4px */
+  --radius-md: 0.375rem;   /* 6px */
+  --radius-lg: 0.5rem;     /* 8px */
+  --radius-xl: 0.75rem;    /* 12px */
+  --radius-2xl: 1rem;      /* 16px */
+  --radius-3xl: 1.5rem;    /* 24px */
+  --radius-4xl: 2rem;      /* 32px */
+  --radius-full: 9999px;
+  
+  /* ==================== SHADOWS ==================== */
+  
+  --shadow-xs: 0 1px 2px var(--shadow-color);
+  --shadow-sm: 0 1px 3px var(--shadow-color), 0 1px 2px var(--shadow-color);
+  --shadow-md: 0 4px 6px -1px var(--shadow-color), 0 2px 4px -1px var(--shadow-color);
+  --shadow-lg: 0 10px 15px -3px var(--shadow-color), 0 4px 6px -2px var(--shadow-color);
+  --shadow-xl: 0 20px 25px -5px var(--shadow-color), 0 10px 10px -5px var(--shadow-color);
+  --shadow-2xl: 0 25px 50px -12px var(--shadow-color);
+  --shadow-inner: inset 0 2px 4px 0 var(--shadow-color);
+  
+  --shadow-gold-sm: 0 1px 3px var(--shadow-gold-color);
+  --shadow-gold-md: 0 4px 6px var(--shadow-gold-color);
+  --shadow-gold-lg: 0 10px 15px var(--shadow-gold-color);
+  --shadow-gold-xl: 0 20px 25px var(--shadow-gold-color);
+  
+  /* ==================== Z-INDEX ==================== */
+  
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal-backdrop: 400;
+  --z-modal: 500;
+  --z-popover: 600;
+  --z-tooltip: 700;
+  --z-toast: 800;
+  --z-loader: 900;
+  --z-max: 9999;
+  
+  /* ==================== TRANSITIONS ==================== */
+  
+  --transition-fast: 150ms;
+  --transition-base: 250ms;
+  --transition-slow: 350ms;
+  --transition-slower: 500ms;
+  
+  --transition-timing-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-timing-in: cubic-bezier(0.4, 0, 1, 1);
+  --transition-timing-out: cubic-bezier(0, 0, 0.2, 1);
+  
+  /* ==================== LAYOUT ==================== */
+  
+  --container-max-width: 1200px;
+  --container-padding: 1rem;
+  --sidebar-width: 260px;
+  --sidebar-collapsed-width: 70px;
+  --header-height: 70px;
+  --footer-height: 300px;
+  
+  /* ==================== BREAKPOINTS ==================== */
+  
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+  
+  /* ==================== OPACITY ==================== */
+  
+  --opacity-0: 0;
+  --opacity-25: 0.25;
+  --opacity-50: 0.5;
+  --opacity-75: 0.75;
+  --opacity-100: 1;
+  
+  /* ==================== BLUR ==================== */
+  
+  --blur-sm: blur(4px);
+  --blur-md: blur(8px);
+  --blur-lg: blur(12px);
+  --blur-xl: blur(16px);
+  --blur-2xl: blur(24px);
+  
+  /* ==================== GRID ==================== */
+  
+  --grid-gap: 1.5rem;
+  --grid-cols-1: repeat(1, minmax(0, 1fr));
+  --grid-cols-2: repeat(2, minmax(0, 1fr));
+  --grid-cols-3: repeat(3, minmax(0, 1fr));
+  --grid-cols-4: repeat(4, minmax(0, 1fr));
+  --grid-cols-5: repeat(5, minmax(0, 1fr));
+  --grid-cols-6: repeat(6, minmax(0, 1fr));
+  
+  /* ==================== CUSTOM PROPERTIES ==================== */
+  
+  /* Gradient Backgrounds */
+  --gradient-primary: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+  --gradient-secondary: linear-gradient(135deg, var(--color-secondary), var(--color-secondary-light));
+  --gradient-dark: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+  --gradient-gold: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+  --gradient-crimson: linear-gradient(135deg, var(--color-accent-crimson), #ff4444);
+  --gradient-teal: linear-gradient(135deg, var(--color-accent-teal), #14b8a6);
+  --gradient-purple: linear-gradient(135deg, var(--color-accent-purple), #a855f7);
+  
+  /* Card Styles */
+  --card-bg: var(--bg-card);
+  --card-border: 1px solid var(--border-light);
+  --card-radius: var(--radius-2xl);
+  --card-shadow: var(--shadow-md);
+  --card-shadow-hover: var(--shadow-lg);
+  
+  /* Button Styles */
+  --btn-padding-y: 0.5rem;
+  --btn-padding-x: 1rem;
+  --btn-radius: var(--radius-full);
+  --btn-font-weight: var(--font-semibold);
+  
+  /* Input Styles */
+  --input-bg: var(--bg-input);
+  --input-border: 1px solid var(--border-light);
+  --input-radius: var(--radius-lg);
+  --input-padding-y: 0.625rem;
+  --input-padding-x: 1rem;
+  
+  /* Modal Styles */
+  --modal-bg: var(--bg-card);
+  --modal-border: 1px solid var(--border-light);
+  --modal-radius: var(--radius-2xl);
+  --modal-shadow: var(--shadow-xl);
+  
+  /* Toast Styles */
+  --toast-bg: var(--bg-card);
+  --toast-border: 1px solid var(--border-light);
+  --toast-radius: var(--radius-lg);
+  --toast-shadow: var(--shadow-lg);
+}
+
+/* ==================== DARK MODE VARIABLES ==================== */
+/* These are applied by default, but can be toggled */
+
+/* ==================== LIGHT MODE VARIABLES ==================== */
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-tertiary: #f1f3f5;
+    --bg-card: #ffffff;
+    --bg-card-hover: #f8f9fa;
+    --bg-input: #ffffff;
+    
+    --text-primary: #1a1a2e;
+    --text-secondary: #2d2d3f;
+    --text-tertiary: #4a4a5e;
+    --text-muted: #71717a;
+    
+    --border-light: rgba(0, 0, 0, 0.1);
+    --border-medium: rgba(0, 0, 0, 0.15);
+    --border-dark: rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* ==================== UTILITY CLASSES ==================== */
+/* These can be used directly in HTML */
+
+/* Colors */
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-muted { color: var(--text-muted); }
+.text-gold { color: var(--color-primary); }
+.text-success { color: var(--color-success); }
+.text-error { color: var(--color-error); }
+.text-warning { color: var(--color-warning); }
+.text-info { color: var(--color-info); }
+
+/* Backgrounds */
+.bg-primary { background: var(--bg-primary); }
+.bg-secondary { background: var(--bg-secondary); }
+.bg-card { background: var(--bg-card); }
+.bg-gold { background: var(--color-primary); }
+.bg-gradient { background: var(--gradient-dark); }
+
+/* Borders */
+.border { border: 1px solid var(--border-light); }
+.border-gold { border-color: var(--color-primary); }
+.border-success { border-color: var(--color-success); }
+.border-error { border-color: var(--color-error); }
+
+/* Shadows */
+.shadow-sm { box-shadow: var(--shadow-sm); }
+.shadow-md { box-shadow: var(--shadow-md); }
+.shadow-lg { box-shadow: var(--shadow-lg); }
+.shadow-gold { box-shadow: var(--shadow-gold-md); }
+
+/* Border Radius */
+.rounded-none { border-radius: var(--radius-none); }
+.rounded-sm { border-radius: var(--radius-sm); }
+.rounded { border-radius: var(--radius-base); }
+.rounded-md { border-radius: var(--radius-md); }
+.rounded-lg { border-radius: var(--radius-lg); }
+.rounded-xl { border-radius: var(--radius-xl); }
+.rounded-2xl { border-radius: var(--radius-2xl); }
+.rounded-full { border-radius: var(--radius-full); }
+
+/* Spacing */
+.m-0 { margin: var(--spacing-0); }
+.m-1 { margin: var(--spacing-1); }
+.m-2 { margin: var(--spacing-2); }
+.m-3 { margin: var(--spacing-3); }
+.m-4 { margin: var(--spacing-4); }
+.m-5 { margin: var(--spacing-5); }
+.m-6 { margin: var(--spacing-6); }
+
+.p-0 { padding: var(--spacing-0); }
+.p-1 { padding: var(--spacing-1); }
+.p-2 { padding: var(--spacing-2); }
+.p-3 { padding: var(--spacing-3); }
+.p-4 { padding: var(--spacing-4); }
+.p-5 { padding: var(--spacing-5); }
+.p-6 { padding: var(--spacing-6); }
+
+/* Flexbox */
+.flex { display: flex; }
+.inline-flex { display: inline-flex; }
+.flex-col { flex-direction: column; }
+.flex-row { flex-direction: row; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.gap-1 { gap: var(--spacing-1); }
+.gap-2 { gap: var(--spacing-2); }
+.gap-3 { gap: var(--spacing-3); }
+.gap-4 { gap: var(--spacing-4); }
+
+/* Grid */
+.grid { display: grid; }
+.grid-cols-1 { grid-template-columns: var(--grid-cols-1); }
+.grid-cols-2 { grid-template-columns: var(--grid-cols-2); }
+.grid-cols-3 { grid-template-columns: var(--grid-cols-3); }
+.grid-cols-4 { grid-template-columns: var(--grid-cols-4); }
+
+/* Typography */
+.text-xs { font-size: var(--text-xs); }
+.text-sm { font-size: var(--text-sm); }
+.text-base { font-size: var(--text-base); }
+.text-lg { font-size: var(--text-lg); }
+.text-xl { font-size: var(--text-xl); }
+.text-2xl { font-size: var(--text-2xl); }
+.text-3xl { font-size: var(--text-3xl); }
+
+.font-light { font-weight: var(--font-light); }
+.font-normal { font-weight: var(--font-normal); }
+.font-medium { font-weight: var(--font-medium); }
+.font-semibold { font-weight: var(--font-semibold); }
+.font-bold { font-weight: var(--font-bold); }
+.font-extrabold { font-weight: var(--font-extrabold); }
+
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+/* Responsive Utilities */
+@media (max-width: 640px) {
+  .sm\:hidden { display: none; }
+  .sm\:block { display: block; }
+  .sm\:flex { display: flex; }
+  .sm\:grid { display: grid; }
+  .sm\:grid-cols-1 { grid-template-columns: repeat(1, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .md\:hidden { display: none; }
+  .md\:block { display: block; }
+  .md\:flex { display: flex; }
+  .md\:grid { display: grid; }
+  .md\:grid-cols-1 { grid-template-columns: repeat(1, 1fr); }
+  .md\:grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 1024px) {
+  .lg\:hidden { display: none; }
+  .lg\:block { display: block; }
+  .lg\:flex { display: flex; }
+  .lg\:grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .lg\:grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ==================== CSS CUSTOM PROPERTIES FOR JS ==================== */
+/* These can be accessed via getComputedStyle in JavaScript */
+
+:root {
+  --js-primary-color: #ffd700;
+  --js-primary-rgb: 255, 215, 0;
+  --js-bg-primary: #0a0a1a;
+  --js-text-primary: #ffffff;
+}
+
+/* ==================== PRINT STYLES ==================== */
+@media print {
+  :root {
+    --bg-primary: #ffffff;
+    --text-primary: #000000;
+    --text-secondary: #333333;
+    --border-light: #cccccc;
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "app_name": "Divine Mantra",
+  "tagline": "Treasury of Sacred Hymns",
+  
+  "nav": {
+    "home": "Home",
+    "mantras": "Mantras",
+    "about": "About",
+    "contact": "Contact",
+    "admin": "Admin Panel",
+    "dashboard": "Dashboard",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout"
+  },
+  
+  "hero": {
+    "title": "Divine Mantra",
+    "subtitle": "Treasury of Sacred Hymns",
+    "description": "Discover the power of ancient mantras, stotras, and devotional hymns. A sacred treasury for spiritual seekers.",
+    "cta": "Explore Library",
+    "stats_mantras": "Mantras",
+    "stats_deities": "Deities",
+    "stats_languages": "Languages",
+    "stats_devotees": "Devotees"
+  },
+  
+  "home": {
+    "featured_mantras": "Featured Mantras",
+    "view_all": "View All",
+    "explore_categories": "Explore Categories",
+    "morning_prayers": "Morning Prayers",
+    "festival_mantras": "Festival Mantras",
+    "learn_sanskrit": "Learn Sanskrit",
+    "community_sabha": "Community Sabha"
+  },
+  
+  "mantras": {
+    "title": "Sacred Mantras",
+    "subtitle": "Browse our complete collection of devotional hymns",
+    "search_placeholder": "Search by mantra name, deity, or purpose...",
+    "deity": "Deity",
+    "language": "Language",
+    "occasion": "Occasion",
+    "all": "All",
+    "no_results": "No mantras found. Try a different search.",
+    "showing": "Showing",
+    "of": "of",
+    "read_more": "Read more →",
+    "purpose": "Purpose",
+    "verses": "Verses"
+  },
+  
+  "about": {
+    "title": "About Divine Mantra",
+    "subtitle": "Preserving the sacred hymns of Sanatana Dharma",
+    "mission_title": "Our Mission",
+    "mission_text": "Divine Mantra is dedicated to preserving and sharing the vast treasury of Hindu prayers, hymns, and stotras.",
+    "what_is_title": "What is a Mantra?",
+    "what_is_text": "A mantra is a sacred utterance that is considered capable of creating transformation.",
+    "collection_title": "Our Collection",
+    "collection_text": "Our library contains mantras across all major traditions — Shaiva, Vaishnava, Shakta, Smarta.",
+    "free_title": "Free Access",
+    "free_text": "All mantras are freely available for reading and chanting.",
+    "closing_verse": "सर्वे भवन्तु सुखिनः",
+    "closing_meaning": "May all beings be happy, may all be free from disease."
+  },
+  
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "We'd love to hear from you",
+    "name": "Full Name",
+    "email": "Email Address",
+    "phone": "Phone Number",
+    "message": "Your Message",
+    "send": "Send Message",
+    "sending": "Sending...",
+    "success": "Message sent successfully!",
+    "error": "Something went wrong. Please try again."
+  },
+  
+  "footer": {
+    "description": "A digital treasury of Hindu devotional literature, open to all seekers of truth.",
+    "quick_links": "Quick Links",
+    "categories": "Categories",
+    "rights": "All rights reserved.",
+    "copyright_note": "All mantras are for devotional purposes only"
+  },
+  
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "confirm_password": "Confirm Password",
+    "forgot_password": "Forgot Password?",
+    "no_account": "Don't have an account?",
+    "has_account": "Already have an account?",
+    "login_title": "Welcome Back",
+    "register_title": "Create Account",
+    "login_subtitle": "Sign in to access your dashboard",
+    "register_subtitle": "Join our spiritual community",
+    "login_success": "Login successful!",
+    "register_success": "Registration successful!",
+    "invalid_credentials": "Invalid email or password",
+    "password_mismatch": "Passwords do not match",
+    "name": "Full Name"
+  },
+  
+  "admin": {
+    "dashboard": "Dashboard",
+    "manage_mantras": "Manage Mantras",
+    "add_mantra": "Add New Mantra",
+    "users": "Users",
+    "analytics": "Analytics",
+    "total_mantras": "Total Mantras",
+    "total_users": "Total Users",
+    "total_views": "Total Views",
+    "recent_activity": "Recent Activity"
+  },
+  
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "back": "Back"
+  }
+}

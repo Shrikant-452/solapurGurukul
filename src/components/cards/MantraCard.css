@@ -1,0 +1,385 @@
+/* Mantra Card Styles */
+.mantra-card {
+  background: var(--bg-card);
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid var(--border-light);
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.mantra-card.hovered {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--gold);
+}
+
+/* Card Header */
+.mantra-card-header {
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* Deity Badge */
+.deity-badge {
+  padding: 5px 14px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+.deity-badge:hover {
+  transform: scale(1.05);
+}
+
+/* Language Badge */
+.language-badge {
+  font-size: 11px;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.08);
+  padding: 4px 10px;
+  border-radius: 50px;
+  font-weight: 500;
+}
+
+/* Mantra Name */
+.mantra-card-name {
+  font-family: var(--ff-deva);
+  font-size: 18px;
+  padding: 18px 20px 10px;
+  line-height: 1.5;
+  color: var(--text-primary);
+  font-weight: 600;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+}
+
+/* Verse Preview */
+.mantra-card-verse {
+  padding: 0 20px 16px;
+  flex: 1;
+}
+
+.verse-text {
+  font-family: var(--ff-deva);
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  background: rgba(255, 215, 0, 0.05);
+  padding: 12px 14px;
+  border-radius: 12px;
+  border-left: 3px solid var(--gold);
+  margin: 0;
+  transition: all 0.3s ease;
+}
+
+.mantra-card:hover .verse-text {
+  background: rgba(255, 215, 0, 0.1);
+  border-left-width: 4px;
+}
+
+/* Card Footer */
+.mantra-card-footer {
+  padding: 14px 20px 18px;
+  border-top: 1px solid var(--border-light);
+  text-align: right;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.read-more {
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+}
+
+.read-more::after {
+  content: '→';
+  transition: transform 0.3s ease;
+}
+
+.mantra-card:hover .read-more::after {
+  transform: translateX(4px);
+}
+
+.read-more:hover {
+  color: var(--gold-light);
+}
+
+/* Stats Section (Optional) */
+.mantra-card-stats {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 20px;
+  font-size: 11px;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-light);
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.stat-icon {
+  font-size: 12px;
+}
+
+/* Bookmark Button */
+.bookmark-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: var(--text-secondary);
+  transition: all 0.3s ease;
+  z-index: 10;
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.mantra-card:hover .bookmark-btn {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.bookmark-btn:hover {
+  background: var(--gold);
+  color: var(--bg-primary);
+  transform: scale(1.1);
+}
+
+.bookmark-btn.active {
+  opacity: 1;
+  background: var(--gold);
+  color: var(--bg-primary);
+}
+
+/* Card Badge (New/Popular) */
+.card-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 4px 10px;
+  border-radius: 50px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  z-index: 10;
+}
+
+.card-badge.new {
+  background: linear-gradient(135deg, #20b2aa, #14b8a6);
+  color: white;
+}
+
+.card-badge.popular {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: var(--bg-primary);
+}
+
+/* Loading State */
+.mantra-card.skeleton {
+  pointer-events: none;
+}
+
+.skeleton .mantra-card-header,
+.skeleton .mantra-card-name,
+.skeleton .verse-text,
+.skeleton .mantra-card-footer {
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton .mantra-card-header::after,
+.skeleton .mantra-card-name::after,
+.skeleton .verse-text::after,
+.skeleton .mantra-card-footer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .mantra-card {
+    border-radius: 16px;
+  }
+  
+  .mantra-card-header {
+    padding: 12px 16px;
+  }
+  
+  .deity-badge {
+    padding: 4px 10px;
+    font-size: 10px;
+  }
+  
+  .mantra-card-name {
+    font-size: 16px;
+    padding: 14px 16px 8px;
+    min-height: 70px;
+  }
+  
+  .mantra-card-verse {
+    padding: 0 16px 12px;
+  }
+  
+  .verse-text {
+    font-size: 13px;
+    padding: 10px 12px;
+  }
+  
+  .mantra-card-footer {
+    padding: 12px 16px 14px;
+  }
+  
+  .read-more {
+    font-size: 12px;
+  }
+  
+  .bookmark-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 480px) {
+  .mantra-card-name {
+    font-size: 15px;
+    padding: 12px 14px 6px;
+    min-height: 60px;
+  }
+  
+  .verse-text {
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  
+  .card-badge {
+    padding: 3px 8px;
+    font-size: 9px;
+  }
+}
+
+/* Dark Mode Enhancement */
+@media (prefers-color-scheme: dark) {
+  .mantra-card {
+    background: var(--bg-card);
+  }
+  
+  .mantra-card-header {
+    background: rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Hover Effects for Touch Devices */
+@media (hover: hover) {
+  .mantra-card:hover {
+    transform: translateY(-6px);
+  }
+}
+
+@media (hover: none) {
+  .mantra-card:active {
+    transform: scale(0.98);
+  }
+  
+  .bookmark-btn {
+    opacity: 1;
+  }
+}
+
+/* Animation for New Cards */
+.mantra-card {
+  animation: cardFadeIn 0.4s ease forwards;
+  opacity: 0;
+}
+
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Stagger Children Animation */
+.mantras-grid .mantra-card:nth-child(1) { animation-delay: 0.05s; }
+.mantras-grid .mantra-card:nth-child(2) { animation-delay: 0.1s; }
+.mantras-grid .mantra-card:nth-child(3) { animation-delay: 0.15s; }
+.mantras-grid .mantra-card:nth-child(4) { animation-delay: 0.2s; }
+.mantras-grid .mantra-card:nth-child(5) { animation-delay: 0.25s; }
+.mantras-grid .mantra-card:nth-child(6) { animation-delay: 0.3s; }
+.mantras-grid .mantra-card:nth-child(7) { animation-delay: 0.35s; }
+.mantras-grid .mantra-card:nth-child(8) { animation-delay: 0.4s; }
+
+/* Focus State for Accessibility */
+.mantra-card:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+  transform: translateY(-2px);
+}
+
+/* Print Styles */
+@media print {
+  .mantra-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    border: 1px solid #ddd;
+    box-shadow: none;
+  }
+  
+  .bookmark-btn,
+  .mantra-card-footer {
+    display: none;
+  }
+}

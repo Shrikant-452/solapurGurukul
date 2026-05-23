@@ -7,36 +7,45 @@ const MantrasByDeity = ({ deityName, mantras, deityInfo, onBack }) => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
 
-  console.log('MantrasByDeity received:', { deityName, mantrasCount: mantras?.length, deityInfo });
+  console.log('Received mantras:', mantras); // Debug log
 
-  const filteredMantras = mantras?.filter(m =>
-    m?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    m?.deity?.toLowerCase().includes(searchTerm.toLowerCase())
-  ) || [];
-
-  const handleMantraClick = (mantra) => {
-    console.log('Clicking mantra:', mantra);
-    if (mantra?.id) {
-      navigate(`/mantra/${mantra.id}`, { state: { mantra } });
-    }
-  };
-
-  const totalViews = mantras?.reduce((sum, m) => sum + (m?.views || 0), 0) || 0;
-  const languages = [...new Set(mantras?.map(m => m?.language).filter(Boolean) || [])];
-  const languageDisplay = languages.slice(0, 2).join(", ") + (languages.length > 2 ? " +" : "");
-
-  if (!deityInfo) {
+  // Check if mantras exist and are valid
+  if (!mantras || mantras.length === 0) {
     return (
       <div className="mantras-by-deity-page">
         <div className="container">
           <button className="back-button" onClick={onBack}>← Back to all deities</button>
+          <div className="deity-header">
+            <div className="deity-icon-large">{deityInfo?.icon || '📿'}</div>
+            <div className="deity-info">
+              <h1 className="deity-name">{deityInfo?.name || 'Deity'} Mantras</h1>
+              <p className="deity-description">{deityInfo?.description || ''}</p>
+            </div>
+          </div>
           <div className="no-mantras-found">
-            <h3>Loading deity information...</h3>
+            <h3>No mantras found</h3>
+            <p>Add mantras for this deity in the admin panel.</p>
           </div>
         </div>
       </div>
     );
   }
+
+  // Simple filter without complex validation
+  const filteredMantras = mantras.filter(m => {
+    const search = searchTerm.toLowerCase();
+    return (m.name && m.name.toLowerCase().includes(search)) ||
+           (m.deity && m.deity.toLowerCase().includes(search));
+  });
+
+  const handleMantraClick = (mantra) => {
+    if (mantra && mantra.id) {
+      navigate(`/mantra/${mantra.id}`, { state: { mantra } });
+    }
+  };
+
+  const totalViews = mantras.reduce((sum, m) => sum + (m.views || 0), 0);
+  const languages = [...new Set(mantras.map(m => m.language))];
 
   return (
     <div className="mantras-by-deity-page">
@@ -44,12 +53,12 @@ const MantrasByDeity = ({ deityName, mantras, deityInfo, onBack }) => {
         <button className="back-button" onClick={onBack}>← Back to all deities</button>
 
         <div className="deity-header">
-          <div className="deity-icon-large">{deityInfo.icon || '📿'}</div>
+          <div className="deity-icon-large">{deityInfo?.icon || '📿'}</div>
           <div className="deity-info">
-            <h1 className="deity-name">{deityInfo.name} Mantras</h1>
-            <p className="deity-description">{deityInfo.description}</p>
+            <h1 className="deity-name">{deityInfo?.name} Mantras</h1>
+            <p className="deity-description">{deityInfo?.description}</p>
           </div>
-          <div className="deity-mantra-count">{mantras?.length || 0} Mantras</div>
+          <div className="deity-mantra-count">{mantras.length} Mantras</div>
         </div>
 
         <div className="stats-bar">
@@ -58,11 +67,11 @@ const MantrasByDeity = ({ deityName, mantras, deityInfo, onBack }) => {
             <div className="stat-label">TOTAL VIEWS</div>
           </div>
           <div className="stat-item">
-            <div className="stat-value">{mantras?.length || 0}</div>
+            <div className="stat-value">{mantras.length}</div>
             <div className="stat-label">MANTRAS</div>
           </div>
           <div className="stat-item">
-            <div className="stat-value">{languageDisplay || 'Sanskrit'}</div>
+            <div className="stat-value">{languages[0] || 'Sanskrit'}</div>
             <div className="stat-label">LANGUAGES</div>
           </div>
         </div>
@@ -72,7 +81,7 @@ const MantrasByDeity = ({ deityName, mantras, deityInfo, onBack }) => {
             <span className="search-icon">🔍</span>
             <input
               type="text"
-              placeholder={`Search ${deityInfo.name} mantras...`}
+              placeholder={`Search ${deityInfo?.name} mantras...`}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -99,7 +108,9 @@ const MantrasByDeity = ({ deityName, mantras, deityInfo, onBack }) => {
                 </div>
                 <h3 className="mantra-title">{mantra.name}</h3>
                 <p className="mantra-deity">🙏 {mantra.deity}</p>
-                <p className="mantra-verse">{(mantra.verse || 'ॐ')?.substring(0, 100)}...</p>
+                <p className="mantra-verse">
+                  {mantra.verse ? (mantra.verse.length > 80 ? mantra.verse.substring(0, 80) + '...' : mantra.verse) : 'ॐ नमः शिवाय'}
+                </p>
                 <div className="mantra-footer">
                   <span className="mantra-occasion">📅 {mantra.occasion || 'Daily'}</span>
                   <span className="mantra-views">👁️ {(mantra.views || 0).toLocaleString()}</span>

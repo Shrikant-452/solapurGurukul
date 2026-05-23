@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MantraCard from '../components/cards/MantraCard';
-import PopularMantras from '../pages/PopularMantras'; // ✅ Uncommented
+import PopularMantras from '../pages/PopularMantras';
 import './Home.css';
 
 const Home = () => {
@@ -141,13 +141,18 @@ const Home = () => {
     window.dispatchEvent(new Event('heroBgUpdated'));
   };
 
+  // Reliable placeholder image function (no external request)
+  const handleImageError = (e) => {
+    e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"%3E%3Crect width="400" height="400" fill="%23e8dcc0"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="%236b4c2c" font-family="Arial,sans-serif" font-size="16"%3ENo Image%3C/text%3E%3C/svg%3E';
+  };
+
   return (
     <div className="spiritual-dashboard">
-      {/* Hero Section (compressed) */}
+      {/* Hero Section - FIXED: No background shorthand mixing */}
       <section 
         className="hero-section"
         style={{
-          background: heroBgImage ? `linear-gradient(135deg, rgba(26, 15, 5, 0.85), rgba(44, 28, 14, 0.9)), url(${heroBgImage})` : 'linear-gradient(135deg, #1a0f05 0%, #2c1c0e 50%, #1a0f05 100%)',
+          backgroundImage: heroBgImage ? `linear-gradient(135deg, rgba(26, 15, 5, 0.85), rgba(44, 28, 14, 0.9)), url(${heroBgImage})` : 'linear-gradient(135deg, #1a0f05 0%, #2c1c0e 50%, #1a0f05 100%)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundAttachment: 'fixed'
@@ -155,28 +160,57 @@ const Home = () => {
       >
         <div className="hero-pattern"></div>
         
+        {/* Admin Controls - Only visible in admin mode */}
         {isAdminMode && (
           <div className="admin-controls">
             <div className="admin-panel">
               <h3>Admin Controls - Hero Section</h3>
+              
+              {/* Background Image Control */}
               <div className="admin-bg-control">
                 <label>Hero Background Image URL:</label>
                 <div className="admin-input-group">
-                  <input type="text" placeholder="Enter background image URL" value={heroBgImage} onChange={(e) => updateHeroBg(e.target.value)} />
+                  <input 
+                    type="text" 
+                    placeholder="Enter background image URL"
+                    value={heroBgImage}
+                    onChange={(e) => updateHeroBg(e.target.value)}
+                  />
                   <button onClick={removeHeroBg} className="admin-btn-remove">Remove BG</button>
                 </div>
               </div>
+
+              {/* Slider Images Control */}
               <div className="admin-slider-control">
                 <h4>Slider Images</h4>
                 {sliderImages.map((img, index) => (
                   <div key={index} className="admin-image-item">
                     <div className="admin-image-preview">
-                      {img.url ? <img src={img.url} alt={img.name} style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '8px' }} /> : <div style={{ width: '60px', height: '60px', background: '#ccc', borderRadius: '8px' }}></div>}
+                      {img.url ? (
+                        <img src={img.url} alt={img.name} style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '8px' }} onError={handleImageError} />
+                      ) : (
+                        <div style={{ width: '60px', height: '60px', background: '#ccc', borderRadius: '8px' }}></div>
+                      )}
                     </div>
                     <div className="admin-image-fields">
-                      <input type="text" placeholder="Image URL" value={img.url} onChange={(e) => updateHeroImage(index, 'url', e.target.value)} />
-                      <input type="text" placeholder="Name" value={img.name} onChange={(e) => updateHeroImage(index, 'name', e.target.value)} />
-                      <input type="text" placeholder="Description" value={img.description} onChange={(e) => updateHeroImage(index, 'description', e.target.value)} />
+                      <input 
+                        type="text" 
+                        placeholder="Image URL"
+                        value={img.url}
+                        onChange={(e) => updateHeroImage(index, 'url', e.target.value)}
+                      />
+                      <input 
+                        type="text" 
+                        placeholder="Name"
+                        value={img.name}
+                        onChange={(e) => updateHeroImage(index, 'name', e.target.value)}
+                      />
+                      <input 
+                        type="text" 
+                        placeholder="Description"
+                        value={img.description}
+                        onChange={(e) => updateHeroImage(index, 'description', e.target.value)}
+                      />
                     </div>
                     <button onClick={() => removeHeroImage(index)} className="admin-btn-remove">Remove</button>
                   </div>
@@ -187,21 +221,26 @@ const Home = () => {
           </div>
         )}
 
+        {/* Admin Mode Indicator */}
         {isAdminMode && (
           <div className="admin-mode-indicator">
             <span>🔧 Admin Mode Active - Press 'A' to exit</span>
           </div>
         )}
 
-        <div className="container" style={{ paddingTop: '20px', paddingBottom: '20px' }}>
-          <div className="hero-wrapper" style={{ gap: '30px' }}>
+        <div className="container">
+          <div className="hero-wrapper">
             <div className="hero-content">
               <span className="hero-badge">🕉️ Sacred Hymns & Spiritual Guidance</span>
-              <h1 className="hero-title" style={{ fontSize: '2.5rem', marginBottom: '16px' }}>Discover the Power of <span className="title-highlight">Ancient Mantras</span></h1>
-              <p className="hero-description" style={{ fontSize: '0.95rem', marginBottom: '24px' }}>Explore thousands of stotras, mantras, and devotional hymns with Devanagari, transliteration, meaning, and audio.</p>
+              <h1 className="hero-title">Discover the Power of <span className="title-highlight">Ancient Mantras</span></h1>
+              <p className="hero-description">Explore thousands of stotras, mantras, and devotional hymns with Devanagari, transliteration, meaning, and audio.</p>
               <div className="hero-buttons">
-                <button className="btn-primary" onClick={() => navigate('/mantras')}><span>📜</span> Explore Library</button>
-                <button className="btn-outline" onClick={() => navigate('/about')}><span>🕉️</span> Learn More</button>
+                <button className="btn-primary" onClick={() => navigate('/mantras')}>
+                  <span>📜</span> Explore Library
+                </button>
+                <button className="btn-outline" onClick={() => navigate('/about')}>
+                  <span>🕉️</span> Learn More
+                </button>
               </div>
             </div>
             
@@ -211,13 +250,31 @@ const Home = () => {
                 <div className="image-container">
                   {sliderImages.map((image, index) => (
                     <div key={index} className={`slide-image ${currentSlide === index ? 'active' : ''}`}>
-                      {image.url ? <img src={image.url} alt={image.name} onError={(e) => { e.target.src = 'https://via.placeholder.com/400x400?text=No+Image'; }} /> : <div className="image-placeholder">No Image</div>}
-                      <div className="image-caption"><h3>{image.name || 'Deity'}</h3><p>{image.description || 'Sacrament'}</p></div>
+                      {image.url ? (
+                        <img 
+                          src={image.url} 
+                          alt={image.name} 
+                          onError={handleImageError}
+                        />
+                      ) : (
+                        <div className="image-placeholder">No Image</div>
+                      )}
+                      <div className="image-caption">
+                        <h3>{image.name || 'Deity'}</h3>
+                        <p>{image.description || 'Sacrament'}</p>
+                      </div>
                     </div>
                   ))}
                 </div>
                 <div className="slider-dots">
-                  {sliderImages.map((_, index) => (<button key={index} className={`dot ${currentSlide === index ? 'active' : ''}`} onClick={() => goToSlide(index)} aria-label={`Go to slide ${index + 1}`} />))}
+                  {sliderImages.map((_, index) => (
+                    <button 
+                      key={index} 
+                      className={`dot ${currentSlide === index ? 'active' : ''}`} 
+                      onClick={() => goToSlide(index)}
+                      aria-label={`Go to slide ${index + 1}`}
+                    />
+                  ))}
                 </div>
               </div>
             </div>
@@ -225,54 +282,94 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Library Section - compressed */}
-      <section className="library-section" style={{ padding: '40px 0' }}>
+      {/* Library Section */}
+      <section className="library-section">
         <div className="container">
-          <div className="library-header" style={{ marginBottom: '24px' }}>
-            <h2 className="library-title" style={{ fontSize: '2rem' }}>Sacred <span className="title-gold">Library</span></h2>
-            <p className="library-subtitle" style={{ fontSize: '0.9rem' }}>Browse the complete collection of Hindu devotional texts</p>
+          <div className="library-header">
+            <h2 className="library-title">Sacred <span className="title-gold">Library</span></h2>
+            <p className="library-subtitle">Browse the complete collection of Hindu devotional texts</p>
           </div>
 
-          <div className="search-filter-section" style={{ marginBottom: '24px' }}>
+          {/* Search and Filter Section */}
+          <div className="search-filter-section">
             <div className="search-wrapper">
               <div className="search-box">
                 <span className="search-icon">🔍</span>
-                <input type="text" placeholder="Search by stotra name, deity, or purpose..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
-                {searchTerm && <button className="clear-search" onClick={() => setSearchTerm('')}>✕</button>}
+                <input 
+                  type="text" 
+                  placeholder="Search by stotra name, deity, or purpose..." 
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                {searchTerm && (
+                  <button className="clear-search" onClick={() => setSearchTerm('')}>✕</button>
+                )}
               </div>
             </div>
+            
             <div className="filter-wrapper">
-              <select className="deity-filter" value={selectedDeity} onChange={(e) => setSelectedDeity(e.target.value)}>
-                {deities.map(deity => (<option key={deity} value={deity}>{deity === 'all' ? 'All Deities' : deity}</option>))}
+              <select 
+                className="deity-filter" 
+                value={selectedDeity}
+                onChange={(e) => setSelectedDeity(e.target.value)}
+              >
+                {deities.map(deity => (
+                  <option key={deity} value={deity}>
+                    {deity === 'all' ? 'All Deities' : deity}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
 
-          <div className="results-count" style={{ marginBottom: '16px', fontSize: '0.8rem' }}>Showing {filteredMantras.length} of {mantras.length} stotras</div>
+          {/* Results Count */}
+          <div className="results-count">
+            Showing {filteredMantras.length} of {mantras.length} stotras
+          </div>
 
+          {/* Mantras Grid */}
           {loading ? (
             <div className="loading-mantras">Loading mantras...</div>
           ) : (
             <>
-              <div className="mantras-home-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '20px', marginBottom: '24px' }}>
-                {filteredMantras.slice(0, 6).map((mantra) => (<MantraCard key={mantra.id} mantra={mantra} onClick={handleMantraClick} variant="default" />))}
+              <div className="mantras-home-grid">
+                {filteredMantras.slice(0, 6).map((mantra) => (
+                  <MantraCard 
+                    key={mantra.id} 
+                    mantra={mantra} 
+                    onClick={handleMantraClick}
+                    variant="default"
+                  />
+                ))}
               </div>
 
-              {filteredMantras.length === 0 && (<div className="no-mantras-found"><p>No mantras found. Try a different search.</p></div>)}
+              {filteredMantras.length === 0 && (
+                <div className="no-mantras-found">
+                  <p>No mantras found. Try a different search.</p>
+                </div>
+              )}
 
-              <div className="view-all-mantras" style={{ textAlign: 'center' }}>
-                <button className="btn-primary" onClick={() => navigate('/mantras')} style={{ padding: '10px 24px' }}>View All Mantras →</button>
+              <div className="view-all-mantras">
+                <button className="btn-primary" onClick={() => navigate('/mantras')}>
+                  View All Mantras →
+                </button>
               </div>
             </>
           )}
         </div>
       </section>
 
-      {/* ✅ Popular Mantras Component - now visible */}
+      {/* Popular Mantras Component */}
       <PopularMantras limit={8} showViewAll={true} />
 
       {/* Floating WhatsApp Button */}
-      <a href="https://wa.me/919876543210" className="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+      <a 
+        href="https://wa.me/919876543210" 
+        className="whatsapp-float" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        aria-label="Chat on WhatsApp"
+      >
         <img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" alt="WhatsApp" />
         <span className="whatsapp-tooltip">Need Help? Chat with us</span>
       </a>

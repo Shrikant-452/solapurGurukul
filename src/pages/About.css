@@ -10,21 +10,21 @@
 }
 
 .about-om {
-  font-size: 48px;
-  color: var(--gold);
-  margin-bottom: 16px;
-  animation: glowPulse 2s ease-in-out infinite;
+  font-size: 64px;
+  color: #c85a00;
+  margin-bottom: 20px;
 }
 
 .about-title {
-  font-family: var(--ff-serif);
+  font-family: 'Playfair Display', serif;
   font-size: clamp(2rem, 5vw, 3rem);
+  color: #18100a;
   margin-bottom: 12px;
 }
 
 .about-subtitle {
-  color: var(--gold);
-  font-size: 18px;
+  color: #c85a00;
+  font-size: 1.1rem;
   font-style: italic;
 }
 
@@ -36,8 +36,8 @@
 }
 
 .about-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-light);
+  background: #fff9f0;
+  border: 1px solid #d8c090;
   border-radius: 20px;
   padding: 30px;
   text-align: center;
@@ -46,8 +46,8 @@
 
 .about-card:hover {
   transform: translateY(-5px);
-  border-color: var(--gold);
-  box-shadow: var(--shadow-gold);
+  border-color: #c85a00;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
 
 .about-card-icon {
@@ -56,34 +56,34 @@
 }
 
 .about-card-title {
-  font-family: var(--ff-serif);
-  font-size: 20px;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  color: #b08820;
   margin-bottom: 16px;
-  color: var(--gold);
 }
 
 .about-card-text {
-  color: var(--text-secondary);
+  color: #6b4820;
   line-height: 1.8;
 }
 
 .about-closing {
   text-align: center;
   padding: 40px;
-  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), transparent);
+  background: linear-gradient(135deg, rgba(200, 90, 0, 0.05), rgba(176, 136, 32, 0.03));
   border-radius: 20px;
-  border: 1px solid var(--border-light);
+  border: 1px solid #d8c090;
 }
 
 .closing-verse {
-  font-family: var(--ff-deva);
-  font-size: 24px;
-  color: var(--gold);
+  font-family: 'Noto Sans Devanagari', sans-serif;
+  font-size: 1.5rem;
+  color: #c85a00;
   margin-bottom: 12px;
 }
 
 .closing-meaning {
-  color: var(--text-muted);
+  color: #9a7850;
   font-style: italic;
 }
 
@@ -98,5 +98,9 @@
   
   .about-card {
     padding: 20px;
+  }
+  
+  .closing-verse {
+    font-size: 1.2rem;
   }
 }

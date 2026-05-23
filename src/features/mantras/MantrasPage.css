@@ -10,88 +10,47 @@
 }
 
 .mantras-title {
-  font-family: var(--ff-serif);
+  font-family: 'Playfair Display', serif;
   font-size: clamp(2rem, 5vw, 3rem);
+  color: #18100a;
   margin-bottom: 12px;
 }
 
 .mantras-subtitle {
-  color: var(--text-secondary);
-  font-size: 18px;
+  color: #6b4820;
+  font-size: 1.1rem;
 }
 
 .filters-section {
-  background: var(--bg-card);
-  border-radius: 20px;
-  padding: 24px;
+  display: flex;
+  gap: 20px;
   margin-bottom: 40px;
-  border: 1px solid var(--border-light);
+  flex-wrap: wrap;
 }
 
 .search-input {
-  width: 100%;
-  padding: 14px 18px;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-light);
-  border-radius: 12px;
-  color: var(--text-primary);
-  font-family: var(--ff-body);
-  font-size: 16px;
-  margin-bottom: 20px;
-  transition: all 0.3s ease;
+  flex: 1;
+  padding: 12px 18px;
+  background: #fff9f0;
+  border: 1px solid #d8c090;
+  border-radius: 40px;
+  font-family: 'Crimson Pro', serif;
+  font-size: 1rem;
 }
 
 .search-input:focus {
   outline: none;
-  border-color: var(--gold);
-  box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
-}
-
-.search-input::placeholder {
-  color: var(--text-muted);
-}
-
-.filters-row {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-}
-
-.filter-group {
-  flex: 1;
-  min-width: 150px;
-}
-
-.filter-label {
-  display: block;
-  font-size: 12px;
-  color: var(--text-muted);
-  margin-bottom: 6px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+  border-color: #c85a00;
 }
 
 .filter-select {
-  width: 100%;
-  padding: 10px 14px;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-light);
-  border-radius: 10px;
-  color: var(--text-primary);
-  font-family: var(--ff-body);
+  padding: 12px 18px;
+  background: #fff9f0;
+  border: 1px solid #d8c090;
+  border-radius: 40px;
+  font-family: 'Crimson Pro', serif;
+  font-size: 0.9rem;
   cursor: pointer;
-}
-
-.filter-select:focus {
-  outline: none;
-  border-color: var(--gold);
-}
-
-.results-count {
-  font-size: 14px;
-  color: var(--text-muted);
-  font-style: italic;
 }
 
 .mantras-grid {
@@ -101,22 +60,21 @@
 }
 
 .mantra-card {
-  background: var(--bg-card);
+  background: #fff9f0;
+  border: 1px solid #d8c090;
   border-radius: 16px;
   overflow: hidden;
   cursor: pointer;
   transition: all 0.3s ease;
-  border: 1px solid var(--border-light);
-  position: relative;
 }
 
-.mantra-card.hovered {
+.mantra-card:hover {
   transform: translateY(-5px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--gold);
+  border-color: #c85a00;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
 
-.mantra-card-top {
+.mantra-card-header {
   padding: 16px 20px;
   display: flex;
   justify-content: space-between;
@@ -124,77 +82,63 @@
   border-bottom: 2px solid;
 }
 
-.mantra-deity-badge {
+.deity-badge {
   padding: 4px 12px;
-  border-radius: 50px;
+  border-radius: 20px;
   font-size: 12px;
   font-weight: 600;
 }
 
-.mantra-language {
+.language-badge {
   font-size: 12px;
-  color: var(--text-muted);
+  color: #9a7850;
 }
 
 .mantra-name {
-  font-family: var(--ff-deva);
-  font-size: 18px;
+  font-family: 'Noto Sans Devanagari', sans-serif;
+  font-size: 1.1rem;
   padding: 16px 20px 8px;
-  line-height: 1.4;
+  color: #2c1c0e;
 }
 
-.mantra-verse-preview {
+.mantra-verse {
   padding: 0 20px 16px;
 }
 
-.verse-dev {
-  font-family: var(--ff-deva);
-  font-size: 14px;
-  color: var(--text-secondary);
+.mantra-verse p {
+  font-family: 'Noto Sans Devanagari', sans-serif;
+  font-size: 0.9rem;
+  color: #6b4820;
   line-height: 1.8;
-  background: rgba(255, 215, 0, 0.05);
+  background: rgba(200, 90, 0, 0.03);
   padding: 12px;
   border-radius: 12px;
-  border-left: 3px solid var(--gold);
+  border-left: 3px solid #c85a00;
 }
 
-.mantra-meta {
-  padding: 0 20px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.meta-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  color: var(--text-secondary);
-}
-
-.meta-icon {
-  font-size: 14px;
-}
-
-.mantra-card-footer {
+.mantra-footer {
   padding: 12px 20px 16px;
-  border-top: 1px solid var(--border-light);
+  border-top: 1px solid #d8c090;
   text-align: right;
 }
 
 .read-more {
-  color: var(--gold);
-  font-size: 13px;
+  color: #c85a00;
+  font-size: 0.85rem;
   font-weight: 600;
 }
 
 .no-results {
   text-align: center;
   padding: 60px;
-  background: var(--bg-card);
-  border-radius: 20px;
-  color: var(--text-muted);
+  color: #9a7850;
+}
+
+.loading {
+  text-align: center;
+  padding: 100px;
+  font-size: 1.2rem;
+  color: #c85a00;
 }
 
 @media (max-width: 768px) {
@@ -202,12 +146,8 @@
     padding-top: 80px;
   }
   
-  .filters-row {
+  .filters-section {
     flex-direction: column;
-  }
-  
-  .filter-group {
-    min-width: 100%;
   }
   
   .mantras-grid {

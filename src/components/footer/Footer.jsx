@@ -10,12 +10,14 @@ const Footer = () => {
           <div className="footer-section">
             <div className="footer-logo">
               <span className="logo-om">ॐ</span>
-              <span>Divine Mantra</span>
+              <span>Solapur Gurukulam</span>
             </div>
-            <p className="footer-desc">A digital treasury of Hindu devotional literature, open to all seekers of truth.</p>
+            <p className="footer-desc">
+              A digital treasury of Hindu devotional literature, open to all seekers of truth.
+            </p>
             <div className="footer-verse">
               <p>सर्वे भवन्तु सुखिनः</p>
-              <p className="verse-meaning">May all beings be happy, may all be free from disease.</p>
+              <p className="verse-meaning">May all beings be happy</p>
             </div>
           </div>
           
@@ -40,7 +42,7 @@ const Footer = () => {
         </div>
         
         <div className="footer-bottom">
-          <p>&copy; 2024 Divine Mantra. All rights reserved.</p>
+          <p>&copy; 2024 Solapur Gurukulam. All rights reserved.</p>
           <p className="copyright-note">All mantras are for devotional purposes only</p>
         </div>
       </div>

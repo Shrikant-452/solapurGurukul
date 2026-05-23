@@ -15,14 +15,11 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
     if (password !== confirmPassword) {
       toast.error('Passwords do not match');
       return;
     }
-    
     setLoading(true);
-    
     setTimeout(() => {
       const result = register(name, email, password);
       if (result.success) {
@@ -39,28 +36,16 @@ const Register = () => {
     <div className="auth-page">
       <div className="container">
         <div className="auth-card">
-          <div className="auth-om">ॐ</div>
+          <div className="auth-om animate-glow">ॐ</div>
           <h1 className="auth-title">Create Account</h1>
           <p className="auth-subtitle">Join our spiritual community</p>
           
           <form onSubmit={handleSubmit} className="auth-form">
-            <div className="form-group">
-              <label className="form-label">Full Name</label>
-              <input type="text" className="form-input" value={name} onChange={(e) => setName(e.target.value)} required />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Email</label>
-              <input type="email" className="form-input" value={email} onChange={(e) => setEmail(e.target.value)} required />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Password</label>
-              <input type="password" className="form-input" value={password} onChange={(e) => setPassword(e.target.value)} required />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Confirm Password</label>
-              <input type="password" className="form-input" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
-            </div>
-            <button type="submit" className="btn btn-primary btn-full" disabled={loading}>{loading ? 'Loading...' : 'Register'}</button>
+            <div className="form-group"><label>Full Name</label><input type="text" value={name} onChange={(e) => setName(e.target.value)} required /></div>
+            <div className="form-group"><label>Email</label><input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required /></div>
+            <div className="form-group"><label>Password</label><input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required /></div>
+            <div className="form-group"><label>Confirm Password</label><input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required /></div>
+            <button type="submit" className="btn-primary btn-full" disabled={loading}>{loading ? 'Loading...' : 'Register'}</button>
           </form>
           
           <p className="auth-footer">Already have an account? <Link to="/login">Login</Link></p>

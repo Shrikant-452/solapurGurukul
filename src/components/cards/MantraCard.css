@@ -1,385 +1,338 @@
-/* Mantra Card Styles */
-.mantra-card {
-  background: var(--bg-card);
+/* components/cards/MantraCard.css */
+
+/* Default Card Variant */
+.mantra-card-library {
+  background: #ffffff;
   border-radius: 20px;
-  overflow: hidden;
+  padding: 20px;
   cursor: pointer;
   transition: all 0.3s ease;
-  border: 1px solid var(--border-light);
-  position: relative;
-  height: 100%;
+  border: 1px solid #e8dcc2;
+  border-top-width: 4px;
+  border-top-style: solid;
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
-.mantra-card.hovered {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--gold);
+.mantra-card-library:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 }
 
-/* Card Header */
-.mantra-card-header {
-  padding: 16px 20px;
+/* Header row with tag and image */
+.mantra-card-header-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid;
-  background: rgba(0, 0, 0, 0.2);
+  margin-bottom: 15px;
 }
 
-/* Deity Badge */
-.deity-badge {
-  padding: 5px 14px;
-  border-radius: 50px;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  transition: all 0.3s ease;
-}
-
-.deity-badge:hover {
-  transform: scale(1.05);
-}
-
-/* Language Badge */
-.language-badge {
+.mantra-card-tag {
+  padding: 4px 12px;
+  border-radius: 20px;
   font-size: 11px;
-  color: var(--text-muted);
-  background: rgba(255, 255, 255, 0.08);
-  padding: 4px 10px;
-  border-radius: 50px;
-  font-weight: 500;
-}
-
-/* Mantra Name */
-.mantra-card-name {
-  font-family: var(--ff-deva);
-  font-size: 18px;
-  padding: 18px 20px 10px;
-  line-height: 1.5;
-  color: var(--text-primary);
   font-weight: 600;
-  min-height: 80px;
-  display: flex;
-  align-items: center;
+  white-space: nowrap;
 }
 
-/* Verse Preview */
-.mantra-card-verse {
-  padding: 0 20px 16px;
-  flex: 1;
-}
-
-.verse-text {
-  font-family: var(--ff-deva);
-  font-size: 14px;
-  color: var(--text-secondary);
-  line-height: 1.8;
-  background: rgba(255, 215, 0, 0.05);
-  padding: 12px 14px;
-  border-radius: 12px;
-  border-left: 3px solid var(--gold);
-  margin: 0;
-  transition: all 0.3s ease;
-}
-
-.mantra-card:hover .verse-text {
-  background: rgba(255, 215, 0, 0.1);
-  border-left-width: 4px;
-}
-
-/* Card Footer */
-.mantra-card-footer {
-  padding: 14px 20px 18px;
-  border-top: 1px solid var(--border-light);
-  text-align: right;
-  background: rgba(0, 0, 0, 0.15);
-}
-
-.read-more {
-  color: var(--gold);
-  font-size: 13px;
-  font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.3s ease;
-  letter-spacing: 0.5px;
-}
-
-.read-more::after {
-  content: '→';
-  transition: transform 0.3s ease;
-}
-
-.mantra-card:hover .read-more::after {
-  transform: translateX(4px);
-}
-
-.read-more:hover {
-  color: var(--gold-light);
-}
-
-/* Stats Section (Optional) */
-.mantra-card-stats {
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 20px;
-  font-size: 11px;
-  color: var(--text-muted);
-  border-top: 1px solid var(--border-light);
-  background: rgba(0, 0, 0, 0.1);
-}
-
-.stat-item {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.stat-icon {
-  font-size: 12px;
-}
-
-/* Bookmark Button */
-.bookmark-btn {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  width: 32px;
-  height: 32px;
+.mantra-card-image {
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  color: var(--text-secondary);
-  transition: all 0.3s ease;
-  z-index: 10;
-  opacity: 0;
-  transform: scale(0.8);
+  background: #f0e6d8;
+  flex-shrink: 0;
 }
 
-.mantra-card:hover .bookmark-btn {
-  opacity: 1;
-  transform: scale(1);
+.mantra-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.bookmark-btn:hover {
-  background: var(--gold);
-  color: var(--bg-primary);
-  transform: scale(1.1);
+.mantra-card-emoji {
+  font-size: 24px;
 }
 
-.bookmark-btn.active {
-  opacity: 1;
-  background: var(--gold);
-  color: var(--bg-primary);
-}
-
-/* Card Badge (New/Popular) */
-.card-badge {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  padding: 4px 10px;
-  border-radius: 50px;
-  font-size: 10px;
+/* Title */
+.mantra-card-title {
+  font-family: 'Noto Sans Devanagari', serif;
+  font-size: 1rem;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  z-index: 10;
+  color: #2c1c0e;
+  margin: 0 0 6px 0;
+  line-height: 1.3;
+  word-break: break-word;
 }
 
-.card-badge.new {
-  background: linear-gradient(135deg, #20b2aa, #14b8a6);
-  color: white;
+/* Deity */
+.mantra-card-deity {
+  font-size: 12px;
+  color: #c85a00;
+  margin: 0 0 12px 0;
+  font-weight: 500;
 }
 
-.card-badge.popular {
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  color: var(--bg-primary);
+/* Verse preview */
+.mantra-card-verse-preview {
+  background: #fcf8f0;
+  border-radius: 12px;
+  padding: 10px;
+  margin-bottom: 15px;
+  flex: 1;
 }
 
-/* Loading State */
-.mantra-card.skeleton {
-  pointer-events: none;
+.mantra-card-verse-preview p {
+  font-family: 'Noto Sans Devanagari', serif;
+  font-size: 11px;
+  color: #6b4820;
+  line-height: 1.5;
+  margin: 0;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
-.skeleton .mantra-card-header,
-.skeleton .mantra-card-name,
-.skeleton .verse-text,
-.skeleton .mantra-card-footer {
+/* Footer */
+.mantra-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid #e8dcc2;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.mantra-card-occasion {
+  font-size: 10px;
+  color: #9a7850;
+  white-space: nowrap;
+}
+
+.mantra-card-read {
+  font-size: 11px;
+  font-weight: 600;
+  color: #c85a00;
+  transition: transform 0.2s;
+}
+
+.mantra-card-library:hover .mantra-card-read {
+  transform: translateX(5px);
+}
+
+/* Featured Card Variant */
+.featured-mantra-card {
+  background: linear-gradient(135deg, #ffffff, #fffaf5);
+  border-radius: 24px;
+  padding: 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid;
   position: relative;
   overflow: hidden;
 }
 
-.skeleton .mantra-card-header::after,
-.skeleton .mantra-card-name::after,
-.skeleton .verse-text::after,
-.skeleton .mantra-card-footer::after {
-  content: '';
+.featured-mantra-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.featured-card-badge {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-  animation: shimmer 1.5s infinite;
+  top: 12px;
+  right: 12px;
+  background: linear-gradient(135deg, #ffd700, #ffed4e);
+  color: #8b691b;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: bold;
 }
 
-@keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
+.featured-card-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  margin: 0 auto 16px;
+  overflow: hidden;
 }
 
-/* Responsive Design */
+.featured-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.featured-card-name {
+  font-family: 'Noto Sans Devanagari', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #2c1c0e;
+  margin: 0 0 8px;
+  word-break: break-word;
+}
+
+.featured-card-deity {
+  font-size: 13px;
+  color: #c85a00;
+  margin: 0 0 12px;
+  font-weight: 600;
+}
+
+.featured-card-desc {
+  font-size: 12px;
+  color: #6b4820;
+  line-height: 1.5;
+  margin: 0 0 16px;
+  word-break: break-word;
+}
+
+.featured-card-btn {
+  background: transparent;
+  border: 2px solid;
+  padding: 8px 20px;
+  border-radius: 40px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.featured-card-btn:hover {
+  background: #c85a00;
+  color: white !important;
+  border-color: #c85a00 !important;
+}
+
+/* Small Card Variant */
+.small-mantra-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #ffffff;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid #e8dcc2;
+}
+
+.small-mantra-card:hover {
+  background: #fffaf5;
+  transform: translateX(5px);
+  border-color: #c85a00;
+}
+
+.small-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.small-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.small-card-info {
+  flex: 1;
+}
+
+.small-card-name {
+  font-family: 'Noto Sans Devanagari', serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #2c1c0e;
+  margin: 0 0 4px;
+  word-break: break-word;
+}
+
+.small-card-deity {
+  font-size: 11px;
+  color: #c85a00;
+  margin: 0;
+  font-weight: 500;
+}
+
+.small-card-arrow {
+  font-size: 18px;
+  color: #c85a00;
+  transition: transform 0.2s;
+}
+
+.small-mantra-card:hover .small-card-arrow {
+  transform: translateX(5px);
+}
+
+/* Responsive */
 @media (max-width: 768px) {
-  .mantra-card {
-    border-radius: 16px;
+  .mantra-card-title {
+    font-size: 0.9rem;
   }
   
-  .mantra-card-header {
-    padding: 12px 16px;
-  }
-  
-  .deity-badge {
-    padding: 4px 10px;
+  .mantra-card-verse-preview p {
     font-size: 10px;
   }
   
-  .mantra-card-name {
-    font-size: 16px;
-    padding: 14px 16px 8px;
-    min-height: 70px;
+  .featured-card-name {
+    font-size: 1rem;
   }
   
-  .mantra-card-verse {
-    padding: 0 16px 12px;
+  .featured-card-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 30px;
   }
   
-  .verse-text {
-    font-size: 13px;
-    padding: 10px 12px;
+  .small-card-name {
+    font-size: 0.8rem;
   }
   
-  .mantra-card-footer {
-    padding: 12px 16px 14px;
-  }
-  
-  .read-more {
-    font-size: 12px;
-  }
-  
-  .bookmark-btn {
-    width: 28px;
-    height: 28px;
-    font-size: 14px;
-    opacity: 1;
-    transform: scale(1);
+  .small-card-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
   }
 }
 
 @media (max-width: 480px) {
-  .mantra-card-name {
-    font-size: 15px;
-    padding: 12px 14px 6px;
-    min-height: 60px;
-  }
-  
-  .verse-text {
-    font-size: 12px;
-    line-height: 1.6;
-  }
-  
-  .card-badge {
-    padding: 3px 8px;
-    font-size: 9px;
-  }
-}
-
-/* Dark Mode Enhancement */
-@media (prefers-color-scheme: dark) {
-  .mantra-card {
-    background: var(--bg-card);
-  }
-  
-  .mantra-card-header {
-    background: rgba(0, 0, 0, 0.3);
-  }
-}
-
-/* Hover Effects for Touch Devices */
-@media (hover: hover) {
-  .mantra-card:hover {
-    transform: translateY(-6px);
-  }
-}
-
-@media (hover: none) {
-  .mantra-card:active {
-    transform: scale(0.98);
-  }
-  
-  .bookmark-btn {
-    opacity: 1;
-  }
-}
-
-/* Animation for New Cards */
-.mantra-card {
-  animation: cardFadeIn 0.4s ease forwards;
-  opacity: 0;
-}
-
-@keyframes cardFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Stagger Children Animation */
-.mantras-grid .mantra-card:nth-child(1) { animation-delay: 0.05s; }
-.mantras-grid .mantra-card:nth-child(2) { animation-delay: 0.1s; }
-.mantras-grid .mantra-card:nth-child(3) { animation-delay: 0.15s; }
-.mantras-grid .mantra-card:nth-child(4) { animation-delay: 0.2s; }
-.mantras-grid .mantra-card:nth-child(5) { animation-delay: 0.25s; }
-.mantras-grid .mantra-card:nth-child(6) { animation-delay: 0.3s; }
-.mantras-grid .mantra-card:nth-child(7) { animation-delay: 0.35s; }
-.mantras-grid .mantra-card:nth-child(8) { animation-delay: 0.4s; }
-
-/* Focus State for Accessibility */
-.mantra-card:focus-visible {
-  outline: 2px solid var(--gold);
-  outline-offset: 2px;
-  transform: translateY(-2px);
-}
-
-/* Print Styles */
-@media print {
-  .mantra-card {
-    break-inside: avoid;
-    page-break-inside: avoid;
-    border: 1px solid #ddd;
-    box-shadow: none;
-  }
-  
-  .bookmark-btn,
   .mantra-card-footer {
-    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  
+  .mantra-card-occasion {
+    white-space: normal;
+  }
+  
+  .mantra-card-tag {
+    font-size: 9px;
+    white-space: normal;
+  }
+  
+  .mantra-card-image {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .mantra-card-emoji {
+    font-size: 20px;
   }
 }

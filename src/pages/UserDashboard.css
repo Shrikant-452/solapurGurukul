@@ -12,7 +12,7 @@
 .user-avatar {
   width: 80px;
   height: 80px;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  background: linear-gradient(135deg, #c85a00, #e06b10);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -20,17 +20,18 @@
   font-size: 36px;
   font-weight: bold;
   margin: 0 auto 20px;
-  color: var(--bg-primary);
+  color: white;
 }
 
 .dashboard-title {
-  font-family: var(--ff-serif);
+  font-family: 'Playfair Display', serif;
   font-size: 28px;
+  color: #18100a;
   margin-bottom: 8px;
 }
 
 .dashboard-subtitle {
-  color: var(--text-muted);
+  color: #6b4820;
 }
 
 .dashboard-stats {
@@ -41,8 +42,8 @@
 }
 
 .dashboard-stats .stat-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-light);
+  background: #fff9f0;
+  border: 1px solid #d8c090;
   border-radius: 16px;
   padding: 24px;
   text-align: center;
@@ -51,7 +52,7 @@
 
 .dashboard-stats .stat-card:hover {
   transform: translateY(-5px);
-  border-color: var(--gold);
+  border-color: #c85a00;
 }
 
 .stat-icon {
@@ -60,37 +61,48 @@
 }
 
 .stat-number {
-  font-family: var(--ff-serif);
+  font-family: 'Playfair Display', serif;
   font-size: 32px;
   font-weight: 800;
-  color: var(--gold);
+  color: #c85a00;
+  margin-bottom: 6px;
 }
 
 .stat-label {
-  color: var(--text-muted);
+  color: #6b4820;
   font-size: 14px;
 }
 
 .dashboard-recent {
-  background: var(--bg-card);
-  border: 1px solid var(--border-light);
+  background: #fff9f0;
+  border: 1px solid #d8c090;
   border-radius: 20px;
   padding: 24px;
 }
 
 .dashboard-recent h2 {
-  font-family: var(--ff-serif);
+  font-family: 'Playfair Display', serif;
   font-size: 20px;
+  color: #b08820;
   margin-bottom: 20px;
-  color: var(--gold);
-}
-
-.recent-list {
-  min-height: 100px;
 }
 
 .no-data {
-  color: var(--text-muted);
+  color: #9a7850;
   text-align: center;
   padding: 30px;
+}
+
+@media (max-width: 768px) {
+  .user-dashboard {
+    padding-top: 100px;
+  }
+  
+  .dashboard-stats {
+    gap: 15px;
+  }
+  
+  .stat-number {
+    font-size: 24px;
+  }
 }

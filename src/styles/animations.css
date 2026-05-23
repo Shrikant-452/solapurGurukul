@@ -1,3 +1,4 @@
+/* Fade In Up Animation */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -9,6 +10,7 @@
   }
 }
 
+/* Fade In Left */
 @keyframes fadeInLeft {
   from {
     opacity: 0;
@@ -20,6 +22,7 @@
   }
 }
 
+/* Fade In Right */
 @keyframes fadeInRight {
   from {
     opacity: 0;
@@ -31,33 +34,96 @@
   }
 }
 
-@keyframes glowPulse {
-  0%, 100% {
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-  }
-  50% {
-    text-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
-  }
-}
-
-@keyframes spin {
+/* Scale In */
+@keyframes scaleIn {
   from {
-    transform: translate(-50%, -50%) rotate(0deg);
+    opacity: 0;
+    transform: scale(0.9);
   }
   to {
-    transform: translate(-50%, -50%) rotate(360deg);
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
+/* Glow Pulse for OM */
+@keyframes glowPulse {
+  0%, 100% {
+    text-shadow: 0 0 10px rgba(200, 90, 0, 0.3);
+  }
+  50% {
+    text-shadow: 0 0 25px rgba(200, 90, 0, 0.6);
+  }
+}
+
+/* Float Animation */
 @keyframes float {
   0%, 100% {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-10px);
+    transform: translateY(-8px);
   }
 }
 
+/* Scroll Progress Bar */
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: transparent;
+  z-index: 10000;
+}
+
+.scroll-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--saff), var(--saff2), var(--gold), var(--saff));
+  background-size: 300% 100%;
+  transition: width 0.1s ease-out;
+  animation: gradientMove 2s linear infinite;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+
+/* Scroll to Top Button */
+.scroll-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 45px;
+  height: 45px;
+  background: linear-gradient(135deg, var(--saff), var(--saff2));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  border: none;
+  color: white;
+  font-size: 20px;
+  box-shadow: 0 4px 15px rgba(200, 90, 0, 0.3);
+}
+
+.scroll-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.scroll-to-top:hover {
+  transform: translateY(-3px);
+}
+
+/* Animation Classes */
 .animate-fade-up {
   animation: fadeInUp 0.6s ease forwards;
 }
@@ -70,10 +136,72 @@
   animation: fadeInRight 0.6s ease forwards;
 }
 
+.animate-scale {
+  animation: scaleIn 0.5s ease forwards;
+}
+
 .animate-glow {
-  animation: glowPulse 3s ease-in-out infinite;
+  animation: glowPulse 2s ease-in-out infinite;
 }
 
 .animate-float {
   animation: float 4s ease-in-out infinite;
 }
+
+/* Scroll Reveal Classes */
+.fade-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+}
+
+.fade-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scale-on-scroll {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: all 0.5s ease;
+}
+
+.scale-on-scroll.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.slide-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: all 0.6s ease;
+}
+
+.slide-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.slide-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: all 0.6s ease;
+}
+
+.slide-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Stagger Children */
+.stagger-children > * {
+  opacity: 0;
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+.stagger-children > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.3s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.6s; }

@@ -1,33 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import './MantraCard.css';
 
-const MantraCard = ({ mantra, onClick, showBookmark = true, isBookmarked = false, onBookmark }) => {
-  const [hovered, setHovered] = useState(false);
-  const [imageError, setImageError] = useState(false);
+const MantraCard = ({ mantra, onClick, variant = 'default' }) => {
+  const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
-
-  const getLocalizedName = () => {
-    switch(i18n.language) {
-      case 'hi': return mantra.name_hi || mantra.name;
-      case 'mr': return mantra.name_mr || mantra.name;
-      case 'te': return mantra.name_te || mantra.name;
-      case 'kn': return mantra.name_kn || mantra.name;
-      default: return mantra.name_en || mantra.name;
-    }
-  };
-
-  const getLocalizedDeity = () => {
-    switch(i18n.language) {
-      case 'hi': return mantra.deity_hi || mantra.deity;
-      case 'mr': return mantra.deity_mr || mantra.deity;
-      case 'te': return mantra.deity_te || mantra.deity;
-      case 'kn': return mantra.deity_kn || mantra.deity;
-      default: return mantra.deity;
-    }
-  };
 
   const handleClick = () => {
     if (onClick) {
@@ -37,68 +14,134 @@ const MantraCard = ({ mantra, onClick, showBookmark = true, isBookmarked = false
     }
   };
 
-  const handleBookmarkClick = (e) => {
-    e.stopPropagation();
-    if (onBookmark) {
-      onBookmark(mantra.id);
+  // Get tag display name
+  const getTagName = () => {
+    if (mantra.tag) return mantra.tag;
+    if (mantra.deity === "Ganesha") return "Popular";
+    if (mantra.deity === "Lakshmi") return "Ashtakam";
+    if (mantra.deity === "Shiva") return "Panchakshara";
+    if (mantra.deity === "Hanuman") return "Chalisa";
+    if (mantra.deity === "Vishnu") return "Sahasranam";
+    if (mantra.deity === "Durga") return "Navratri";
+    return mantra.deity;
+  };
+
+  // Check for uploaded image (base64 or http URL)
+  const imageSrc = mantra.imageUrl && (mantra.imageUrl.startsWith('data:') || mantra.imageUrl.startsWith('http')) ? mantra.imageUrl : null;
+  const defaultIcon = mantra.icon || '🔱';
+
+  return (
+    <div 
+      className={`mantra-card-library ${variant} ${isHovered ? 'hovered' : ''}`}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onClick={handleClick}
+      style={{ 
+        borderTopColor: mantra.color || '#c85a00'
+      }}
+    >
+      {/* Header row with tag and image/icon */}
+      <div className="mantra-card-header-row">
+        <div className="mantra-card-tag" style={{ background: `${mantra.color || '#c85a00'}15`, color: mantra.color || '#c85a00' }}>
+          {getTagName()}
+        </div>
+        <div className="mantra-card-image">
+          {imageSrc ? (
+            <img src={imageSrc} alt={mantra.name} className="mantra-card-img" />
+          ) : (
+            <span className="mantra-card-emoji">{defaultIcon}</span>
+          )}
+        </div>
+      </div>
+
+      <h3 className="mantra-card-title">{mantra.name}</h3>
+      <p className="mantra-card-deity">🙏 {mantra.deity}</p>
+
+      {/* Verse preview */}
+      <div className="mantra-card-verse-preview">
+        <p>{mantra.verses?.[0]?.dev?.substring(0, 60) || mantra.verse?.substring(0, 60) || 'ॐ'}...</p>
+      </div>
+
+      {/* Footer */}
+      <div className="mantra-card-footer">
+        <span className="mantra-card-occasion">📅 {mantra.occasion || 'Daily'}</span>
+        <span className="mantra-card-read">Read more →</span>
+      </div>
+    </div>
+  );
+};
+
+// Featured Card Variant
+export const FeaturedMantraCard = ({ mantra, onClick }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    if (onClick) {
+      onClick(mantra);
+    } else {
+      navigate(`/mantra/${mantra.id}`, { state: { mantra } });
     }
   };
 
-  const getBadge = () => {
-    if (mantra.isNew) return <span className="card-badge new">New</span>;
-    if (mantra.isPopular) return <span className="card-badge popular">Popular</span>;
-    return null;
-  };
+  const imageSrc = mantra.imageUrl && (mantra.imageUrl.startsWith('data:') || mantra.imageUrl.startsWith('http')) ? mantra.imageUrl : null;
+  const defaultIcon = 'ॐ';
 
   return (
-    <div
-      className={`mantra-card ${hovered ? 'hovered' : ''}`}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+    <div 
+      className={`featured-mantra-card ${isHovered ? 'hovered' : ''}`}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       onClick={handleClick}
-      role="button"
-      tabIndex={0}
-      onKeyPress={(e) => e.key === 'Enter' && handleClick()}
+      style={{ borderColor: mantra.color || '#c85a00' }}
     >
-      {getBadge()}
-      
-      {showBookmark && (
-        <button 
-          className={`bookmark-btn ${isBookmarked ? 'active' : ''}`}
-          onClick={handleBookmarkClick}
-          aria-label={isBookmarked ? 'Remove bookmark' : 'Add bookmark'}
-        >
-          {isBookmarked ? '★' : '☆'}
-        </button>
-      )}
-      
-      <div className="mantra-card-header" style={{ borderColor: mantra.color || '#ffd700' }}>
-        <span className="deity-badge" style={{ background: `${mantra.color || '#ffd700'}20`, color: mantra.color || '#ffd700' }}>
-          {getLocalizedDeity()}
-        </span>
-        <span className="language-badge">{mantra.language}</span>
+      <div className="featured-card-badge">✨ Featured</div>
+      <div className="featured-card-icon" style={{ background: `${mantra.color || '#c85a00'}20`, color: mantra.color || '#c85a00' }}>
+        {imageSrc ? (
+          <img src={imageSrc} alt={mantra.name} className="featured-card-img" />
+        ) : (
+          defaultIcon
+        )}
       </div>
-      
-      <h3 className="mantra-card-name">{getLocalizedName()}</h3>
-      
-      <div className="mantra-card-verse">
-        <p className="verse-text">{mantra.verses?.[0]?.dev || 'ॐ'}</p>
+      <h3 className="featured-card-name">{mantra.name}</h3>
+      <p className="featured-card-deity">{mantra.deity}</p>
+      <p className="featured-card-desc">{mantra.purpose?.substring(0, 60)}...</p>
+      <button className="featured-card-btn" style={{ borderColor: mantra.color || '#c85a00', color: mantra.color || '#c85a00' }}>
+        Chant Now →
+      </button>
+    </div>
+  );
+};
+
+// Small Card Variant
+export const SmallMantraCard = ({ mantra, onClick }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    if (onClick) {
+      onClick(mantra);
+    } else {
+      navigate(`/mantra/${mantra.id}`, { state: { mantra } });
+    }
+  };
+
+  const imageSrc = mantra.imageUrl && (mantra.imageUrl.startsWith('data:') || mantra.imageUrl.startsWith('http')) ? mantra.imageUrl : null;
+  const defaultIcon = 'ॐ';
+
+  return (
+    <div className="small-mantra-card" onClick={handleClick}>
+      <div className="small-card-icon" style={{ background: `${mantra.color || '#c85a00'}20`, color: mantra.color || '#c85a00' }}>
+        {imageSrc ? (
+          <img src={imageSrc} alt={mantra.name} className="small-card-img" />
+        ) : (
+          defaultIcon
+        )}
       </div>
-      
-      <div className="mantra-card-footer">
-        <span className="read-more">{t('mantras.read_more')}</span>
+      <div className="small-card-info">
+        <h4 className="small-card-name">{mantra.name}</h4>
+        <p className="small-card-deity">{mantra.deity}</p>
       </div>
-      
-      {mantra.views !== undefined && (
-        <div className="mantra-card-stats">
-          <span className="stat-item">
-            <span className="stat-icon">👁️</span> {mantra.views}
-          </span>
-          <span className="stat-item">
-            <span className="stat-icon">⬇️</span> {mantra.downloads}
-          </span>
-        </div>
-      )}
+      <div className="small-card-arrow">→</div>
     </div>
   );
 };

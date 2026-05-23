@@ -1,29 +1,17 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import toast from 'react-hot-toast';
 import './Contact.css';
 
 const Contact = () => {
-  const { t } = useTranslation();
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
+    setSubmitting(true);
     setTimeout(() => {
-      alert(t('contact.success') || 'Message sent successfully!');
-      setIsSubmitting(false);
+      toast.success('Message sent successfully!');
+      setSubmitting(false);
       setFormData({ name: '', email: '', message: '' });
     }, 1000);
   };
@@ -32,15 +20,17 @@ const Contact = () => {
     <div className="contact-page">
       <div className="container">
         <div className="contact-header">
-          <h1 className="contact-title">{t('contact.title') || 'Contact Us'}</h1>
-          <p className="contact-subtitle">{t('contact.subtitle') || 'We would love to hear from you'}</p>
+          <div className="contact-om animate-glow">ॐ</div>
+          <h1 className="contact-title">Contact Us</h1>
+          <p className="contact-subtitle">We'd love to hear from you</p>
         </div>
+        
         <div className="contact-grid">
           <div className="contact-info">
             <div className="info-card">
               <div className="info-icon">📧</div>
               <h3>Email</h3>
-              <p>contact@divinemantra.com</p>
+              <p>contact@solapurgurukulam.com</p>
             </div>
             <div className="info-card">
               <div className="info-icon">📞</div>
@@ -50,24 +40,16 @@ const Contact = () => {
             <div className="info-card">
               <div className="info-icon">📍</div>
               <h3>Address</h3>
-              <p>Mumbai, Maharashtra, India</p>
+              <p>Solapur, Maharashtra, India</p>
             </div>
           </div>
+          
           <form className="contact-form" onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label>{t('contact.name') || 'Name'}</label>
-              <input type="text" name="name" value={formData.name} onChange={handleChange} required />
-            </div>
-            <div className="form-group">
-              <label>{t('contact.email') || 'Email'}</label>
-              <input type="email" name="email" value={formData.email} onChange={handleChange} required />
-            </div>
-            <div className="form-group">
-              <label>{t('contact.message') || 'Message'}</label>
-              <textarea name="message" rows="5" value={formData.message} onChange={handleChange} required></textarea>
-            </div>
-            <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
-              {isSubmitting ? (t('contact.sending') || 'Sending...') : (t('contact.send') || 'Send Message')}
+            <input type="text" placeholder="Your Name" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} required />
+            <input type="email" placeholder="Your Email" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} required />
+            <textarea placeholder="Your Message" rows="5" value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} required></textarea>
+            <button type="submit" className="btn-primary" disabled={submitting}>
+              {submitting ? 'Sending...' : 'Send Message'}
             </button>
           </form>
         </div>

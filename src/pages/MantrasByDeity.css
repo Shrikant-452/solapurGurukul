@@ -1,0 +1,428 @@
+/* components/Public/MantrasByDeity.css */
+
+.mantras-by-deity-page {
+  min-height: 100vh;
+  padding: 40px 0 60px;
+  background: linear-gradient(135deg, #fdf6ec 0%, #fff8f0 100%);
+  margin-top: 40px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Back Button */
+.back-button {
+  background: transparent;
+  border: 1px solid #d8c090;
+  color: #6b4820;
+  padding: 8px 18px;
+  border-radius: 40px;
+  cursor: pointer;
+  margin-bottom: 24px;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.back-button:hover {
+  border-color: #c85a00;
+  color: #c85a00;
+}
+
+/* Deity Header */
+.deity-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 24px;
+  padding: 20px 24px;
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid #e8dcc2;
+  flex-wrap: wrap;
+}
+
+.deity-icon-large {
+  width: 70px;
+  height: 70px;
+  background: rgba(200, 90, 0, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  flex-shrink: 0;
+}
+
+.deity-info {
+  flex: 1;
+  min-width: 180px;
+}
+
+.deity-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2c1c0e;
+  margin-bottom: 6px;
+  word-break: break-word;
+}
+
+.deity-description {
+  color: #6b4820;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.deity-mantra-count {
+  background: rgba(200, 90, 0, 0.1);
+  color: #c85a00;
+  padding: 6px 18px;
+  border-radius: 40px;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Stats Bar */
+.stats-bar {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding: 16px 20px;
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e8dcc2;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  text-align: center;
+  flex: 1;
+  min-width: 90px;
+}
+
+.stat-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #c85a00;
+  line-height: 1.2;
+  word-break: break-word;
+}
+
+.stat-label {
+  font-size: 0.65rem;
+  color: #9a7850;
+  letter-spacing: 1px;
+  margin-top: 4px;
+}
+
+/* Search Section */
+.search-section {
+  margin-bottom: 24px;
+}
+
+.search-box {
+  position: relative;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: #9a7850;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 12px 40px 12px 42px;
+  background: #ffffff;
+  border: 1px solid #e8dcc2;
+  border-radius: 40px;
+  font-size: 13px;
+  color: #2c1c0e;
+  transition: all 0.2s;
+}
+
+.search-box input:focus {
+  outline: none;
+  border-color: #c85a00;
+  box-shadow: 0 0 0 2px rgba(200, 90, 0, 0.1);
+}
+
+.clear-search {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  color: #9a7850;
+}
+
+.clear-search:hover {
+  color: #c85a00;
+}
+
+/* Results Header */
+.results-header {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.results-header h3 {
+  font-size: 0.9rem;
+  color: #6b4820;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Mantras Grid */
+.mantras-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+/* Mantra Card */
+.mantra-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid #e8dcc2;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.mantra-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  border-color: #c85a00;
+}
+
+.mantra-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.mantra-language {
+  background: rgba(200, 90, 0, 0.1);
+  color: #c85a00;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.mantra-icon {
+  font-size: 32px;
+}
+
+.mantra-title {
+  font-family: 'Noto Sans Devanagari', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #2c1c0e;
+  margin: 0 0 8px 0;
+  line-height: 1.4;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.mantra-deity {
+  font-size: 12px;
+  color: #c85a00;
+  margin: 0 0 12px 0;
+  font-weight: 500;
+  word-break: break-word;
+}
+
+.mantra-verse {
+  font-family: 'Noto Sans Devanagari', serif;
+  font-size: 12px;
+  color: #6b4820;
+  line-height: 1.6;
+  padding: 12px;
+  background: #fcf8f0;
+  border-radius: 12px;
+  margin: 0 0 15px 0;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+.mantra-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid #e8dcc2;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.mantra-occasion {
+  font-size: 10px;
+  color: #9a7850;
+}
+
+.mantra-views {
+  font-size: 10px;
+  color: #9a7850;
+}
+
+.mantra-read-more {
+  font-size: 11px;
+  font-weight: 600;
+  color: #c85a00;
+  transition: transform 0.2s;
+}
+
+.mantra-card:hover .mantra-read-more {
+  transform: translateX(5px);
+}
+
+/* No Results */
+.no-mantras-found {
+  text-align: center;
+  padding: 60px 20px;
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1px solid #e8dcc2;
+}
+
+.no-mantras-found h3 {
+  font-size: 1.3rem;
+  color: #2c1c0e;
+  margin: 0 0 10px 0;
+  font-family: 'Playfair Display', serif;
+}
+
+.no-mantras-found p {
+  color: #9a7850;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .mantras-by-deity-page {
+    padding: 20px 0 40px;
+  }
+  
+  .deity-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+  
+  .deity-icon-large {
+    width: 60px;
+    height: 60px;
+    font-size: 32px;
+  }
+  
+  .deity-name {
+    font-size: 1.4rem;
+  }
+  
+  .deity-description {
+    font-size: 0.8rem;
+  }
+  
+  .deity-mantra-count {
+    white-space: normal;
+  }
+  
+  .stats-bar {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .stat-value {
+    font-size: 1.2rem;
+  }
+  
+  .stat-label {
+    margin-top: 0;
+  }
+  
+  .mantras-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .mantra-card {
+    padding: 16px;
+  }
+  
+  .mantra-title {
+    font-size: 0.95rem;
+  }
+  
+  .mantra-verse {
+    font-size: 11px;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 15px;
+  }
+  
+  .deity-name {
+    font-size: 1.2rem;
+  }
+  
+  .deity-icon-large {
+    width: 50px;
+    height: 50px;
+    font-size: 28px;
+  }
+  
+  .mantra-card {
+    padding: 14px;
+  }
+  
+  .mantra-title {
+    font-size: 0.9rem;
+  }
+  
+  .mantra-verse {
+    font-size: 10px;
+    padding: 8px;
+  }
+  
+  .mantra-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+}

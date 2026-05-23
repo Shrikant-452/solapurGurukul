@@ -13,8 +13,15 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (!email || !password) {
+      toast.error('Please enter both email and password');
+      return;
+    }
+    
     setLoading(true);
     
+    // Simulate network delay
     setTimeout(() => {
       const result = login(email, password);
       if (result.success) {
@@ -25,7 +32,7 @@ const Login = () => {
           navigate('/dashboard');
         }
       } else {
-        toast.error('Invalid email or password');
+        toast.error(result.error || 'Invalid email or password');
       }
       setLoading(false);
     }, 500);
@@ -35,27 +42,44 @@ const Login = () => {
     <div className="auth-page">
       <div className="container">
         <div className="auth-card">
-          <div className="auth-om">ॐ</div>
+          <div className="auth-om animate-glow">ॐ</div>
           <h1 className="auth-title">Welcome Back</h1>
           <p className="auth-subtitle">Sign in to access your dashboard</p>
           
           <form onSubmit={handleSubmit} className="auth-form">
             <div className="form-group">
-              <label className="form-label">Email</label>
-              <input type="email" className="form-input" value={email} onChange={(e) => setEmail(e.target.value)} required placeholder="admin@divinemantra.com" />
+              <label>Email</label>
+              <input 
+                type="email" 
+                value={email} 
+                onChange={(e) => setEmail(e.target.value)} 
+                required 
+                placeholder="admin@solapur.com" 
+              />
             </div>
             <div className="form-group">
-              <label className="form-label">Password</label>
-              <input type="password" className="form-input" value={password} onChange={(e) => setPassword(e.target.value)} required placeholder="••••••" />
+              <label>Password</label>
+              <input 
+                type="password" 
+                value={password} 
+                onChange={(e) => setPassword(e.target.value)} 
+                required 
+                placeholder="••••••" 
+              />
             </div>
-            <button type="submit" className="btn btn-primary btn-full" disabled={loading}>{loading ? 'Loading...' : 'Login'}</button>
+            <button type="submit" className="btn-primary btn-full" disabled={loading}>
+              {loading ? 'Loading...' : 'Login'}
+            </button>
           </form>
           
-          <p className="auth-footer">Don't have an account? <Link to="/register">Register</Link></p>
+          <p className="auth-footer">
+            Don't have an account? <Link to="/register">Register</Link>
+          </p>
+          
           <div className="demo-credentials">
-            <p>Demo Credentials:</p>
-            <p>Admin: admin@divinemantra.com / admin123</p>
-            <p>User: user@divinemantra.com / user123</p>
+            <p><strong>Demo Credentials:</strong></p>
+            <p>📧 Admin: admin@solapur.com / admin123</p>
+            <p>📧 User: user@solapur.com / user123</p>
           </div>
         </div>
       </div>

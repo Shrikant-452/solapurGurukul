@@ -7,47 +7,59 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [users, setUsers] = useState([]);
 
   useEffect(() => {
+    // Check if user is already logged in
     const storedUser = localStorage.getItem('user');
-    const storedUsers = localStorage.getItem('users');
-    
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
-    
-    if (storedUsers) {
-      setUsers(JSON.parse(storedUsers));
-    } else {
-      const defaultUsers = [
-        { id: '1', email: 'admin@divinemantra.com', password: 'admin123', name: 'Admin User', role: 'admin', createdAt: new Date().toISOString() },
-        { id: '2', email: 'user@divinemantra.com', password: 'user123', name: 'Devotee User', role: 'user', createdAt: new Date().toISOString() }
-      ];
-      setUsers(defaultUsers);
-      localStorage.setItem('users', JSON.stringify(defaultUsers));
-    }
-    
     setLoading(false);
   }, []);
 
   const login = (email, password) => {
-    const foundUser = users.find(u => u.email === email && u.password === password);
+    console.log('Login attempt:', email, password);
     
-    if (foundUser) {
-      const { password: _, ...userWithoutPassword } = foundUser;
-      setUser(userWithoutPassword);
-      localStorage.setItem('user', JSON.stringify(userWithoutPassword));
-      return { success: true, user: userWithoutPassword };
+    // Hardcoded admin credentials for testing
+    if (email === 'admin@solapur.com' && password === 'admin123') {
+      const adminUser = {
+        id: '1',
+        email: 'admin@solapur.com',
+        name: 'Admin User',
+        role: 'admin',
+        createdAt: new Date().toISOString()
+      };
+      setUser(adminUser);
+      localStorage.setItem('user', JSON.stringify(adminUser));
+      console.log('Admin login success');
+      return { success: true, user: adminUser };
     }
     
-    return { success: false, error: 'Invalid credentials' };
+    // Hardcoded user credentials
+    if (email === 'user@solapur.com' && password === 'user123') {
+      const normalUser = {
+        id: '2',
+        email: 'user@solapur.com',
+        name: 'Devotee User',
+        role: 'user',
+        createdAt: new Date().toISOString()
+      };
+      setUser(normalUser);
+      localStorage.setItem('user', JSON.stringify(normalUser));
+      console.log('User login success');
+      return { success: true, user: normalUser };
+    }
+    
+    console.log('Login failed: Invalid credentials');
+    return { success: false, error: 'Invalid email or password' };
   };
 
   const register = (name, email, password) => {
-    const existingUser = users.find(u => u.email === email);
+    // Check if user already exists in localStorage
+    const existingUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+    const userExists = existingUsers.find(u => u.email === email);
     
-    if (existingUser) {
+    if (userExists) {
       return { success: false, error: 'Email already exists' };
     }
     
@@ -60,9 +72,9 @@ export const AuthProvider = ({ children }) => {
       createdAt: new Date().toISOString()
     };
     
-    const updatedUsers = [...users, newUser];
-    setUsers(updatedUsers);
-    localStorage.setItem('users', JSON.stringify(updatedUsers));
+    // Save to registered users
+    const updatedUsers = [...existingUsers, newUser];
+    localStorage.setItem('registeredUsers', JSON.stringify(updatedUsers));
     
     const { password: _, ...userWithoutPassword } = newUser;
     setUser(userWithoutPassword);
@@ -77,13 +89,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   const getAllUsers = () => {
-    return users.map(({ password, ...user }) => user);
-  };
-
-  const deleteUser = (userId) => {
-    const updatedUsers = users.filter(u => u.id !== userId);
-    setUsers(updatedUsers);
-    localStorage.setItem('users', JSON.stringify(updatedUsers));
+    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+    return [
+      { id: '1', email: 'admin@solapur.com', name: 'Admin User', role: 'admin', createdAt: new Date().toISOString() },
+      ...registeredUsers
+    ];
   };
 
   const value = {
@@ -93,7 +103,6 @@ export const AuthProvider = ({ children }) => {
     logout,
     loading,
     getAllUsers,
-    deleteUser,
     isAdmin: user?.role === 'admin',
     isAuthenticated: !!user,
   };

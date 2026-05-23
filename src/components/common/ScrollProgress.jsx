@@ -19,10 +19,7 @@ const ScrollProgress = () => {
 
   return (
     <div className="scroll-progress-bar">
-      <div 
-        className="scroll-progress-fill" 
-        style={{ width: `${scrollProgress}%` }}
-      />
+      <div className="scroll-progress-fill" style={{ width: `${scrollProgress}%` }} />
     </div>
   );
 };

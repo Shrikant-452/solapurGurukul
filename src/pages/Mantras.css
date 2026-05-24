@@ -18,6 +18,7 @@
 .mantras-page-header {
   text-align: center;
   margin-bottom: 40px;
+  animation: fadeInDown 0.6s ease;
 }
 
 .mantras-page-om {
@@ -61,6 +62,7 @@
   margin-bottom: 30px;
   flex-wrap: wrap;
   justify-content: center;
+  animation: fadeInUp 0.5s ease;
 }
 
 .search-wrapper {
@@ -89,7 +91,7 @@
   border-radius: 50px;
   font-size: 14px;
   color: #2c1c0e;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
 }
 
 .search-box input:focus {
@@ -108,6 +110,7 @@
   font-size: 16px;
   cursor: pointer;
   color: #9a7850;
+  transition: color 0.2s;
 }
 
 .clear-search:hover {
@@ -122,6 +125,7 @@
   font-size: 14px;
   color: #2c1c0e;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .filter-wrapper select:focus {
@@ -134,6 +138,7 @@
   margin-bottom: 24px;
   color: #9a7850;
   font-size: 0.85rem;
+  animation: fadeInUp 0.5s ease 0.1s both;
 }
 
 /* Deities Grid */
@@ -151,21 +156,48 @@
   padding: 24px 16px;
   text-align: center;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
   border: 1px solid #e8dcc2;
   border-bottom-width: 3px;
   border-bottom-style: solid;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+  animation: fadeInUp 0.5s ease backwards;
 }
 
 .deity-category-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
 }
 
+/* Deity Card Icon - Support for both emoji and images */
 .deity-card-icon {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.deity-card-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.deity-category-card:hover .deity-card-img {
+  transform: scale(1.05);
+}
+
+.deity-card-emoji {
   font-size: 48px;
-  margin-bottom: 12px;
+  transition: transform 0.3s ease;
+}
+
+.deity-category-card:hover .deity-card-emoji {
+  transform: scale(1.05);
 }
 
 .deity-card-name {
@@ -189,6 +221,7 @@
   font-size: 0.7rem;
   font-weight: 600;
   margin-bottom: 10px;
+  transition: all 0.3s ease;
 }
 
 .deity-card-btn {
@@ -198,11 +231,11 @@
   align-items: center;
   justify-content: center;
   gap: 4px;
-  transition: gap 0.2s;
+  transition: gap 0.3s ease;
 }
 
 .deity-category-card:hover .deity-card-btn {
-  gap: 8px;
+  gap: 10px;
 }
 
 /* Mantras Home Grid */
@@ -221,6 +254,7 @@
   border-radius: 20px;
   border: 1px solid #e8dcc2;
   margin-bottom: 40px;
+  animation: fadeInUp 0.4s ease;
 }
 
 .no-mantras-found p {
@@ -231,6 +265,7 @@
 .view-all-mantras {
   text-align: center;
   margin-top: 20px;
+  animation: fadeInUp 0.5s ease 0.2s both;
 }
 
 .btn-primary {
@@ -241,12 +276,12 @@
   color: white;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(200, 90, 0, 0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(200, 90, 0, 0.3);
 }
 
 /* Loading State */
@@ -264,6 +299,29 @@
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.6; }
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Responsive */
@@ -309,6 +367,11 @@
   }
   
   .deity-card-icon {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .deity-card-emoji {
     font-size: 40px;
   }
 }
@@ -320,10 +383,11 @@
   
   .deities-grid {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
   
   .deity-category-card {
-    padding: 16px;
+    padding: 20px 16px;
   }
   
   .mantras-page-title {
@@ -332,5 +396,14 @@
   
   .mantras-page-om {
     font-size: 40px;
+  }
+  
+  .deity-card-icon {
+    width: 55px;
+    height: 55px;
+  }
+  
+  .deity-card-emoji {
+    font-size: 36px;
   }
 }

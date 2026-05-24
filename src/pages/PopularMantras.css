@@ -1,19 +1,16 @@
-/* PopularMantras.css - Modern UI with glassmorphism */
+/* PopularMantras.css - Fixed with image support */
 
 .popular-mantras-section {
   padding: 60px 0;
   background: linear-gradient(145deg, #fef9f0 0%, #fff5e6 100%);
-  position: relative;
   overflow: hidden;
 }
 
-/* Right-aligned header */
 .popular-header-right {
   display: flex;
   align-items: center;
   justify-content: flex-end;
   margin-bottom: 40px;
-  position: relative;
 }
 
 .header-line {
@@ -48,7 +45,6 @@
   color: #2c1c0e;
 }
 
-/* Scroll wrapper with gradient masks */
 .popular-scroll-wrapper {
   position: relative;
   margin-bottom: 40px;
@@ -79,30 +75,20 @@
   overflow-x: auto;
   scroll-behavior: smooth;
   padding: 16px 0 24px 0;
-  /* Hide scrollbar */
-  -ms-overflow-style: none;
   scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .popular-mantras-horizontal::-webkit-scrollbar {
-  height: 6px;
+  display: none;
 }
 
-.popular-mantras-horizontal::-webkit-scrollbar-track {
-  background: #e8dcc2;
-  border-radius: 10px;
-}
-
-.popular-mantras-horizontal::-webkit-scrollbar-thumb {
-  background: #c85a00;
-  border-radius: 10px;
-}
-
-/* Modern glass cards */
+/* Card Styles */
 .popular-card-new {
   flex: 0 0 280px;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  animation: fadeInUp 0.5s ease backwards;
 }
 
 .popular-card-new:hover {
@@ -110,24 +96,30 @@
 }
 
 .card-inner {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(8px);
   border-radius: 24px;
   overflow: hidden;
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
   border: 1px solid rgba(200, 90, 0, 0.2);
   transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .popular-card-new:hover .card-inner {
   border-color: #c85a00;
-  box-shadow: 0 20px 35px -8px rgba(200, 90, 0, 0.2);
+  box-shadow: 0 20px 35px -8px rgba(200, 90, 0, 0.25);
 }
 
+/* Card Image Styles */
 .card-image-new {
   position: relative;
   height: 180px;
   overflow: hidden;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #f5f0e8, #e8dcc2);
 }
 
 .card-image-new img {
@@ -135,12 +127,35 @@
   height: 100%;
   object-fit: cover;
   transition: transform 0.5s ease;
+  display: block;
 }
 
 .popular-card-new:hover .card-image-new img {
-  transform: scale(1.05);
+  transform: scale(1.08);
 }
 
+/* Placeholder for cards without images */
+.card-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f5f0e8, #e8dcc2);
+}
+
+.placeholder-icon {
+  font-size: 56px;
+  opacity: 0.8;
+  transition: transform 0.3s ease;
+  filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1));
+}
+
+.popular-card-new:hover .placeholder-icon {
+  transform: scale(1.1);
+}
+
+/* Rank Badge */
 .card-rank-new {
   position: absolute;
   top: 12px;
@@ -153,64 +168,90 @@
   padding: 4px 10px;
   border-radius: 30px;
   font-family: monospace;
+  z-index: 1;
+  letter-spacing: 0.5px;
 }
 
+/* Card Content */
 .card-content-new {
   padding: 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .card-name-new {
   font-family: 'Noto Sans Devanagari', 'Playfair Display', serif;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 700;
   color: #2c1c0e;
   margin: 0 0 6px 0;
-  line-height: 1.3;
+  line-height: 1.35;
+  white-space: normal;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 2.7rem;
 }
 
 .card-deity-new {
   font-size: 0.75rem;
   font-weight: 600;
-  color: #c85a00;
   margin: 0 0 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .card-desc-new {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: #6b4c2c;
-  line-height: 1.4;
+  line-height: 1.45;
   margin: 0 0 12px 0;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 2.2rem;
 }
 
+/* Card Footer */
 .card-footer-new {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-top: 10px;
   border-top: 1px solid #ede4d4;
+  margin-top: auto;
 }
 
 .card-views-new {
   font-size: 0.7rem;
   color: #9a7b50;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .card-read-new {
   font-size: 0.75rem;
   font-weight: 600;
-  color: #c85a00;
-  transition: transform 0.2s;
+  transition: transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .popular-card-new:hover .card-read-new {
   transform: translateX(4px);
 }
 
-/* View All button */
+/* View All Button */
 .view-all-popular {
   text-align: center;
   margin-top: 20px;
@@ -226,17 +267,70 @@
   font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .btn-view-all-new:hover {
   background: #c85a00;
   color: white;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(200, 90, 0, 0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(200, 90, 0, 0.3);
 }
 
+.btn-view-all-new:active {
+  transform: translateY(0);
+}
+
+/* Animations */
+@keyframes pulse {
+  0%, 100% { 
+    opacity: 0.7; 
+    transform: scale(1); 
+  }
+  50% { 
+    opacity: 1; 
+    transform: scale(1.1); 
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Staggered animation delays for cards */
+.popular-card-new:nth-child(1) { animation-delay: 0.05s; }
+.popular-card-new:nth-child(2) { animation-delay: 0.1s; }
+.popular-card-new:nth-child(3) { animation-delay: 0.15s; }
+.popular-card-new:nth-child(4) { animation-delay: 0.2s; }
+.popular-card-new:nth-child(5) { animation-delay: 0.25s; }
+.popular-card-new:nth-child(6) { animation-delay: 0.3s; }
+.popular-card-new:nth-child(7) { animation-delay: 0.35s; }
+.popular-card-new:nth-child(8) { animation-delay: 0.4s; }
+
 /* Responsive */
+@media (max-width: 1024px) {
+  .popular-card-new {
+    flex: 0 0 270px;
+  }
+  
+  .card-image-new {
+    height: 170px;
+  }
+}
+
 @media (max-width: 768px) {
+  .popular-mantras-section {
+    padding: 40px 0;
+  }
+  
   .popular-card-new {
     flex: 0 0 260px;
   }
@@ -252,11 +346,27 @@
   .star-icon {
     font-size: 1rem;
   }
+  
+  .placeholder-icon {
+    font-size: 48px;
+  }
+  
+  .card-content-new {
+    padding: 14px;
+  }
 }
 
 @media (max-width: 480px) {
+  .popular-mantras-section {
+    padding: 30px 0;
+  }
+  
   .popular-card-new {
     flex: 0 0 240px;
+  }
+  
+  .card-image-new {
+    height: 150px;
   }
   
   .card-content-new {
@@ -264,11 +374,55 @@
   }
   
   .card-name-new {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+    min-height: 2.4rem;
+  }
+  
+  .card-desc-new {
+    font-size: 0.7rem;
+    min-height: 2rem;
+  }
+  
+  .placeholder-icon {
+    font-size: 40px;
+  }
+  
+  .card-rank-new {
+    font-size: 0.7rem;
+    padding: 3px 8px;
+    top: 8px;
+    left: 8px;
+  }
+  
+  .card-deity-new {
+    font-size: 0.7rem;
+  }
+  
+  .card-views-new, .card-read-new {
+    font-size: 0.65rem;
+  }
+  
+  .btn-view-all-new {
+    padding: 10px 24px;
+    font-size: 0.8rem;
   }
 }
 
-@keyframes pulse {
-  0%, 100% { opacity: 0.7; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.1); }
+/* For very small devices */
+@media (max-width: 360px) {
+  .popular-card-new {
+    flex: 0 0 220px;
+  }
+  
+  .card-image-new {
+    height: 140px;
+  }
+  
+  .card-name-new {
+    font-size: 0.85rem;
+  }
+  
+  .placeholder-icon {
+    font-size: 36px;
+  }
 }

@@ -4,7 +4,7 @@ import './ManageMantras.css';
 
 const ManageMantras = () => {
   const [mantras, setMantras] = useState([]);
-  const [categories, setCategories] = useState([]); // ✅ New: categories from storage
+  const [categories, setCategories] = useState([]);
   const [search, setSearch] = useState('');
   const [filterDeity, setFilterDeity] = useState('all');
   const [filterStatus, setFilterStatus] = useState('all');
@@ -13,79 +13,85 @@ const ManageMantras = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedMantra, setSelectedMantra] = useState(null);
   const [imagePreview, setImagePreview] = useState('');
-  const [audioFileName, setAudioFileName] = useState('');
-  const [pdfFileName, setPdfFileName] = useState('');
-  
-  // Drag & drop refs
   const imageDropRef = useRef(null);
-  const audioDropRef = useRef(null);
-  const pdfDropRef = useRef(null);
 
   const [formData, setFormData] = useState({
     name: '',
     name_en: '',
+    title: '',
+    subtitle: '',
+    largeText: '',
     deity: '',
     language: 'Sanskrit',
     occasion: '',
-    purpose: '',
     verses: [{ dev: '', roman: '', meaning: '' }],
     status: 'published',
-    imageUrl: '',
-    audioUrl: '',
-    pdfUrl: ''
+    imageUrl: ''
   });
 
-  // Load mantras and categories
-  useEffect(() => {
-    loadMantras();
-    loadCategories();
-    window.addEventListener('mantrasUpdated', loadMantras);
-    window.addEventListener('categoriesUpdated', loadCategories);
-    return () => {
-      window.removeEventListener('mantrasUpdated', loadMantras);
-      window.removeEventListener('categoriesUpdated', loadCategories);
-    };
-  }, []);
+  const deityColors = {
+    Ganesha: '#c85a00', Shiva: '#0a5a50', Vishnu: '#4a2878',
+    Rama: '#b08820', Krishna: '#1a8070', Durga: '#7a1818',
+    Lakshmi: '#e06b10', Saraswati: '#d4aa30', Hanuman: '#f59040'
+  };
 
+  // Load categories function
+  const loadCategories = () => {
+    const saved = localStorage.getItem('categories');
+    console.log('Loading categories from localStorage:', saved);
+    if (saved) {
+      setCategories(JSON.parse(saved));
+    } else {
+      const defaultCategories = [
+        { id: 1, name: "Ganesha", icon: "🐘", color: "#c85a00", description: "Remover of Obstacles" },
+        { id: 2, name: "Shiva", icon: "🕉️", color: "#0a5a50", description: "The Destroyer of Evil" },
+        { id: 3, name: "Lakshmi", icon: "🪷", color: "#e06b10", description: "Goddess of Wealth" }
+      ];
+      setCategories(defaultCategories);
+      localStorage.setItem('categories', JSON.stringify(defaultCategories));
+    }
+  };
+
+  // Load mantras function
   const loadMantras = () => {
     const saved = localStorage.getItem('admin_mantras');
     if (saved) {
       setMantras(JSON.parse(saved));
     } else {
       const defaultMantras = [
-        { id: 1, name: "ॐ गण गणपतये नमः", name_en: "Om Gan Ganapataye Namah", deity: "Ganesha", language: "Sanskrit", occasion: "Daily", purpose: "Removal of obstacles, success in all endeavors", verses: [{ dev: "ॐ गण गणपतये नमः", roman: "Om Gan Ganapataye Namah", meaning: "Salutations to Lord Ganesha" }], status: "published", color: "#c85a00", views: 1247, downloads: 342, imageUrl: "", audioUrl: "", pdfUrl: "" },
-        { id: 2, name: "ॐ नमः शिवाय", name_en: "Om Namah Shivaya", deity: "Shiva", language: "Sanskrit", occasion: "Daily, Monday", purpose: "Inner peace, liberation, spiritual growth", verses: [{ dev: "ॐ नमः शिवाय", roman: "Om Namah Shivaya", meaning: "Salutations to Lord Shiva" }], status: "published", color: "#0a5a50", views: 2341, downloads: 567, imageUrl: "", audioUrl: "", pdfUrl: "" },
-        { id: 3, name: "ॐ श्री रामाय नमः", name_en: "Om Shri Ramaya Namah", deity: "Rama", language: "Sanskrit", occasion: "Daily, Tuesday", purpose: "Strength, righteousness, protection", verses: [{ dev: "ॐ श्री रामाय नमः", roman: "Om Shri Ramaya Namah", meaning: "Salutations to Lord Rama" }], status: "published", color: "#4a2878", views: 1892, downloads: 421, imageUrl: "", audioUrl: "", pdfUrl: "" }
+        { id: 1, name: "श्री गणेश स्तोत्रम्", name_en: "Shri Ganesh Stotram", title: "", subtitle: "", largeText: "", deity: "Ganesha", language: "Sanskrit", occasion: "Daily", verses: [{ dev: "वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ।\nनिर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा॥", roman: "Vakratunda Mahakaya Suryakoti Samaprabha, Nirvighnam Kuru Me Deva Sarvakaryeshu Sarvada.", meaning: "O Lord with curved trunk, massive body, radiant as ten million suns — make all my works obstacle-free, always." }], status: "published", color: "#c85a00", views: 1247, imageUrl: "" },
+        { id: 2, name: "ॐ नमः शिवाय", name_en: "Om Namah Shivaya", title: "", subtitle: "", largeText: "", deity: "Shiva", language: "Sanskrit", occasion: "Daily, Monday", verses: [{ dev: "ॐ नमः शिवाय", roman: "Om Namah Shivaya", meaning: "Salutations to Lord Shiva" }], status: "published", color: "#0a5a50", views: 2341, imageUrl: "" },
+        { id: 3, name: "महालक्ष्मी अष्टकम्", name_en: "Mahalakshmi Ashtakam", title: "", subtitle: "", largeText: "", deity: "Lakshmi", language: "Sanskrit", occasion: "Friday Puja", verses: [{ dev: "नमस्तेऽस्तु महामाये श्रीपीठे सुरपूजिते।\nशङ्खचक्रगदाहस्ते महालक्ष्मि नमोऽस्तु ते॥", roman: "Namaste'stu Mahamaye Shripithe Surapujite, Shankhachakragadahaste Mahalakshmi Namo'stu Te.", meaning: "Salutations to you, O Great Illusion — O Mahalakshmi, salutations to you." }], status: "published", color: "#e06b10", views: 987, imageUrl: "" }
       ];
       setMantras(defaultMantras);
       localStorage.setItem('admin_mantras', JSON.stringify(defaultMantras));
-      window.dispatchEvent(new Event('mantrasUpdated'));
     }
   };
 
-  const loadCategories = () => {
-    const saved = localStorage.getItem('categories');
-    if (saved) {
-      setCategories(JSON.parse(saved));
-    } else {
-      // Default categories if none exist
-      const defaultCategories = [
-        { id: 1, name: 'Ganesha', description: 'Remover of Obstacles', imageUrl: '🐘', color: '#c85a00', mantraCount: 0 },
-        { id: 2, name: 'Lakshmi', description: 'Goddess of Wealth', imageUrl: '🪷', color: '#e06b10', mantraCount: 0 },
-        { id: 3, name: 'Shiva', description: 'The Destroyer of Evil', imageUrl: '🕉️', color: '#0a5a50', mantraCount: 0 },
-        { id: 4, name: 'Hanuman', description: 'God of Strength', imageUrl: '🙏', color: '#f59040', mantraCount: 0 }
-      ];
-      setCategories(defaultCategories);
-      localStorage.setItem('categories', JSON.stringify(defaultCategories));
-      window.dispatchEvent(new Event('categoriesUpdated'));
-    }
-  };
-
-  // Build deityColors map from categories
-  const deityColors = categories.reduce((acc, cat) => {
-    acc[cat.name] = cat.color;
-    return acc;
-  }, {});
+  // Initial load
+  useEffect(() => {
+    loadMantras();
+    loadCategories();
+    
+    // Listen for updates
+    const handleMantrasUpdated = () => {
+      console.log('mantrasUpdated event received');
+      loadMantras();
+    };
+    
+    const handleCategoriesUpdated = () => {
+      console.log('categoriesUpdated event received');
+      loadCategories();
+    };
+    
+    window.addEventListener('mantrasUpdated', handleMantrasUpdated);
+    window.addEventListener('categoriesUpdated', handleCategoriesUpdated);
+    
+    return () => {
+      window.removeEventListener('mantrasUpdated', handleMantrasUpdated);
+      window.removeEventListener('categoriesUpdated', handleCategoriesUpdated);
+    };
+  }, []);
 
   const saveMantras = (updated) => {
     setMantras(updated);
@@ -98,19 +104,17 @@ const ManageMantras = () => {
     setFormData({
       name: '',
       name_en: '',
+      title: '',
+      subtitle: '',
+      largeText: '',
       deity: '',
       language: 'Sanskrit',
       occasion: '',
-      purpose: '',
       verses: [{ dev: '', roman: '', meaning: '' }],
       status: 'published',
-      imageUrl: '',
-      audioUrl: '',
-      pdfUrl: ''
+      imageUrl: ''
     });
     setImagePreview('');
-    setAudioFileName('');
-    setPdfFileName('');
   };
 
   const handleInputChange = (e) => {
@@ -136,48 +140,37 @@ const ManageMantras = () => {
     setFormData({ ...formData, verses: newVerses });
   };
 
-  // File upload handlers
-  const handleFileUpload = (type, file) => {
+  const handleImageUpload = (file) => {
     if (!file) return;
-    const maxSize = type === 'image' ? 10 : 20;
-    if (file.size > maxSize * 1024 * 1024) {
-      toast.error(`File too large! Max ${maxSize}MB`);
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error('Image too large! Max 10MB');
       return;
     }
     const reader = new FileReader();
     reader.onloadend = () => {
       const base64 = reader.result;
-      if (type === 'image') {
-        setFormData({ ...formData, imageUrl: base64 });
-        setImagePreview(base64);
-        toast.success('Image uploaded!');
-      } else if (type === 'audio') {
-        setFormData({ ...formData, audioUrl: base64 });
-        setAudioFileName(file.name);
-        toast.success('Audio uploaded!');
-      } else if (type === 'pdf') {
-        setFormData({ ...formData, pdfUrl: base64 });
-        setPdfFileName(file.name);
-        toast.success('PDF uploaded!');
-      }
+      setFormData({ ...formData, imageUrl: base64 });
+      setImagePreview(base64);
+      toast.success('Image uploaded!');
     };
     reader.readAsDataURL(file);
   };
 
-  const handleDrop = (e, type) => {
+  const handleImageDrop = (e) => {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
-    if (file) handleFileUpload(type, file);
+    if (file && file.type.startsWith('image/')) handleImageUpload(file);
+    else toast.error('Please drop an image file');
   };
 
   const handleDragOver = (e) => e.preventDefault();
 
-  const triggerFileInput = (type) => {
+  const triggerImageInput = () => {
     const input = document.createElement('input');
     input.type = 'file';
-    input.accept = type === 'image' ? 'image/*' : type === 'audio' ? 'audio/*' : '.pdf';
+    input.accept = 'image/*';
     input.onchange = (e) => {
-      if (e.target.files[0]) handleFileUpload(type, e.target.files[0]);
+      if (e.target.files[0]) handleImageUpload(e.target.files[0]);
     };
     input.click();
   };
@@ -191,19 +184,19 @@ const ManageMantras = () => {
       id: Date.now(),
       name: formData.name,
       name_en: formData.name_en,
+      title: formData.title,
+      subtitle: formData.subtitle,
+      largeText: formData.largeText,
       deity: formData.deity,
       language: formData.language,
       occasion: formData.occasion,
-      purpose: formData.purpose,
       verses: formData.verses.filter(v => v.dev || v.roman || v.meaning),
       status: formData.status,
       color: deityColors[formData.deity] || '#c85a00',
       views: 0,
       downloads: 0,
       createdAt: new Date().toISOString(),
-      imageUrl: formData.imageUrl,
-      audioUrl: formData.audioUrl,
-      pdfUrl: formData.pdfUrl
+      imageUrl: formData.imageUrl
     };
     saveMantras([newMantra, ...mantras]);
     setShowAddModal(false);
@@ -216,19 +209,17 @@ const ManageMantras = () => {
     setFormData({
       name: mantra.name,
       name_en: mantra.name_en || '',
+      title: mantra.title || '',
+      subtitle: mantra.subtitle || '',
+      largeText: mantra.largeText || '',
       deity: mantra.deity,
       language: mantra.language,
       occasion: mantra.occasion || '',
-      purpose: mantra.purpose || '',
       verses: mantra.verses || [{ dev: '', roman: '', meaning: '' }],
       status: mantra.status,
-      imageUrl: mantra.imageUrl || '',
-      audioUrl: mantra.audioUrl || '',
-      pdfUrl: mantra.pdfUrl || ''
+      imageUrl: mantra.imageUrl || ''
     });
     setImagePreview(mantra.imageUrl || '');
-    setAudioFileName(mantra.audioUrl ? 'Audio file' : '');
-    setPdfFileName(mantra.pdfUrl ? 'PDF file' : '');
     setShowEditModal(true);
   };
 
@@ -243,16 +234,16 @@ const ManageMantras = () => {
             ...selectedMantra,
             name: formData.name,
             name_en: formData.name_en,
+            title: formData.title,
+            subtitle: formData.subtitle,
+            largeText: formData.largeText,
             deity: formData.deity,
             language: formData.language,
             occasion: formData.occasion,
-            purpose: formData.purpose,
             verses: formData.verses,
             status: formData.status,
             color: deityColors[formData.deity] || '#c85a00',
-            imageUrl: formData.imageUrl,
-            audioUrl: formData.audioUrl,
-            pdfUrl: formData.pdfUrl
+            imageUrl: formData.imageUrl
           }
         : mantra
     );
@@ -285,9 +276,6 @@ const ManageMantras = () => {
     toast.success('Status updated successfully!');
   };
 
-  // Build filter options from categories
-  const filterOptions = ['all', ...categories.map(c => c.name)];
-
   const filteredMantras = mantras.filter(m => {
     const matchSearch = search === '' || 
       m.name.toLowerCase().includes(search.toLowerCase()) || 
@@ -298,22 +286,23 @@ const ManageMantras = () => {
     return matchSearch && matchDeity && matchStatus;
   });
 
-  // DropZone component (defined inside for access to refs)
-  const DropZone = ({ type, label, preview, fileName, onDrop, onDragOver, onClick }) => (
+  const filterOptions = ['all', ...categories.map(c => c.name)];
+
+  const ImageDropZone = () => (
     <div
-      ref={type === 'image' ? imageDropRef : type === 'audio' ? audioDropRef : pdfDropRef}
-      className={`drop-zone ${preview ? 'has-file' : ''}`}
-      onDrop={(e) => onDrop(e, type)}
-      onDragOver={onDragOver}
-      onClick={onClick}
+      ref={imageDropRef}
+      className={`drop-zone ${imagePreview ? 'has-file' : ''}`}
+      onDrop={handleImageDrop}
+      onDragOver={handleDragOver}
+      onClick={triggerImageInput}
     >
-      {type === 'image' && preview && <img src={preview} alt="Preview" className="image-preview" />}
-      {type !== 'image' && preview && <div className="file-info">📄 {fileName}</div>}
-      {!preview && (
+      {imagePreview ? (
+        <img src={imagePreview} alt="Preview" className="image-preview" />
+      ) : (
         <>
-          <div className="drop-icon">{type === 'image' ? '🖼️' : type === 'audio' ? '🎵' : '📄'}</div>
-          <p>Drag & drop or click to upload {label}</p>
-          <small>Max {type === 'image' ? '10MB' : '20MB'}</small>
+          <div className="drop-icon">🖼️</div>
+          <p>Drag & drop or click to upload image</p>
+          <small>Max 10MB (optional)</small>
         </>
       )}
     </div>
@@ -332,9 +321,7 @@ const ManageMantras = () => {
       <div className="filters-bar">
         <input type="text" placeholder="Search by name, deity..." value={search} onChange={(e) => setSearch(e.target.value)} />
         <select value={filterDeity} onChange={(e) => setFilterDeity(e.target.value)}>
-          {filterOptions.map(opt => (
-            <option key={opt} value={opt}>{opt === 'all' ? 'All Deities' : opt}</option>
-          ))}
+          {filterOptions.map(opt => <option key={opt} value={opt}>{opt === 'all' ? 'All Deities' : opt}</option>)}
         </select>
         <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)}>
           <option value="all">All Status</option>
@@ -353,7 +340,7 @@ const ManageMantras = () => {
               <th>Occasion</th>
               <th>Status</th>
               <th>Views</th>
-              <th>Media</th>
+              <th>Image</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -369,7 +356,9 @@ const ManageMantras = () => {
                     <div className="mantra-title">{m.name}</div>
                     <div className="mantra-subtitle">{m.name_en}</div>
                   </td>
-                  <td><span className="deity-badge" style={{ background: `${m.color}20`, color: m.color }}>{m.deity}</span></td>
+                  <td>
+                    <span className="deity-badge" style={{ background: `${m.color}20`, color: m.color }}>{m.deity}</span>
+                  </td>
                   <td>{m.language}</td>
                   <td>{m.occasion || '-'}</td>
                   <td>
@@ -380,16 +369,13 @@ const ManageMantras = () => {
                   <td>{m.views || 0}</td>
                   <td>
                     <div className="media-icons">
-                      {m.imageUrl && <span title="Has Image">🖼️</span>}
-                      {m.audioUrl && <span title="Has Audio">🎵</span>}
-                      {m.pdfUrl && <span title="Has PDF">📄</span>}
-                      {!m.imageUrl && !m.audioUrl && !m.pdfUrl && <span className="no-media">—</span>}
+                      {m.imageUrl ? <span title="Has Image">🖼️</span> : <span className="no-media">—</span>}
                     </div>
                   </td>
                   <td>
                     <button className="action-btn edit" onClick={() => openEditModal(m)}>✏️</button>
                     <button className="action-btn delete" onClick={() => openDeleteModal(m)}>🗑️</button>
-                  </td>
+                   </td>
                 </tr>
               ))
             )}
@@ -407,39 +393,38 @@ const ManageMantras = () => {
             </div>
             <div className="modal-body">
               <div className="form-row">
-                <input type="text" name="name" placeholder="Mantra Name (Devanagari)" value={formData.name} onChange={handleInputChange} />
+                <input type="text" name="name" placeholder="Mantra Name (Devanagari) *" value={formData.name} onChange={handleInputChange} />
                 <input type="text" name="name_en" placeholder="Mantra Name (English)" value={formData.name_en} onChange={handleInputChange} />
               </div>
+              
+              <input type="text" name="title" placeholder="Title (Optional)" value={formData.title} onChange={handleInputChange} />
+              <input type="text" name="subtitle" placeholder="Subtitle (Optional)" value={formData.subtitle} onChange={handleInputChange} />
+              <textarea name="largeText" placeholder="Mantra Text (Large content)" rows="4" value={formData.largeText} onChange={handleInputChange}></textarea>
+              
               <div className="form-row">
                 <select name="deity" value={formData.deity} onChange={handleInputChange}>
-                  <option value="">Select Deity</option>
-                  {categories.map(cat => (
-                    <option key={cat.id} value={cat.name}>{cat.name}</option>
-                  ))}
+                  <option value="">Select Deity *</option>
+                  {categories.map(c => <option key={c.id} value={c.name}>{c.name}</option>)}
                 </select>
                 <select name="language" value={formData.language} onChange={handleInputChange}>
                   <option>Sanskrit</option><option>Hindi</option><option>English</option>
                 </select>
               </div>
               <input type="text" name="occasion" placeholder="Occasion (e.g., Daily, Monday)" value={formData.occasion} onChange={handleInputChange} />
-              <textarea name="purpose" placeholder="Purpose / Benefits" rows="3" value={formData.purpose} onChange={handleInputChange}></textarea>
               
-              <div className="file-uploads">
-                <DropZone type="image" label="Image" preview={imagePreview} fileName={audioFileName} onDrop={handleDrop} onDragOver={handleDragOver} onClick={() => triggerFileInput('image')} />
-                <DropZone type="audio" label="Audio" preview={formData.audioUrl} fileName={audioFileName} onDrop={handleDrop} onDragOver={handleDragOver} onClick={() => triggerFileInput('audio')} />
-                <DropZone type="pdf" label="PDF" preview={formData.pdfUrl} fileName={pdfFileName} onDrop={handleDrop} onDragOver={handleDragOver} onClick={() => triggerFileInput('pdf')} />
-              </div>
+              <label>Image (Optional):</label>
+              <ImageDropZone />
 
               <label>Verses:</label>
-              {formData.verses.map((verse, index) => (
-                <div key={index} className="verse-group">
+              {formData.verses.map((verse, idx) => (
+                <div key={idx} className="verse-group">
                   <div className="verse-header">
-                    <span>Verse {index + 1}</span>
-                    {index > 0 && <button type="button" className="remove-verse" onClick={() => removeVerse(index)}>✕</button>}
+                    <span>Verse {idx + 1}</span>
+                    {idx > 0 && <button type="button" className="remove-verse" onClick={() => removeVerse(idx)}>✕</button>}
                   </div>
-                  <textarea placeholder="Devanagari text" value={verse.dev} onChange={(e) => handleVerseChange(index, 'dev', e.target.value)} rows="2" />
-                  <textarea placeholder="Transliteration" value={verse.roman} onChange={(e) => handleVerseChange(index, 'roman', e.target.value)} rows="2" />
-                  <textarea placeholder="Meaning" value={verse.meaning} onChange={(e) => handleVerseChange(index, 'meaning', e.target.value)} rows="2" />
+                  <textarea placeholder="Devanagari text" value={verse.dev} onChange={(e) => handleVerseChange(idx, 'dev', e.target.value)} rows="2" />
+                  <textarea placeholder="Transliteration" value={verse.roman} onChange={(e) => handleVerseChange(idx, 'roman', e.target.value)} rows="2" />
+                  <textarea placeholder="Meaning" value={verse.meaning} onChange={(e) => handleVerseChange(idx, 'meaning', e.target.value)} rows="2" />
                 </div>
               ))}
               <button type="button" className="add-verse-btn" onClick={addVerse}>+ Add Another Verse</button>
@@ -467,38 +452,37 @@ const ManageMantras = () => {
             </div>
             <div className="modal-body">
               <div className="form-row">
-                <input type="text" name="name" placeholder="Mantra Name (Devanagari)" value={formData.name} onChange={handleInputChange} />
+                <input type="text" name="name" placeholder="Mantra Name (Devanagari) *" value={formData.name} onChange={handleInputChange} />
                 <input type="text" name="name_en" placeholder="Mantra Name (English)" value={formData.name_en} onChange={handleInputChange} />
               </div>
+              
+              <input type="text" name="title" placeholder="Title" value={formData.title} onChange={handleInputChange} />
+              <input type="text" name="subtitle" placeholder="Subtitle" value={formData.subtitle} onChange={handleInputChange} />
+              <textarea name="largeText" placeholder="Mantra Text" rows="4" value={formData.largeText} onChange={handleInputChange}></textarea>
+              
               <div className="form-row">
                 <select name="deity" value={formData.deity} onChange={handleInputChange}>
-                  {categories.map(cat => (
-                    <option key={cat.id} value={cat.name}>{cat.name}</option>
-                  ))}
+                  {categories.map(c => <option key={c.id} value={c.name}>{c.name}</option>)}
                 </select>
                 <select name="language" value={formData.language} onChange={handleInputChange}>
                   <option>Sanskrit</option><option>Hindi</option><option>English</option>
                 </select>
               </div>
               <input type="text" name="occasion" placeholder="Occasion" value={formData.occasion} onChange={handleInputChange} />
-              <textarea name="purpose" placeholder="Purpose / Benefits" rows="3" value={formData.purpose} onChange={handleInputChange}></textarea>
               
-              <div className="file-uploads">
-                <DropZone type="image" label="Image" preview={imagePreview} fileName={audioFileName} onDrop={handleDrop} onDragOver={handleDragOver} onClick={() => triggerFileInput('image')} />
-                <DropZone type="audio" label="Audio" preview={formData.audioUrl} fileName={audioFileName} onDrop={handleDrop} onDragOver={handleDragOver} onClick={() => triggerFileInput('audio')} />
-                <DropZone type="pdf" label="PDF" preview={formData.pdfUrl} fileName={pdfFileName} onDrop={handleDrop} onDragOver={handleDragOver} onClick={() => triggerFileInput('pdf')} />
-              </div>
+              <label>Image (Optional):</label>
+              <ImageDropZone />
 
               <label>Verses:</label>
-              {formData.verses.map((verse, index) => (
-                <div key={index} className="verse-group">
+              {formData.verses.map((verse, idx) => (
+                <div key={idx} className="verse-group">
                   <div className="verse-header">
-                    <span>Verse {index + 1}</span>
-                    {index > 0 && <button type="button" className="remove-verse" onClick={() => removeVerse(index)}>✕</button>}
+                    <span>Verse {idx + 1}</span>
+                    {idx > 0 && <button type="button" className="remove-verse" onClick={() => removeVerse(idx)}>✕</button>}
                   </div>
-                  <textarea placeholder="Devanagari text" value={verse.dev} onChange={(e) => handleVerseChange(index, 'dev', e.target.value)} rows="2" />
-                  <textarea placeholder="Transliteration" value={verse.roman} onChange={(e) => handleVerseChange(index, 'roman', e.target.value)} rows="2" />
-                  <textarea placeholder="Meaning" value={verse.meaning} onChange={(e) => handleVerseChange(index, 'meaning', e.target.value)} rows="2" />
+                  <textarea placeholder="Devanagari text" value={verse.dev} onChange={(e) => handleVerseChange(idx, 'dev', e.target.value)} rows="2" />
+                  <textarea placeholder="Transliteration" value={verse.roman} onChange={(e) => handleVerseChange(idx, 'roman', e.target.value)} rows="2" />
+                  <textarea placeholder="Meaning" value={verse.meaning} onChange={(e) => handleVerseChange(idx, 'meaning', e.target.value)} rows="2" />
                 </div>
               ))}
               <button type="button" className="add-verse-btn" onClick={addVerse}>+ Add Verse</button>
@@ -525,7 +509,7 @@ const ManageMantras = () => {
               <button className="modal-close" onClick={() => setShowDeleteModal(false)}>✕</button>
             </div>
             <div className="modal-body">
-              <p>Are you sure you want to delete <strong>{selectedMantra.name}</strong>?</p>
+              <p>Delete <strong>{selectedMantra.name}</strong>?</p>
               <p className="warning">This action cannot be undone!</p>
             </div>
             <div className="modal-footer">

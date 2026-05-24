@@ -15,7 +15,7 @@ import Login from './features/auth/Login';
 import Register from './features/auth/Register';
 import AdminDashboard from './features/admin/AdminDashboard';
 import UserDashboard from './pages/UserDashboard';
-import MantrasByDeity from './pages/MantrasByDeity';
+import MantrasByDeity from './components/cards/MantrasByDeity';
 import './styles/globals.css';
 import './styles/animations.css';
 

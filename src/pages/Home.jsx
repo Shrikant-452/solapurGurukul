@@ -1,16 +1,12 @@
+// pages/Home.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import MantraCard from '../components/cards/MantraCard';
-import PopularMantras from '../pages/PopularMantras';
+import PopularMantras from '../components/cards/PopularMantras';
 import './Home.css';
 
 const Home = () => {
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [mantras, setMantras] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedDeity, setSelectedDeity] = useState('all');
-  const [loading, setLoading] = useState(true);
   const [sliderImages, setSliderImages] = useState([]);
   const [heroBgImage, setHeroBgImage] = useState('');
   const [isAdminMode, setIsAdminMode] = useState(false);
@@ -19,14 +15,11 @@ const Home = () => {
   useEffect(() => {
     loadHeroImages();
     loadHeroBgImage();
-    loadMantras();
     
-    window.addEventListener('mantrasUpdated', loadMantras);
     window.addEventListener('heroImagesUpdated', loadHeroImages);
     window.addEventListener('heroBgUpdated', loadHeroBgImage);
     
     return () => {
-      window.removeEventListener('mantrasUpdated', loadMantras);
       window.removeEventListener('heroImagesUpdated', loadHeroImages);
       window.removeEventListener('heroBgUpdated', loadHeroBgImage);
     };
@@ -53,40 +46,6 @@ const Home = () => {
     else setHeroBgImage('');
   };
 
-  const loadMantras = () => {
-    const savedMantras = localStorage.getItem('admin_mantras');
-    if (savedMantras) {
-      const parsed = JSON.parse(savedMantras);
-      const published = parsed.filter(m => m.status === 'published');
-      const normalized = published.map(m => ({
-        ...m,
-        verse: m.verse || (m.verses && m.verses[0]?.dev) || "ॐ नमः शिवाय",
-      }));
-      setMantras(normalized);
-    } else {
-      const defaultMantras = [
-        { id: 1, name: "श्री गणेश स्तोत्रम्", tag: "Popular", deity: "Ganesha", language: "Sanskrit", occasion: "Daily", purpose: "Removal of obstacles", verse: "वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ।\nनिर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा॥", status: "published", color: "#c85a00", views: 1247, icon: "🐘" },
-        { id: 2, name: "महालक्ष्मी अष्टकम्", tag: "Ashtakam", deity: "Lakshmi", language: "Sanskrit", occasion: "Friday Puja", purpose: "Wealth and prosperity", verse: "नमस्तेऽस्तु महामाये श्रीपीठे सुरपूजिते।\nशङ्खचक्रगदाहस्ते महालक्ष्मि नमोऽस्तु ते॥", status: "published", color: "#e06b10", views: 987, icon: "🪷" },
-        { id: 3, name: "शिव पञ्चाक्षर स्तोत्रम्", tag: "Panchakshara", deity: "Shiva", language: "Sanskrit", occasion: "Shivaratri, Monday", purpose: "Inner peace, liberation", verse: "नागेन्द्रहाराय त्रिलोचनाय भस्माङ्गरागाय महेश्वराय।\nनित्याय शुद्धाय दिगम्बराय तस्मै नकाराय नमः शिवाय॥", status: "published", color: "#0a5a50", views: 2341, icon: "🕉️" },
-        { id: 4, name: "हनुमान चालीसा", tag: "Chalisa", deity: "Hanuman", language: "Hindi", occasion: "Tuesday, Saturday", purpose: "Strength and courage", verse: "श्रीगुरु चरण सरोज रज निज मन मुकुर सुधारि।\nबरनउँ रघुबर बिमल जसु जो दायकु फल चारि॥", status: "published", color: "#f59040", views: 876, icon: "🙏" },
-        { id: 5, name: "विष्णु सहस्रनामम्", tag: "Sahasranam", deity: "Vishnu", language: "Sanskrit", occasion: "Ekadashi, Sunday", purpose: "Protection, moksha", verse: "विश्वं विष्णुर्वषट्कारो भूतभव्यभवत्प्रभुः।\nभूतकृद्भूतभृद्भावो भूतात्मा भूतभावनः॥", status: "published", color: "#4a2878", views: 1892, icon: "🌊" },
-        { id: 6, name: "दुर्गा सप्तशती", tag: "Navratri", deity: "Durga", language: "Sanskrit", occasion: "Navratri", purpose: "Victory over evil", verse: "अयि गिरिनन्दिनि नन्दितमेदिनि विश्वविनोदिनि नन्दनुते।\nगिरिवरविन्ध्यशिरोऽधिनिवासिनि विष्णुविलासिनि जिष्णुनुते॥", status: "published", color: "#7a1818", views: 1567, icon: "⚔️" }
-      ];
-      setMantras(defaultMantras);
-      localStorage.setItem('admin_mantras', JSON.stringify(defaultMantras));
-    }
-    setLoading(false);
-  };
-
-  const filteredMantras = mantras.filter(m => {
-    const matchesSearch = searchTerm === '' || 
-      m.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-      m.deity.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (m.purpose && m.purpose.toLowerCase().includes(searchTerm.toLowerCase()));
-    const matchesDeity = selectedDeity === 'all' || m.deity === selectedDeity;
-    return matchesSearch && matchesDeity;
-  });
-
   useEffect(() => {
     if (sliderImages.length > 0) {
       const interval = setInterval(() => {
@@ -97,9 +56,6 @@ const Home = () => {
   }, [sliderImages.length]);
 
   const goToSlide = (index) => setCurrentSlide(index);
-  const deities = ['all', ...new Set(mantras.map(m => m.deity))];
-  
-  const handleMantraClick = (mantra) => navigate(`/mantra/${mantra.id}`, { state: { mantra } });
 
   useEffect(() => {
     const handleKeyPress = (e) => { if (e.key === 'a' || e.key === 'A') setIsAdminMode(prev => !prev); };
@@ -141,14 +97,13 @@ const Home = () => {
     window.dispatchEvent(new Event('heroBgUpdated'));
   };
 
-  // Reliable placeholder image function (no external request)
   const handleImageError = (e) => {
     e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"%3E%3Crect width="400" height="400" fill="%23e8dcc0"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="%236b4c2c" font-family="Arial,sans-serif" font-size="16"%3ENo Image%3C/text%3E%3C/svg%3E';
   };
 
   return (
     <div className="spiritual-dashboard">
-      {/* Hero Section - FIXED: No background shorthand mixing */}
+      {/* Hero Section */}
       <section 
         className="hero-section"
         style={{
@@ -160,57 +115,28 @@ const Home = () => {
       >
         <div className="hero-pattern"></div>
         
-        {/* Admin Controls - Only visible in admin mode */}
         {isAdminMode && (
           <div className="admin-controls">
             <div className="admin-panel">
               <h3>Admin Controls - Hero Section</h3>
-              
-              {/* Background Image Control */}
               <div className="admin-bg-control">
                 <label>Hero Background Image URL:</label>
                 <div className="admin-input-group">
-                  <input 
-                    type="text" 
-                    placeholder="Enter background image URL"
-                    value={heroBgImage}
-                    onChange={(e) => updateHeroBg(e.target.value)}
-                  />
+                  <input type="text" placeholder="Enter background image URL" value={heroBgImage} onChange={(e) => updateHeroBg(e.target.value)} />
                   <button onClick={removeHeroBg} className="admin-btn-remove">Remove BG</button>
                 </div>
               </div>
-
-              {/* Slider Images Control */}
               <div className="admin-slider-control">
                 <h4>Slider Images</h4>
                 {sliderImages.map((img, index) => (
                   <div key={index} className="admin-image-item">
                     <div className="admin-image-preview">
-                      {img.url ? (
-                        <img src={img.url} alt={img.name} style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '8px' }} onError={handleImageError} />
-                      ) : (
-                        <div style={{ width: '60px', height: '60px', background: '#ccc', borderRadius: '8px' }}></div>
-                      )}
+                      {img.url ? <img src={img.url} alt={img.name} style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '8px' }} onError={handleImageError} /> : <div style={{ width: '60px', height: '60px', background: '#ccc', borderRadius: '8px' }}></div>}
                     </div>
                     <div className="admin-image-fields">
-                      <input 
-                        type="text" 
-                        placeholder="Image URL"
-                        value={img.url}
-                        onChange={(e) => updateHeroImage(index, 'url', e.target.value)}
-                      />
-                      <input 
-                        type="text" 
-                        placeholder="Name"
-                        value={img.name}
-                        onChange={(e) => updateHeroImage(index, 'name', e.target.value)}
-                      />
-                      <input 
-                        type="text" 
-                        placeholder="Description"
-                        value={img.description}
-                        onChange={(e) => updateHeroImage(index, 'description', e.target.value)}
-                      />
+                      <input type="text" placeholder="Image URL" value={img.url} onChange={(e) => updateHeroImage(index, 'url', e.target.value)} />
+                      <input type="text" placeholder="Name" value={img.name} onChange={(e) => updateHeroImage(index, 'name', e.target.value)} />
+                      <input type="text" placeholder="Description" value={img.description} onChange={(e) => updateHeroImage(index, 'description', e.target.value)} />
                     </div>
                     <button onClick={() => removeHeroImage(index)} className="admin-btn-remove">Remove</button>
                   </div>
@@ -221,7 +147,6 @@ const Home = () => {
           </div>
         )}
 
-        {/* Admin Mode Indicator */}
         {isAdminMode && (
           <div className="admin-mode-indicator">
             <span>🔧 Admin Mode Active - Press 'A' to exit</span>
@@ -250,15 +175,7 @@ const Home = () => {
                 <div className="image-container">
                   {sliderImages.map((image, index) => (
                     <div key={index} className={`slide-image ${currentSlide === index ? 'active' : ''}`}>
-                      {image.url ? (
-                        <img 
-                          src={image.url} 
-                          alt={image.name} 
-                          onError={handleImageError}
-                        />
-                      ) : (
-                        <div className="image-placeholder">No Image</div>
-                      )}
+                      {image.url ? <img src={image.url} alt={image.name} onError={handleImageError} /> : <div className="image-placeholder">No Image</div>}
                       <div className="image-caption">
                         <h3>{image.name || 'Deity'}</h3>
                         <p>{image.description || 'Sacrament'}</p>
@@ -268,94 +185,12 @@ const Home = () => {
                 </div>
                 <div className="slider-dots">
                   {sliderImages.map((_, index) => (
-                    <button 
-                      key={index} 
-                      className={`dot ${currentSlide === index ? 'active' : ''}`} 
-                      onClick={() => goToSlide(index)}
-                      aria-label={`Go to slide ${index + 1}`}
-                    />
+                    <button key={index} className={`dot ${currentSlide === index ? 'active' : ''}`} onClick={() => goToSlide(index)} aria-label={`Go to slide ${index + 1}`} />
                   ))}
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Library Section */}
-      <section className="library-section">
-        <div className="container">
-          <div className="library-header">
-            <h2 className="library-title">Sacred <span className="title-gold">Library</span></h2>
-            <p className="library-subtitle">Browse the complete collection of Hindu devotional texts</p>
-          </div>
-
-          {/* Search and Filter Section */}
-          <div className="search-filter-section">
-            <div className="search-wrapper">
-              <div className="search-box">
-                <span className="search-icon">🔍</span>
-                <input 
-                  type="text" 
-                  placeholder="Search by stotra name, deity, or purpose..." 
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                {searchTerm && (
-                  <button className="clear-search" onClick={() => setSearchTerm('')}>✕</button>
-                )}
-              </div>
-            </div>
-            
-            <div className="filter-wrapper">
-              <select 
-                className="deity-filter" 
-                value={selectedDeity}
-                onChange={(e) => setSelectedDeity(e.target.value)}
-              >
-                {deities.map(deity => (
-                  <option key={deity} value={deity}>
-                    {deity === 'all' ? 'All Deities' : deity}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          {/* Results Count */}
-          <div className="results-count">
-            Showing {filteredMantras.length} of {mantras.length} stotras
-          </div>
-
-          {/* Mantras Grid */}
-          {loading ? (
-            <div className="loading-mantras">Loading mantras...</div>
-          ) : (
-            <>
-              <div className="mantras-home-grid">
-                {filteredMantras.slice(0, 6).map((mantra) => (
-                  <MantraCard 
-                    key={mantra.id} 
-                    mantra={mantra} 
-                    onClick={handleMantraClick}
-                    variant="default"
-                  />
-                ))}
-              </div>
-
-              {filteredMantras.length === 0 && (
-                <div className="no-mantras-found">
-                  <p>No mantras found. Try a different search.</p>
-                </div>
-              )}
-
-              <div className="view-all-mantras">
-                <button className="btn-primary" onClick={() => navigate('/mantras')}>
-                  View All Mantras →
-                </button>
-              </div>
-            </>
-          )}
         </div>
       </section>
 

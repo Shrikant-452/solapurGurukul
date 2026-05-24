@@ -16,7 +16,6 @@ const Categories = () => {
   });
   const [imagePreview, setImagePreview] = useState('');
 
-  // Predefined color options for categories
   const colorOptions = [
     '#c85a00', '#0a5a50', '#4a2878', '#e06b10', 
     '#7a1818', '#f59040', '#d4aa30', '#1a8070', '#b08820'
@@ -24,13 +23,30 @@ const Categories = () => {
 
   useEffect(() => {
     loadCategories();
+    
+    // Listen for external category updates
+    const handleExternalUpdate = () => {
+      loadCategories();
+    };
+    
+    window.addEventListener('categoriesUpdated', handleExternalUpdate);
+    window.addEventListener('categoriesForceRefresh', handleExternalUpdate);
+    
+    return () => {
+      window.removeEventListener('categoriesUpdated', handleExternalUpdate);
+      window.removeEventListener('categoriesForceRefresh', handleExternalUpdate);
+    };
   }, []);
 
   const loadCategories = () => {
     const saved = localStorage.getItem('categories');
+    console.log('Categories.jsx - Loading categories:', saved);
+    
     if (saved) {
-      setCategories(JSON.parse(saved));
+      const parsed = JSON.parse(saved);
+      setCategories(parsed);
     } else {
+      // Default categories
       const defaultCategories = [
         { id: 1, name: 'Ganesha', description: 'Remover of Obstacles', imageUrl: '🐘', color: '#c85a00', mantraCount: 0 },
         { id: 2, name: 'Lakshmi', description: 'Goddess of Wealth', imageUrl: '🪷', color: '#e06b10', mantraCount: 0 },
@@ -39,14 +55,20 @@ const Categories = () => {
       ];
       setCategories(defaultCategories);
       localStorage.setItem('categories', JSON.stringify(defaultCategories));
+      notifyCategoriesUpdated();
     }
+  };
+
+  const notifyCategoriesUpdated = () => {
+    window.dispatchEvent(new Event('categoriesUpdated'));
+    window.dispatchEvent(new Event('storage'));
+    window.dispatchEvent(new CustomEvent('categoriesForceRefresh', { detail: { timestamp: Date.now() } }));
   };
 
   const saveCategories = (updated) => {
     setCategories(updated);
     localStorage.setItem('categories', JSON.stringify(updated));
-    window.dispatchEvent(new Event('categoriesUpdated'));
-    toast.success('Categories saved!');
+    notifyCategoriesUpdated();
   };
 
   const handleFileUpload = (file) => {
@@ -82,14 +104,21 @@ const Categories = () => {
   };
 
   const handleAddCategory = () => {
-    if (!formData.name) {
+    if (!formData.name.trim()) {
       toast.error('Category name required');
       return;
     }
+    
+    // Check for duplicate name
+    if (categories.some(cat => cat.name.toLowerCase() === formData.name.toLowerCase())) {
+      toast.error('Category with this name already exists');
+      return;
+    }
+    
     const newCategory = {
       id: Date.now(),
-      name: formData.name,
-      description: formData.description,
+      name: formData.name.trim(),
+      description: formData.description.trim(),
       imageUrl: formData.imageUrl || '📁',
       color: formData.color,
       mantraCount: 0
@@ -113,16 +142,23 @@ const Categories = () => {
   };
 
   const handleUpdateCategory = () => {
-    if (!formData.name) {
+    if (!formData.name.trim()) {
       toast.error('Category name required');
       return;
     }
+    
+    // Check for duplicate name (excluding current category)
+    if (categories.some(cat => cat.id !== selectedCategory.id && cat.name.toLowerCase() === formData.name.toLowerCase())) {
+      toast.error('Category with this name already exists');
+      return;
+    }
+    
     const updated = categories.map(cat =>
       cat.id === selectedCategory.id
         ? {
             ...cat,
-            name: formData.name,
-            description: formData.description,
+            name: formData.name.trim(),
+            description: formData.description.trim(),
             imageUrl: formData.imageUrl,
             color: formData.color
           }
@@ -159,33 +195,41 @@ const Categories = () => {
   return (
     <div className="categories-management">
       <div className="categories-header">
-        <h2>📂 Categories & Tags</h2>
-        <p>Manage deities, types and occasions</p>
+        <div>
+          <h2>📂 Categories & Tags</h2>
+          <p>Manage deities, types and occasions</p>
+        </div>
         <button className="btn-primary" onClick={() => setShowAddModal(true)}>+ Add New Category</button>
       </div>
 
       <div className="categories-list">
-        {categories.map(cat => (
-          <div key={cat.id} className="category-item" style={{ borderLeftColor: cat.color }}>
-            <div className="category-icon" style={{ background: `${cat.color}15`, color: cat.color }}>
-              {cat.imageUrl?.startsWith('data:') ? (
-                <img src={cat.imageUrl} alt={cat.name} className="category-img" />
-              ) : (
-                <span className="category-emoji">{cat.imageUrl || '📁'}</span>
-              )}
-            </div>
-            <div className="category-info">
-              <h3>{cat.name}</h3>
-              <p>{cat.description}</p>
-              <span className="category-count">{cat.mantraCount} stotra{cat.mantraCount !== 1 && 's'}</span>
-            </div>
-            <div className="category-actions">
-              <button className="btn-edit" onClick={() => openEditModal(cat)}>EDIT</button>
-              <button className="btn-view" onClick={() => window.location.href = `/mantras/deity/${cat.name.toLowerCase()}`}>VIEW ALL</button>
-              <button className="btn-delete" onClick={() => openDeleteModal(cat)}>🗑️</button>
-            </div>
+        {categories.length === 0 ? (
+          <div className="empty-state">
+            <p>No categories found. Click "Add New Category" to create one.</p>
           </div>
-        ))}
+        ) : (
+          categories.map(cat => (
+            <div key={cat.id} className="category-item" style={{ borderLeftColor: cat.color }}>
+              <div className="category-icon" style={{ background: `${cat.color}15`, color: cat.color }}>
+                {cat.imageUrl?.startsWith('data:') ? (
+                  <img src={cat.imageUrl} alt={cat.name} className="category-img" />
+                ) : (
+                  <span className="category-emoji">{cat.imageUrl || '📁'}</span>
+                )}
+              </div>
+              <div className="category-info">
+                <h3>{cat.name}</h3>
+                <p>{cat.description || 'No description'}</p>
+                <span className="category-count">{cat.mantraCount || 0} stotra{(cat.mantraCount || 0) !== 1 && 's'}</span>
+              </div>
+              <div className="category-actions">
+                <button className="btn-edit" onClick={() => openEditModal(cat)}>EDIT</button>
+                <button className="btn-view" onClick={() => window.location.href = `/mantras/deity/${cat.name.toLowerCase()}`}>VIEW ALL</button>
+                <button className="btn-delete" onClick={() => openDeleteModal(cat)}>🗑️</button>
+              </div>
+            </div>
+          ))
+        )}
       </div>
 
       {/* Add Modal */}
@@ -197,8 +241,18 @@ const Categories = () => {
               <button className="modal-close" onClick={() => setShowAddModal(false)}>✕</button>
             </div>
             <div className="modal-body">
-              <input type="text" placeholder="Category Name" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} />
-              <textarea placeholder="Description" rows="3" value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} />
+              <input 
+                type="text" 
+                placeholder="Category Name *" 
+                value={formData.name} 
+                onChange={(e) => setFormData({...formData, name: e.target.value})} 
+              />
+              <textarea 
+                placeholder="Description" 
+                rows="3" 
+                value={formData.description} 
+                onChange={(e) => setFormData({...formData, description: e.target.value})} 
+              />
               
               <div className="drop-zone" onDrop={handleDrop} onDragOver={(e) => e.preventDefault()} onClick={triggerFileInput}>
                 {imagePreview ? (
@@ -232,7 +286,7 @@ const Categories = () => {
         </div>
       )}
 
-      {/* Edit Modal - same fields */}
+      {/* Edit Modal */}
       {showEditModal && (
         <div className="modal-overlay" onClick={() => setShowEditModal(false)}>
           <div className="modal-content" onClick={e => e.stopPropagation()}>
@@ -241,8 +295,18 @@ const Categories = () => {
               <button className="modal-close" onClick={() => setShowEditModal(false)}>✕</button>
             </div>
             <div className="modal-body">
-              <input type="text" placeholder="Category Name" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} />
-              <textarea placeholder="Description" rows="3" value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} />
+              <input 
+                type="text" 
+                placeholder="Category Name *" 
+                value={formData.name} 
+                onChange={(e) => setFormData({...formData, name: e.target.value})} 
+              />
+              <textarea 
+                placeholder="Description" 
+                rows="3" 
+                value={formData.description} 
+                onChange={(e) => setFormData({...formData, description: e.target.value})} 
+              />
               
               <div className="drop-zone" onDrop={handleDrop} onDragOver={(e) => e.preventDefault()} onClick={triggerFileInput}>
                 {imagePreview ? (

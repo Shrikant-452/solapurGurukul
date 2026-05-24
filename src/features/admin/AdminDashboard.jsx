@@ -26,19 +26,51 @@ const AdminDashboard = () => {
     loadMantras();
     loadCategories();
     loadActivityLog();
+    
+    // Listen for updates
+    const handleMantrasUpdate = () => {
+      loadMantras();
+    };
+    
+    const handleCategoriesUpdate = () => {
+      loadCategories();
+    };
+    
+    const handleForceRefresh = () => {
+      loadCategories();
+      loadMantras();
+    };
+    
+    window.addEventListener('mantrasUpdated', handleMantrasUpdate);
+    window.addEventListener('categoriesUpdated', handleCategoriesUpdate);
+    window.addEventListener('categoriesForceRefresh', handleForceRefresh);
+    
+    return () => {
+      window.removeEventListener('mantrasUpdated', handleMantrasUpdate);
+      window.removeEventListener('categoriesUpdated', handleCategoriesUpdate);
+      window.removeEventListener('categoriesForceRefresh', handleForceRefresh);
+    };
   }, []);
 
   const loadMantras = () => {
     const saved = localStorage.getItem('admin_mantras');
-    if (saved) setMantras(JSON.parse(saved));
-    else setMantras([]);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      setMantras(parsed);
+    } else {
+      setMantras([]);
+    }
     calculateMediaFiles();
   };
 
   const loadCategories = () => {
     const saved = localStorage.getItem('categories');
-    if (saved) setCategories(JSON.parse(saved));
-    else setCategories([]);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      setCategories(parsed);
+    } else {
+      setCategories([]);
+    }
   };
 
   const loadActivityLog = () => {
@@ -76,11 +108,11 @@ const AdminDashboard = () => {
 
   // Mantras by type (tag)
   const typeCounts = {
-    'Stotram': mantras.filter(m => m.tag === 'Stotram' || m.name.includes('स्तोत्र')).length,
-    'Aṣṭakam': mantras.filter(m => m.tag === 'Ashtakam' || m.name.includes('अष्टक')).length,
-    'Sahasranāma': mantras.filter(m => m.tag === 'Sahasranam' || m.name.includes('सहस्रनाम')).length,
-    'Cālīsā': mantras.filter(m => m.tag === 'Chalisa' || m.name.includes('चालीसा')).length,
-    'Other': mantras.filter(m => !m.tag && !m.name.includes('स्तोत्र') && !m.name.includes('अष्टक') && !m.name.includes('सहस्रनाम') && !m.name.includes('चालीसा')).length
+    'Stotram': mantras.filter(m => m.tag === 'Stotram' || m.name?.includes('स्तोत्र')).length,
+    'Aṣṭakam': mantras.filter(m => m.tag === 'Ashtakam' || m.name?.includes('अष्टक')).length,
+    'Sahasranāma': mantras.filter(m => m.tag === 'Sahasranam' || m.name?.includes('सहस्रनाम')).length,
+    'Cālīsā': mantras.filter(m => m.tag === 'Chalisa' || m.name?.includes('चालीसा')).length,
+    'Other': mantras.filter(m => !m.tag && !m.name?.includes('स्तोत्र') && !m.name?.includes('अष्टक') && !m.name?.includes('सहस्रनाम') && !m.name?.includes('चालीसा')).length
   };
 
   // Quick stats – Sanskrit stotras
@@ -158,19 +190,22 @@ const AdminDashboard = () => {
                 <div className="dashboard-card">
                   <h3>📿 Stotras by Deity</h3>
                   <div className="deity-list">
-                    {deityCounts.map(d => (
-                      <div key={d.name} className="deity-item">
-                        <div className="deity-icon" style={{ background: `${d.color}15`, color: d.color }}>{d.icon}</div>
-                        <div className="deity-info">
-                          <span className="deity-name">{d.name}</span>
-                          <div className="deity-bar">
-                            <div className="deity-bar-fill" style={{ width: `${(d.count / totalMantras) * 100}%`, background: d.color }}></div>
+                    {deityCounts.length > 0 ? (
+                      deityCounts.map(d => (
+                        <div key={d.name} className="deity-item">
+                          <div className="deity-icon" style={{ background: `${d.color}15`, color: d.color }}>{d.icon}</div>
+                          <div className="deity-info">
+                            <span className="deity-name">{d.name}</span>
+                            <div className="deity-bar">
+                              <div className="deity-bar-fill" style={{ width: `${(d.count / totalMantras) * 100}%`, background: d.color }}></div>
+                            </div>
+                            <span className="deity-count">{d.count} stotra{d.count !== 1 && 's'}</span>
                           </div>
-                          <span className="deity-count">{d.count} stotra{d.count !== 1 && 's'}</span>
                         </div>
-                      </div>
-                    ))}
-                    {deityCounts.length === 0 && <p className="empty-text">No mantras assigned yet. Add categories and mantras.</p>}
+                      ))
+                    ) : (
+                      <p className="empty-text">No mantras assigned yet. Add categories and mantras.</p>
+                    )}
                   </div>
                 </div>
 
@@ -233,7 +268,7 @@ const AdminDashboard = () => {
             </>
           )}
 
-          {activeTab === 'categories' && <Categories />}
+          {activeTab === 'categories' && <Categories key={activeTab} />}
           {activeTab === 'mantras' && <ManageMantras />}
           {activeTab === 'hero' && <HeroManagement />}
           {activeTab === 'users' && <UserManagement />}

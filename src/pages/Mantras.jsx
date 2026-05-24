@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import MantraCard from '../components/cards/MantraCard';
-import MantrasByDeity from './MantrasByDeity';
+import MantrasByDeity from "../components/cards/MantrasByDeity";
+import LibrarySection from '../components/cards/LibrarySection';
 import './Mantras.css';
 
 const Mantras = () => {
@@ -10,7 +11,6 @@ const Mantras = () => {
   const { deityName } = useParams();
   const [selectedDeity, setSelectedDeity] = useState(null);
   const [filteredMantras, setFilteredMantras] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
   const [mantras, setMantras] = useState([]);
@@ -19,8 +19,13 @@ const Mantras = () => {
   useEffect(() => {
     loadMantras();
     loadCategories();
-    window.addEventListener('mantrasUpdated', loadMantras);
+    
+    window.addEventListener('mantrasUpdated', () => {
+      loadMantras();
+      loadCategories();
+    });
     window.addEventListener('categoriesUpdated', loadCategories);
+    
     return () => {
       window.removeEventListener('mantrasUpdated', loadMantras);
       window.removeEventListener('categoriesUpdated', loadCategories);
@@ -29,16 +34,18 @@ const Mantras = () => {
 
   const loadMantras = () => {
     const saved = localStorage.getItem('admin_mantras');
+    
     if (saved) {
       const all = JSON.parse(saved);
       const published = all.filter(m => m.status === 'published');
       const sorted = published.sort((a, b) => b.id - a.id);
       setMantras(sorted);
+      console.log('Mantras loaded:', sorted.length);
     } else {
       const defaultMantras = [
-        { id: 1, name: "श्री गणेश स्तोत्रम्", deity: "Ganesha", language: "Sanskrit", occasion: "Daily", purpose: "Removal of obstacles", verse: "वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ।\nनिर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा॥", status: "published", color: "#c85a00", views: 1247, icon: "🐘", imageUrl: null },
-        { id: 2, name: "ॐ नमः शिवाय", deity: "Shiva", language: "Sanskrit", occasion: "Daily", purpose: "Inner peace", verse: "ॐ नमः शिवाय", status: "published", color: "#0a5a50", views: 2341, icon: "🕉️", imageUrl: null },
-        { id: 3, name: "महालक्ष्मी अष्टकम्", deity: "Lakshmi", language: "Sanskrit", occasion: "Friday", purpose: "Wealth and prosperity", verse: "नमस्तेऽस्तु महामाये श्रीपीठे सुरपूजिते", status: "published", color: "#e06b10", views: 987, icon: "🪷", imageUrl: null }
+        { id: 1, name: "श्री गणेश स्तोत्रम्", name_en: "Shri Ganesh Stotram", deity: "Ganesha", language: "Sanskrit", occasion: "Daily", verses: [{ dev: "वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ।\nनिर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा॥" }], status: "published", color: "#c85a00", views: 1247, imageUrl: "" },
+        { id: 2, name: "ॐ नमः शिवाय", name_en: "Om Namah Shivaya", deity: "Shiva", language: "Sanskrit", occasion: "Daily", verses: [{ dev: "ॐ नमः शिवाय" }], status: "published", color: "#0a5a50", views: 2341, imageUrl: "" },
+        { id: 3, name: "महालक्ष्मी अष्टकम्", name_en: "Mahalakshmi Ashtakam", deity: "Lakshmi", language: "Sanskrit", occasion: "Friday", verses: [{ dev: "नमस्तेऽस्तु महामाये श्रीपीठे सुरपूजिते" }], status: "published", color: "#e06b10", views: 987, imageUrl: "" }
       ];
       setMantras(defaultMantras);
       localStorage.setItem('admin_mantras', JSON.stringify(defaultMantras));
@@ -52,20 +59,16 @@ const Mantras = () => {
       setCategories(JSON.parse(saved));
     } else {
       const defaultCategories = [
-        { id: 1, name: "Ganesha", icon: "🐘", imageUrl: null, color: "#c85a00", description: "Remover of Obstacles" },
-        { id: 2, name: "Shiva", icon: "🕉️", imageUrl: null, color: "#0a5a50", description: "The Destroyer of Evil" },
-        { id: 3, name: "Vishnu", icon: "🌊", imageUrl: null, color: "#4a2878", description: "The Preserver" },
-        { id: 4, name: "Lakshmi", icon: "🪷", imageUrl: null, color: "#e06b10", description: "Goddess of Wealth" },
-        { id: 5, name: "Durga", icon: "⚔️", imageUrl: null, color: "#7a1818", description: "The Warrior Goddess" },
-        { id: 6, name: "Hanuman", icon: "🙏", imageUrl: null, color: "#f59040", description: "The Devotee" },
-        { id: 7, name: "Saraswati", icon: "📖", imageUrl: null, color: "#d4aa30", description: "Goddess of Knowledge" }
+        { id: 1, name: "Ganesha", icon: "🐘", color: "#c85a00", description: "Remover of Obstacles" },
+        { id: 2, name: "Shiva", icon: "🕉️", color: "#0a5a50", description: "The Destroyer of Evil" },
+        { id: 3, name: "Lakshmi", icon: "🪷", color: "#e06b10", description: "Goddess of Wealth" }
       ];
       setCategories(defaultCategories);
       localStorage.setItem('categories', JSON.stringify(defaultCategories));
     }
   };
 
-  // Get category icon (prefer imageUrl over icon)
+  // Get category icon
   const getCategoryIcon = (cat) => {
     if (cat.imageUrl && (cat.imageUrl.startsWith('data:') || cat.imageUrl.startsWith('http'))) {
       return cat.imageUrl;
@@ -73,7 +76,7 @@ const Mantras = () => {
     return cat.icon || '📿';
   };
 
-  // Build deities from categories with proper image handling
+  // Build deities from categories
   const deities = categories.map(cat => ({
     name: cat.name,
     icon: getCategoryIcon(cat),
@@ -105,10 +108,10 @@ const Mantras = () => {
   }, [deityName, categories, loading]);
 
   const filterByDeity = (deity) => {
-    setSelectedDeity(deity);
+    // Filter mantras by selected deity
     const filtered = mantras.filter(m => m.deity === deity && m.status === 'published');
+    setSelectedDeity(deity);
     setFilteredMantras(filtered);
-    setSearchTerm('');
     navigate(`/mantras/deity/${deity.toLowerCase()}`, { replace: true });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -116,13 +119,7 @@ const Mantras = () => {
   const clearDeityFilter = () => {
     setSelectedDeity(null);
     setFilteredMantras([]);
-    setSearchTerm('');
     navigate('/mantras', { replace: true });
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const handleMantraClick = (mantra) => {
-    navigate(`/mantra/${mantra.id}`, { state: { mantra } });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -151,16 +148,26 @@ const Mantras = () => {
     );
   }
 
-  // Otherwise show the deity grid
+  // Otherwise show the main page
   return (
     <div className="mantras-page-full">
       <div className="container">
-        <div className="mantras-page-header">
+        
+        {/* ॐ Logo - Centered */}
+        <div style={{ textAlign: 'center' }}>
           <div className="mantras-page-om">ॐ</div>
+        </div>
+
+        {/* Library Section */}
+        <LibrarySection mantras={mantras} loading={loading} showViewAll={false} />
+
+        {/* Heading */}
+        <div className="mantras-page-header">
           <h1 className="mantras-page-title">Mantras by <span className="title-gold">Deity</span></h1>
           <p className="mantras-page-subtitle">Browse powerful mantras by deity and tradition</p>
         </div>
 
+        {/* Deities Grid */}
         <div className="deities-grid">
           {deities.map((deity, index) => (
             <div 

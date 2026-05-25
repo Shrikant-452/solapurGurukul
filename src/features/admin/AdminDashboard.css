@@ -1,9 +1,15 @@
-/* AdminDashboard.css - Responsive & Modern */
+/* AdminDashboard.css - Responsive & Modern - FULLY FIXED */
+
+* {
+  box-sizing: border-box;
+}
 
 .admin-dashboard {
   display: flex;
   min-height: 100vh;
   background: linear-gradient(145deg, #fef9f0 0%, #fff5e6 100%);
+  overflow-x: hidden;
+  width: 100%;
 }
 
 /* Sidebar */
@@ -177,10 +183,14 @@
   flex: 1;
   margin-left: 260px;
   transition: margin-left 0.3s;
+  width: calc(100% - 260px);
+  overflow-x: hidden;
 }
 
+.admin-sidebar.collapsed ~ .admin-main,
 .admin-sidebar.collapsed + .admin-main {
   margin-left: 70px;
+  width: calc(100% - 70px);
 }
 
 .admin-header {
@@ -194,6 +204,8 @@
   position: sticky;
   top: 0;
   z-index: 50;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .admin-header h1 {
@@ -239,6 +251,9 @@
 
 .admin-content {
   padding: 30px;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 /* Stats Cards */
@@ -290,7 +305,7 @@
 .stat-change.up { color: #0a5a50; }
 .stat-change.down { color: #7a1818; }
 
-/* ========== NEW DASHBOARD COMPONENT STYLES ========== */
+/* Dashboard Two Columns */
 .dashboard-two-columns {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -316,7 +331,7 @@
   border-bottom: 1px solid #e8dcc2;
 }
 
-/* Deity list with progress bars */
+/* Deity list */
 .deity-list {
   display: flex;
   flex-direction: column;
@@ -327,6 +342,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  flex-wrap: wrap;
 }
 
 .deity-icon {
@@ -345,6 +361,7 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+  min-width: 120px;
 }
 
 .deity-name {
@@ -371,7 +388,6 @@
   color: #9a7850;
 }
 
-/* Type list (Stotram, Ashtakam, etc.) */
 .type-list {
   display: flex;
   flex-direction: column;
@@ -384,6 +400,8 @@
   align-items: center;
   padding: 8px 0;
   border-bottom: 1px solid #e8dcc2;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .type-name {
@@ -416,6 +434,7 @@
   padding: 8px 0;
   border-bottom: 1px solid #f0e6d8;
   font-size: 0.85rem;
+  flex-wrap: wrap;
 }
 
 .activity-icon {
@@ -446,6 +465,7 @@
   padding: 12px;
   background: #fcf8f0;
   border-radius: 16px;
+  flex-wrap: wrap;
 }
 
 .quick-icon {
@@ -457,6 +477,8 @@
   display: flex;
   justify-content: space-between;
   align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .quick-label {
@@ -476,9 +498,40 @@
   padding: 20px;
 }
 
-/* ========== END NEW STYLES ========== */
+/* ============================================ */
+/* FIXES FOR MANAGE MANTRAS & USERS */
+/* ============================================ */
 
-/* Mobile Responsive */
+.admin-content .manage-mantras,
+.admin-content .user-management {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  padding: 0;
+}
+
+.admin-content .table-container,
+.admin-content .users-table-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.admin-content table {
+  width: 100%;
+  min-width: 550px;
+}
+
+.admin-content th,
+.admin-content td {
+  padding: 12px 10px;
+  font-size: 0.8rem;
+}
+
+/* ============================================ */
+/* MOBILE RESPONSIVE */
+/* ============================================ */
+
 .mobile-menu-toggle {
   display: none;
   position: fixed;
@@ -505,6 +558,21 @@
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
   z-index: 99;
+}
+
+/* Tablet and Mobile */
+@media (max-width: 1024px) {
+  .admin-header h1 {
+    font-size: 20px;
+  }
+  
+  .admin-content {
+    padding: 20px;
+  }
+  
+  .stats-grid {
+    gap: 16px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -537,6 +605,7 @@
   
   .admin-main {
     margin-left: 0 !important;
+    width: 100% !important;
   }
   
   .mobile-overlay.show {
@@ -545,11 +614,12 @@
   
   .stats-grid {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 12px;
   }
   
   .dashboard-two-columns {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
   
   .admin-header {
@@ -557,7 +627,7 @@
   }
   
   .admin-header h1 {
-    font-size: 18px;
+    font-size: 16px;
   }
   
   .back-button {
@@ -565,7 +635,166 @@
   }
   
   .admin-content {
-    padding: 16px;
+    padding: 12px;
+  }
+  
+  /* Table fixes */
+  .admin-content .table-container,
+  .admin-content .users-table-container {
+    overflow-x: auto;
+  }
+  
+  .admin-content table {
+    min-width: 500px;
+  }
+  
+  .admin-content th,
+  .admin-content td {
+    padding: 8px 6px;
+    font-size: 0.7rem;
+  }
+  
+  /* Card fixes */
+  .stat-card {
+    padding: 12px;
+  }
+  
+  .stat-number {
+    font-size: 24px;
+  }
+  
+  .stat-icon {
+    font-size: 24px;
+  }
+  
+  .dashboard-card {
+    padding: 12px;
+  }
+  
+  .dashboard-card h3 {
+    font-size: 1rem;
+  }
+  
+  .deity-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
+  
+  .deity-name {
+    font-size: 0.75rem;
+  }
+  
+  .quick-stat {
+    padding: 8px;
+  }
+  
+  .quick-icon {
+    font-size: 1.2rem;
+  }
+  
+  .quick-value {
+    font-size: 1.1rem;
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  .admin-content {
+    padding: 8px;
+  }
+  
+  .admin-content .manage-mantras,
+  .admin-content .user-management {
+    padding: 0;
+  }
+  
+  .admin-content table {
+    min-width: 450px;
+  }
+  
+  .admin-content th,
+  .admin-content td {
+    padding: 6px 4px;
+    font-size: 0.65rem;
+  }
+  
+  .stat-card {
+    padding: 10px;
+  }
+  
+  .stat-number {
+    font-size: 20px;
+  }
+  
+  .stat-label {
+    font-size: 11px;
+  }
+  
+  .dashboard-card {
+    padding: 10px;
+  }
+  
+  .type-item {
+    font-size: 0.7rem;
+  }
+  
+  .type-count {
+    font-size: 0.65rem;
+    padding: 2px 6px;
+  }
+  
+  .activity-item {
+    font-size: 0.7rem;
+  }
+  
+  .quick-label {
+    font-size: 0.7rem;
+  }
+  
+  .user-avatar-small {
+    width: 28px;
+    height: 28px;
+    font-size: 0.7rem;
+  }
+}
+
+/* Landscape mode on phones */
+@media (max-height: 500px) and (orientation: landscape) {
+  .admin-sidebar {
+    transform: translateX(-100%);
+  }
+  
+  .admin-sidebar.mobile-open {
+    transform: translateX(0);
+  }
+  
+  .admin-header {
+    padding: 8px 16px;
+  }
+  
+  .admin-content {
+    padding: 8px;
+  }
+}
+
+/* Touch devices - larger tap targets */
+@media (hover: none) and (pointer: coarse) {
+  .nav-item,
+  .logout-btn,
+  .back-to-site-btn,
+  .sidebar-toggle,
+  .mobile-menu-toggle,
+  .back-button {
+    min-height: 44px;
+  }
+  
+  .action-btn,
+  .btn-primary,
+  .btn-outline,
+  .btn-danger,
+  .btn-outline-small {
+    min-height: 44px;
   }
 }
 

@@ -1,0 +1,174 @@
+/* UserManagement.css - Complete Responsive */
+
+.user-management {
+  width: 100%;
+  padding: 16px;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.users-table-container {
+  width: 100%;
+  overflow-x: auto;
+  background: rgba(255, 249, 240, 0.8);
+  border-radius: 16px;
+  border: 1px solid #e8dcc2;
+  -webkit-overflow-scrolling: touch;
+}
+
+.user-management table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 500px;
+}
+
+.user-management th,
+.user-management td {
+  padding: 12px 10px;
+  text-align: left;
+  border-bottom: 1px solid #e8dcc2;
+}
+
+.user-management th {
+  color: #c85a00;
+  font-size: 0.8rem;
+  background: #fff9f0;
+  position: sticky;
+  top: 0;
+}
+
+.user-management td {
+  font-size: 0.8rem;
+  color: #2c1c0e;
+}
+
+.user-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-avatar-small {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, #c85a00, #e06b10);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.role-badge {
+  padding: 4px 10px;
+  border-radius: 30px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.role-badge.admin {
+  background: rgba(200, 90, 0, 0.15);
+  color: #c85a00;
+}
+
+.role-badge.user {
+  background: rgba(10, 90, 80, 0.15);
+  color: #0a5a50;
+}
+
+.btn-outline-small {
+  background: transparent;
+  border: 1px solid #c85a00;
+  color: #c85a00;
+  padding: 6px 12px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 0.7rem;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.btn-outline-small:hover {
+  background: #c85a00;
+  color: white;
+}
+
+/* ============================================ */
+/* RESPONSIVE FIXES */
+/* ============================================ */
+
+@media (max-width: 768px) {
+  .user-management {
+    padding: 12px;
+  }
+  
+  .users-table-container {
+    border-radius: 12px;
+  }
+  
+  .user-management th,
+  .user-management td {
+    padding: 10px 8px;
+    font-size: 0.7rem;
+  }
+  
+  .user-avatar-small {
+    width: 28px;
+    height: 28px;
+    font-size: 0.7rem;
+  }
+  
+  .btn-outline-small {
+    padding: 5px 10px;
+    font-size: 0.65rem;
+  }
+  
+  .role-badge {
+    font-size: 0.65rem;
+    padding: 3px 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .user-management {
+    padding: 10px;
+  }
+  
+  .user-management th,
+  .user-management td {
+    padding: 8px 6px;
+    font-size: 0.65rem;
+  }
+  
+  .user-cell {
+    gap: 6px;
+  }
+  
+  .user-avatar-small {
+    width: 24px;
+    height: 24px;
+    font-size: 0.6rem;
+  }
+  
+  .btn-outline-small {
+    padding: 4px 8px;
+    font-size: 0.6rem;
+  }
+  
+  .role-badge {
+    font-size: 0.6rem;
+    padding: 2px 6px;
+  }
+}
+
+/* Touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .btn-outline-small {
+    min-height: 40px;
+    padding: 8px 12px;
+  }
+}

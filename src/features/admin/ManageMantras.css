@@ -1,26 +1,17 @@
-/* ManageMantras.css - Complete Fixed Responsive Version */
+/* ManageMantras.css - Complete Responsive Fix */
 
-/* RESET & BASE */
 * {
   box-sizing: border-box;
 }
 
 .manage-mantras {
-  padding: 12px;
+  padding: 16px;
   width: 100%;
-  margin: 0 auto;
+  max-width: 100%;
   overflow-x: hidden;
 }
 
-/* Desktop */
-@media (min-width: 1024px) {
-  .manage-mantras {
-    padding: 20px;
-    max-width: 1400px;
-  }
-}
-
-/* HEADER SECTION */
+/* Header */
 .manage-header {
   display: flex;
   justify-content: space-between;
@@ -31,19 +22,18 @@
 }
 
 .manage-header h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.5rem;
+  font-size: clamp(1.2rem, 5vw, 1.5rem);
   color: #c85a00;
-  margin: 0 0 5px 0;
-}
-
-.manage-header p {
-  color: #6b4820;
-  font-size: 0.85rem;
   margin: 0;
 }
 
-/* BUTTONS */
+.manage-header p {
+  font-size: clamp(0.7rem, 3vw, 0.85rem);
+  color: #666;
+  margin: 5px 0 0;
+}
+
+/* Buttons */
 .btn-primary {
   background: linear-gradient(135deg, #c85a00, #e06b10);
   border: none;
@@ -52,47 +42,11 @@
   color: white;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
-  font-size: 0.85rem;
+  white-space: nowrap;
+  font-size: clamp(0.75rem, 3vw, 0.85rem);
 }
 
-.btn-outline {
-  background: transparent;
-  border: 1px solid #c85a00;
-  padding: 8px 18px;
-  border-radius: 40px;
-  color: #c85a00;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-size: 0.85rem;
-}
-
-.btn-danger {
-  background: #7a1818;
-  border: none;
-  padding: 8px 18px;
-  border-radius: 40px;
-  color: white;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-size: 0.85rem;
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(200, 90, 0, 0.3);
-}
-
-.btn-outline:hover {
-  background: rgba(200, 90, 0, 0.1);
-}
-
-.btn-danger:hover {
-  background: #5a1010;
-  transform: translateY(-2px);
-}
-
-/* FILTERS BAR */
+/* Filters */
 .filters-bar {
   display: flex;
   gap: 12px;
@@ -100,26 +54,18 @@
   flex-wrap: wrap;
 }
 
-.filters-bar input, 
+.filters-bar input,
 .filters-bar select {
   padding: 10px 16px;
   background: #fff9f0;
   border: 1px solid #d8c090;
   border-radius: 40px;
-  font-size: 0.85rem;
-  transition: all 0.2s;
   flex: 1;
   min-width: 140px;
+  font-size: clamp(0.7rem, 3vw, 0.85rem);
 }
 
-.filters-bar input:focus, 
-.filters-bar select:focus {
-  outline: none;
-  border-color: #c85a00;
-  box-shadow: 0 0 0 2px rgba(200, 90, 0, 0.2);
-}
-
-/* TABLE CONTAINER - FIXED SCROLLING */
+/* Table Container */
 .table-container {
   width: 100%;
   overflow-x: auto;
@@ -132,7 +78,7 @@
 table {
   width: 100%;
   border-collapse: collapse;
-  /* REMOVED fixed min-width - let it be responsive */
+  min-width: 550px;
 }
 
 th, td {
@@ -143,44 +89,42 @@ th, td {
 
 th {
   color: #c85a00;
-  font-weight: 600;
-  font-size: 0.8rem;
+  font-size: clamp(0.7rem, 2.5vw, 0.8rem);
   background: #fff9f0;
+  position: sticky;
+  top: 0;
 }
 
 td {
-  font-size: 0.8rem;
+  font-size: clamp(0.65rem, 2.5vw, 0.8rem);
 }
 
 .mantra-title {
-  font-family: 'Noto Sans Devanagari', sans-serif;
   font-weight: 600;
-  color: #2c1c0e;
-  font-size: 0.85rem;
+  font-size: clamp(0.7rem, 2.5vw, 0.85rem);
 }
 
 .mantra-subtitle {
-  font-size: 0.65rem;
+  font-size: clamp(0.55rem, 2vw, 0.65rem);
   color: #9a7850;
 }
 
 .deity-badge {
-  padding: 3px 10px;
+  padding: 4px 10px;
   border-radius: 30px;
-  font-size: 0.7rem;
+  font-size: clamp(0.6rem, 2vw, 0.7rem);
   font-weight: 600;
   display: inline-block;
   white-space: nowrap;
 }
 
 .status-badge {
-  padding: 3px 10px;
+  padding: 4px 10px;
   border-radius: 30px;
-  font-size: 0.7rem;
+  font-size: clamp(0.6rem, 2vw, 0.7rem);
   font-weight: 600;
-  cursor: pointer;
   border: none;
-  transition: all 0.2s;
+  cursor: pointer;
   white-space: nowrap;
 }
 
@@ -194,40 +138,21 @@ td {
   color: #c85a00;
 }
 
-.status-badge:hover {
-  transform: scale(0.95);
-}
-
-.media-icons span {
-  font-size: 1rem;
-}
-
-/* ACTION BUTTONS */
 .action-btn {
   background: transparent;
   border: none;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: clamp(0.85rem, 3.5vw, 1rem);
   padding: 6px 8px;
-  margin: 0 2px;
   border-radius: 8px;
-  transition: all 0.2s;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  min-width: 36px;
+  min-height: 36px;
 }
 
-.action-btn.edit:hover { 
-  background: rgba(200, 90, 0, 0.1);
-  transform: scale(1.05);
-}
-
-.action-btn.delete:hover { 
-  background: rgba(122, 24, 24, 0.1);
-  transform: scale(1.05);
-}
-
+/* ============================================ */
 /* MODAL STYLES */
+/* ============================================ */
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -235,20 +160,19 @@ td {
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
-  padding: 10px;
+  z-index: 9999;
+  padding: 16px;
 }
 
 .modal-content {
   background: #fff9f0;
   border-radius: 20px;
   width: 100%;
-  max-width: 600px;
-  max-height: 90vh;
+  max-width: 500px;
+  max-height: 85vh;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -266,127 +190,63 @@ td {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 18px;
+  padding: 15px 20px;
   border-bottom: 1px solid #e8dcc2;
+  background: #fff9f0;
   position: sticky;
   top: 0;
-  background: #fff9f0;
-  z-index: 20;
-  border-radius: 20px 20px 0 0;
 }
 
 .modal-header h3 {
   color: #c85a00;
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 4vw, 1.2rem);
   margin: 0;
 }
 
 .modal-close {
-  background: transparent;
+  background: none;
   border: none;
   font-size: 1.3rem;
   cursor: pointer;
-  color: #6b4820;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-}
-
-.modal-close:hover {
-  background: rgba(200, 90, 0, 0.1);
+  padding: 5px 10px;
 }
 
 .modal-body {
-  padding: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+  padding: 20px;
   overflow-y: auto;
 }
 
-/* FORM ELEMENTS */
+/* Form Elements */
 .form-row {
   display: flex;
   gap: 12px;
+  margin-bottom: 12px;
   flex-wrap: wrap;
 }
 
-.form-row > * {
+.form-row input,
+.form-row select {
   flex: 1;
-  min-width: 120px;
 }
 
 input, select, textarea {
   padding: 10px 14px;
-  background: #ffffff;
   border: 1px solid #e8dcc2;
   border-radius: 12px;
-  font-size: 0.85rem;
-  font-family: inherit;
+  font-size: clamp(0.75rem, 3vw, 0.85rem);
   width: 100%;
-}
-
-input:focus, select:focus, textarea:focus {
-  outline: none;
-  border-color: #c85a00;
-  box-shadow: 0 0 0 2px rgba(200, 90, 0, 0.1);
+  margin-bottom: 12px;
+  background: white;
 }
 
 textarea {
   resize: vertical;
-  min-height: 70px;
+  min-height: 80px;
 }
 
-textarea[name="largeText"] {
-  font-family: 'Noto Sans Devanagari', monospace;
-  font-size: 0.9rem;
-  min-height: 100px;
-}
-
-/* DROP ZONE */
-.drop-zone {
-  background: rgba(200, 90, 0, 0.03);
-  border: 2px dashed #d8c090;
-  border-radius: 16px;
-  padding: 15px;
-  text-align: center;
-  cursor: pointer;
-}
-
-.drop-zone:hover {
-  border-color: #c85a00;
-  background: rgba(200, 90, 0, 0.06);
-}
-
-.drop-icon {
-  font-size: 2rem;
-  margin-bottom: 5px;
-}
-
-.drop-zone p {
-  margin: 5px 0;
-  font-size: 0.75rem;
-  color: #6b4820;
-}
-
-.drop-zone small {
-  font-size: 0.65rem;
-  color: #9a7850;
-}
-
-.image-preview {
-  max-width: 100%;
-  max-height: 80px;
-  border-radius: 10px;
-  object-fit: cover;
-}
-
-/* VERSES SECTION */
+/* Verse Group */
 .verse-group {
-  background: rgba(200, 90, 0, 0.03);
+  background: rgba(200, 90, 0, 0.05);
   padding: 12px;
   border-radius: 12px;
   margin-bottom: 10px;
@@ -395,60 +255,107 @@ textarea[name="largeText"] {
 .verse-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   margin-bottom: 10px;
-  font-weight: 600;
   color: #c85a00;
-}
-
-.verse-header span {
-  font-size: 0.8rem;
+  font-weight: bold;
+  font-size: clamp(0.7rem, 2.5vw, 0.8rem);
 }
 
 .remove-verse {
-  background: transparent;
+  background: none;
   border: none;
-  color: #7a1818;
+  color: red;
   cursor: pointer;
-  font-size: 0.9rem;
-  padding: 4px 8px;
-  border-radius: 8px;
 }
 
 .add-verse-btn {
-  background: transparent;
+  background: none;
   border: 1px dashed #c85a00;
   color: #c85a00;
   padding: 8px;
-  border-radius: 40px;
+  border-radius: 20px;
   cursor: pointer;
   width: 100%;
-  margin-top: 8px;
-  font-size: 0.8rem;
+  margin: 10px 0;
+  font-size: clamp(0.7rem, 2.5vw, 0.8rem);
 }
 
+/* Drop Zone */
+.drop-zone {
+  border: 2px dashed #d8c090;
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+
+.image-preview {
+  max-width: 100%;
+  max-height: 100px;
+  border-radius: 8px;
+}
+
+/* Modal Footer */
 .modal-footer {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  padding: 14px 18px;
+  padding: 15px 20px;
   border-top: 1px solid #e8dcc2;
+  background: #fff9f0;
   position: sticky;
   bottom: 0;
-  background: #fff9f0;
-  border-radius: 0 0 20px 20px;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid #c85a00;
+  color: #c85a00;
+  padding: 8px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: clamp(0.7rem, 2.5vw, 0.8rem);
+}
+
+.btn-danger {
+  background: #dc3545;
+  border: none;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: clamp(0.7rem, 2.5vw, 0.8rem);
 }
 
 .warning {
-  color: #7a1818;
-  font-size: 0.75rem;
-  margin-top: 5px;
+  color: #dc3545;
+  font-size: 0.8rem;
+  margin-top: 8px;
 }
 
 /* ============================================ */
-/* MOBILE RESPONSIVE (under 768px) */
+/* RESPONSIVE FOR PORTABLE DEVICES */
 /* ============================================ */
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .manage-mantras {
+    padding: 14px;
+  }
+  
+  .modal-content.large {
+    max-width: 90%;
+  }
+}
+
+/* Mobile devices */
 @media (max-width: 768px) {
+  .manage-mantras {
+    padding: 12px;
+  }
+  
+  /* Stack header */
   .manage-header {
     flex-direction: column;
     align-items: flex-start;
@@ -456,8 +363,10 @@ textarea[name="largeText"] {
   
   .manage-header button {
     width: 100%;
+    white-space: normal;
   }
   
+  /* Stack filters */
   .filters-bar {
     flex-direction: column;
   }
@@ -474,42 +383,24 @@ textarea[name="largeText"] {
   }
   
   table {
-    min-width: 550px;
+    min-width: 500px;
   }
   
   th, td {
-    padding: 10px 8px;
-    font-size: 0.75rem;
+    padding: 8px 6px;
   }
   
-  .mantra-title {
-    font-size: 0.8rem;
-  }
-  
-  .deity-badge, .status-badge {
-    padding: 2px 8px;
-    font-size: 0.65rem;
-  }
-  
-  .action-btn {
-    padding: 5px 6px;
-    font-size: 0.9rem;
-  }
-  
-  /* Modal full screen on mobile */
+  /* Full screen modal on mobile */
   .modal-overlay {
     padding: 0;
   }
   
-  .modal-content {
-    max-width: 100%;
-    max-height: 100vh;
-    border-radius: 0;
-    margin: 0;
-  }
-  
+  .modal-content,
   .modal-content.large {
-    max-width: 100%;
+    max-width: 100% !important;
+    max-height: 100vh !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
   }
   
   .modal-header {
@@ -524,20 +415,25 @@ textarea[name="largeText"] {
     padding: 15px;
   }
   
+  /* Stack form rows */
   .form-row {
     flex-direction: column;
-    gap: 10px;
+    gap: 0;
   }
   
-  .form-row > * {
-    min-width: auto;
+  .form-row input,
+  .form-row select {
+    width: 100%;
+    margin-bottom: 10px;
   }
   
+  /* Full width inputs */
   input, select, textarea {
-    padding: 8px 12px;
-    font-size: 0.8rem;
+    padding: 10px 12px;
+    font-size: 14px;
   }
   
+  /* Stack modal footer buttons */
   .modal-footer {
     flex-direction: column;
     padding: 12px 15px;
@@ -545,128 +441,104 @@ textarea[name="largeText"] {
   
   .modal-footer button {
     width: 100%;
-  }
-  
-  .verse-group {
     padding: 10px;
   }
   
-  .drop-zone {
-    padding: 12px;
+  /* Touch-friendly action buttons */
+  .action-btn {
+    padding: 8px 10px;
   }
   
-  .drop-icon {
-    font-size: 1.8rem;
+  .status-badge {
+    padding: 5px 10px;
   }
 }
 
-/* ============================================ */
-/* VERY SMALL PHONES (under 480px) */
-/* ============================================ */
+/* Small phones */
 @media (max-width: 480px) {
   .manage-mantras {
-    padding: 8px;
+    padding: 10px;
   }
   
   .manage-header h2 {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
   
-  .btn-primary, .btn-outline, .btn-danger {
-    padding: 8px 16px;
-    font-size: 0.8rem;
-  }
-  
-  table {
-    min-width: 480px;
+  .manage-header p {
+    font-size: 0.7rem;
   }
   
   th, td {
-    padding: 8px 6px;
+    padding: 6px 4px;
   }
   
   .mantra-title {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
   }
   
-  .mantra-subtitle {
-    font-size: 0.6rem;
+  .deity-badge {
+    font-size: 0.55rem;
+    padding: 2px 6px;
   }
   
   .action-btn {
-    padding: 4px 4px;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
+    padding: 5px 6px;
+    min-width: 32px;
+    min-height: 32px;
   }
   
   .modal-body {
     padding: 12px;
-    gap: 10px;
   }
   
   .verse-group {
     padding: 8px;
   }
   
-  .verse-header span {
+  textarea {
+    font-size: 13px;
+  }
+  
+  .btn-primary,
+  .btn-outline,
+  .btn-danger {
+    padding: 8px 16px;
     font-size: 0.75rem;
   }
-  
-  textarea[name="largeText"] {
-    min-height: 80px;
-    font-size: 0.85rem;
-  }
 }
 
-/* ============================================ */
-/* TABLET (768px - 1024px) */
-/* ============================================ */
-@media (min-width: 768px) and (max-width: 1024px) {
-  .manage-mantras {
-    padding: 15px;
-  }
-  
+/* Landscape mode on phones */
+@media (max-height: 500px) and (orientation: landscape) {
   .modal-content {
-    max-width: 550px;
+    max-height: 95vh !important;
   }
   
-  .modal-content.large {
-    max-width: 650px;
+  .modal-body {
+    max-height: 60vh;
+    overflow-y: auto;
   }
   
-  table {
-    min-width: auto;
+  .verse-group textarea {
+    min-height: 50px;
+  }
+}
+
+/* Touch devices - larger tap targets */
+@media (hover: none) and (pointer: coarse) {
+  .action-btn,
+  .status-badge,
+  .btn-primary,
+  .btn-outline,
+  .btn-danger {
+    min-height: 44px;
   }
   
-  th, td {
-    padding: 12px 10px;
+  .action-btn {
+    min-width: 44px;
   }
-}
-
-/* SCROLLBAR STYLING */
-.table-container::-webkit-scrollbar {
-  height: 6px;
-}
-
-.table-container::-webkit-scrollbar-track {
-  background: #e8dcc2;
-  border-radius: 10px;
-}
-
-.table-container::-webkit-scrollbar-thumb {
-  background: #c85a00;
-  border-radius: 10px;
-}
-
-.modal-content::-webkit-scrollbar {
-  width: 5px;
-}
-
-.modal-content::-webkit-scrollbar-track {
-  background: #e8dcc2;
-  border-radius: 10px;
-}
-
-.modal-content::-webkit-scrollbar-thumb {
-  background: #c85a00;
-  border-radius: 10px;
+  
+  .status-badge {
+    padding: 8px 12px;
+  }
 }

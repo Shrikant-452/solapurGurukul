@@ -1,4 +1,4 @@
-/* ManageMantras.css - Modern & Beautiful with Horizontal Scroll */
+/* ManageMantras.css - Modern & Beautiful with Responsive Modal */
 
 .manage-mantras {
   padding: 20px;
@@ -96,7 +96,7 @@
   box-shadow: 0 0 0 2px rgba(200, 90, 0, 0.2);
 }
 
-/* Table Container - Horizontal Scroll Fix */
+/* Table Container - Horizontal Scroll */
 .table-container {
   width: 100%;
   overflow-x: auto;
@@ -110,15 +110,13 @@
   position: relative;
 }
 
-/* Table - Force horizontal scroll on small screens */
 table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 900px; /* Increased to ensure scroll on smaller screens */
+  min-width: 900px;
   white-space: nowrap;
 }
 
-/* Allow specific columns to wrap text */
 td:first-child, th:first-child {
   white-space: normal;
   min-width: 180px;
@@ -219,7 +217,6 @@ tr:hover td {
   transform: scale(1.05);
 }
 
-/* Scrollbar Styling */
 .table-container::-webkit-scrollbar {
   height: 8px;
   width: 8px;
@@ -239,29 +236,36 @@ tr:hover td {
   background: #a04800;
 }
 
-/* Modal Styles */
+/* ============================================ */
+/* MODAL STYLES - FIXED FOR SMARTPHONES */
+/* ============================================ */
+
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  padding: 16px;
+  box-sizing: border-box;
 }
 
 .modal-content {
   background: #fff9f0;
-  border-radius: 28px;
-  width: 90%;
+  border-radius: 24px;
+  width: 100%;
   max-width: 700px;
-  max-height: 85vh;
+  max-height: 90vh;
   overflow-y: auto;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
 }
 
 .modal-content.large {
@@ -269,7 +273,7 @@ tr:hover td {
 }
 
 .modal-content.confirm {
-  max-width: 450px;
+  max-width: 400px;
 }
 
 .modal-header {
@@ -278,6 +282,11 @@ tr:hover td {
   align-items: center;
   padding: 20px 24px;
   border-bottom: 1px solid #e8dcc2;
+  position: sticky;
+  top: 0;
+  background: #fff9f0;
+  z-index: 20;
+  border-radius: 24px 24px 0 0;
 }
 
 .modal-header h3 {
@@ -293,10 +302,17 @@ tr:hover td {
   cursor: pointer;
   color: #6b4820;
   transition: transform 0.2s;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
 }
 
 .modal-close:hover {
   transform: scale(1.1);
+  background: rgba(200, 90, 0, 0.1);
   color: #c85a00;
 }
 
@@ -305,8 +321,11 @@ tr:hover td {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  overflow-y: auto;
+  flex: 1;
 }
 
+/* Form Elements */
 .form-row {
   display: flex;
   gap: 16px;
@@ -315,6 +334,7 @@ tr:hover td {
 
 .form-row > * {
   flex: 1;
+  min-width: 0; /* Prevents overflow on small screens */
 }
 
 input, select, textarea {
@@ -325,6 +345,8 @@ input, select, textarea {
   font-size: 0.9rem;
   transition: all 0.2s;
   font-family: inherit;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 input:focus, select:focus, textarea:focus {
@@ -338,7 +360,6 @@ textarea {
   min-height: 80px;
 }
 
-/* Specific styles for title and large text */
 input[name="title"] {
   font-weight: 600;
   background: #fffdf8;
@@ -403,6 +424,7 @@ textarea[name="largeText"] {
   object-fit: cover;
 }
 
+/* Verses Section */
 .verse-group {
   background: rgba(200, 90, 0, 0.03);
   padding: 16px;
@@ -413,9 +435,16 @@ textarea[name="largeText"] {
 .verse-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 12px;
   font-weight: 600;
   color: #c85a00;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.verse-header span {
+  font-size: 0.9rem;
 }
 
 .remove-verse {
@@ -425,10 +454,13 @@ textarea[name="largeText"] {
   cursor: pointer;
   font-size: 1rem;
   transition: transform 0.2s;
+  padding: 4px 8px;
+  border-radius: 8px;
 }
 
 .remove-verse:hover {
   transform: scale(1.1);
+  background: rgba(122, 24, 24, 0.1);
 }
 
 .add-verse-btn {
@@ -454,6 +486,10 @@ textarea[name="largeText"] {
   gap: 12px;
   padding: 16px 24px;
   border-top: 1px solid #e8dcc2;
+  position: sticky;
+  bottom: 0;
+  background: #fff9f0;
+  border-radius: 0 0 24px 24px;
 }
 
 .warning {
@@ -462,12 +498,9 @@ textarea[name="largeText"] {
   margin-top: 8px;
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
-  table {
-    min-width: 850px;
-  }
-}
+/* ============================================ */
+/* RESPONSIVE STYLES FOR SMARTPHONES */
+/* ============================================ */
 
 @media (max-width: 768px) {
   .manage-header {
@@ -484,23 +517,70 @@ textarea[name="largeText"] {
     width: 100%;
   }
   
+  /* Modal fixes for tablets */
+  .modal-overlay {
+    padding: 12px;
+  }
+  
   .modal-content {
-    width: 95%;
+    max-width: 95%;
+    max-height: 85vh;
+  }
+  
+  .modal-content.large {
+    max-width: 95%;
+  }
+  
+  .modal-header {
+    padding: 16px 20px;
+  }
+  
+  .modal-header h3 {
+    font-size: 1.2rem;
+  }
+  
+  .modal-body {
+    padding: 20px;
+    gap: 14px;
   }
   
   .form-row {
     flex-direction: column;
+    gap: 12px;
   }
   
-  .modal-body {
-    padding: 16px;
+  .form-row > * {
+    width: 100%;
   }
   
   input, select, textarea {
     padding: 10px 14px;
+    font-size: 0.85rem;
   }
   
-  /* Table cells padding on mobile */
+  textarea[name="largeText"] {
+    font-size: 0.9rem;
+    min-height: 100px;
+  }
+  
+  .verse-group {
+    padding: 12px;
+  }
+  
+  .verse-header span {
+    font-size: 0.85rem;
+  }
+  
+  .modal-footer {
+    padding: 12px 20px;
+  }
+  
+  .btn-outline, .btn-primary, .btn-danger {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+  }
+  
+  /* Table fixes */
   th, td {
     padding: 12px 8px;
     font-size: 0.85rem;
@@ -511,10 +591,7 @@ textarea[name="largeText"] {
     padding: 4px;
   }
   
-  /* Ensure table container takes full width */
   .table-container {
-    width: 100%;
-    margin: 0;
     border-radius: 16px;
   }
 }
@@ -528,6 +605,91 @@ textarea[name="largeText"] {
     font-size: 1.4rem;
   }
   
+  /* Modal fixes for mobile phones */
+  .modal-overlay {
+    padding: 8px;
+  }
+  
+  .modal-content {
+    max-width: 100%;
+    max-height: 90vh;
+    border-radius: 20px;
+  }
+  
+  .modal-header {
+    padding: 14px 16px;
+  }
+  
+  .modal-header h3 {
+    font-size: 1.1rem;
+  }
+  
+  .modal-close {
+    width: 32px;
+    height: 32px;
+    font-size: 1.3rem;
+  }
+  
+  .modal-body {
+    padding: 16px;
+    gap: 12px;
+  }
+  
+  input, select, textarea {
+    padding: 10px 12px;
+    font-size: 0.8rem;
+    border-radius: 12px;
+  }
+  
+  textarea[name="largeText"] {
+    font-size: 0.85rem;
+    min-height: 80px;
+  }
+  
+  .drop-zone {
+    padding: 16px 12px;
+  }
+  
+  .drop-icon {
+    font-size: 2rem;
+  }
+  
+  .drop-zone p {
+    font-size: 0.75rem;
+  }
+  
+  .drop-zone small {
+    font-size: 0.65rem;
+  }
+  
+  .verse-group {
+    padding: 10px;
+  }
+  
+  .verse-header {
+    margin-bottom: 8px;
+  }
+  
+  .verse-header span {
+    font-size: 0.8rem;
+  }
+  
+  .add-verse-btn {
+    padding: 8px;
+    font-size: 0.8rem;
+  }
+  
+  .modal-footer {
+    padding: 12px 16px;
+    gap: 8px;
+  }
+  
+  .btn-outline, .btn-primary, .btn-danger {
+    padding: 8px 14px;
+    font-size: 0.8rem;
+  }
+  
+  /* Table fixes for mobile */
   th, td {
     padding: 10px 6px;
     font-size: 0.75rem;
@@ -538,21 +700,45 @@ textarea[name="largeText"] {
     font-size: 0.65rem;
   }
   
-  .modal-header h3 {
-    font-size: 1.2rem;
-  }
-  
-  .verse-group {
-    padding: 12px;
-  }
-  
   .action-btn {
     font-size: 0.9rem;
     padding: 3px;
   }
   
-  /* Table min width for very small screens */
   table {
     min-width: 750px;
+  }
+}
+
+/* For very small devices (iPhone SE, etc.) */
+@media (max-width: 380px) {
+  .modal-body {
+    padding: 12px;
+  }
+  
+  .modal-header {
+    padding: 12px 16px;
+  }
+  
+  .modal-header h3 {
+    font-size: 1rem;
+  }
+  
+  input, select, textarea {
+    padding: 8px 10px;
+    font-size: 0.75rem;
+  }
+  
+  .verse-group {
+    padding: 8px;
+  }
+  
+  .btn-outline, .btn-primary, .btn-danger {
+    padding: 6px 12px;
+    font-size: 0.75rem;
+  }
+  
+  .modal-footer {
+    padding: 10px 12px;
   }
 }

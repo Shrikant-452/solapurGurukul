@@ -49,6 +49,7 @@ const ManageMantras = () => {
       ];
       setCategories(defaultCategories);
       localStorage.setItem('categories', JSON.stringify(defaultCategories));
+      window.dispatchEvent(new Event('categoriesUpdated')); // ✅ Added
     }
   };
 
@@ -65,6 +66,7 @@ const ManageMantras = () => {
       ];
       setMantras(defaultMantras);
       localStorage.setItem('admin_mantras', JSON.stringify(defaultMantras));
+      window.dispatchEvent(new Event('mantrasUpdated')); // ✅ Added
     }
   };
 
@@ -371,7 +373,7 @@ const ManageMantras = () => {
                     <div className="media-icons">
                       {m.imageUrl ? <span title="Has Image">🖼️</span> : <span className="no-media">—</span>}
                     </div>
-                  </td>
+                   </td>
                   <td>
                     <button className="action-btn edit" onClick={() => openEditModal(m)}>✏️</button>
                     <button className="action-btn delete" onClick={() => openDeleteModal(m)}>🗑️</button>
